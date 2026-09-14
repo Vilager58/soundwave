@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформление заказа | SOUNDWAVE</title>
+  <meta name="description" content="Безопасное оформление заказа в магазине музыкальных инструментов SOUNDWAVE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/checkout.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="brand-logo">
+          <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
+          <span>SOUND<span>WAVE</span></span>
+        </a>
+
+        <div class="catalog-dropdown-wrapper">
+          <button class="catalog-btn" type="button">
+            <i class="bi bi-grid-fill"></i>
+            Каталог
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Гитары</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=electric">Электрогитары</a></li>
+                <li><a href="catalog.html?cat=acoustic">Акустические гитары</a></li>
+                <li><a href="catalog.html?cat=bass">Бас-гитары</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Клавишные</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=synths">Синтезаторы</a></li>
+                <li><a href="catalog.html?cat=pianos">Пианино</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Студия</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=mics">Микрофоны</a></li>
+                <li><a href="catalog.html?cat=amps">Усилители</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="catalog.html" class="nav-link-custom">Все товары</a>
+          <a href="about.html" class="nav-link-custom">О нас</a>
+          <a href="contacts.html" class="nav-link-custom">Контакты</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="cart.html" class="action-btn" title="Корзина">
+            <i class="bi bi-bag"></i>
+            <span class="action-badge cart-count-badge">0</span>
+          </a>
+          <a href="account.php" class="action-btn" title="Личный кабинет">
+            <i class="bi bi-person"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs-list">
+        <li><a href="/">Главная</a></li>
+        <li><a href="cart.html">Корзина</a></li>
+        <li>Оформление заказа</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="checkout-layout">
+        <div>
+          <div class="checkout-steps-nav">
+            <div class="step-indicator active" id="step-nav-1" onclick="goToStep(1)">
+              <div class="step-number">1</div>
+              <span>Покупатель</span>
+            </div>
+            <div class="step-indicator" id="step-nav-2" onclick="goToStep(2)">
+              <div class="step-number">2</div>
+              <span>Доставка</span>
+            </div>
+            <div class="step-indicator" id="step-nav-3" onclick="goToStep(3)">
+              <div class="step-number">3</div>
+              <span>Оплата</span>
+            </div>
+            <div class="step-indicator" id="step-nav-4" onclick="goToStep(4)">
+              <div class="step-number">4</div>
+              <span>Подтверждение</span>
+            </div>
+          </div>
+
+          <form id="checkout-form" onsubmit="event.preventDefault();">
+            <div class="checkout-step-card" id="step-card-1">
+              <div class="step-card-title">
+                <i class="bi bi-person-check-fill"></i>
+                Шаг 1 — Контактные данные покупателя
+              </div>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label for="c-name">Имя и фамилия *</label>
+                  <input type="text" id="c-name" value="Александр Воронов" required>
+                </div>
+                <div class="form-field">
+                  <label for="c-phone">Телефон *</label>
+                  <input type="tel" id="c-phone" value="+7 (999) 820-14-32" required>
+                </div>
+              </div>
+              <div class="form-field" style="margin-bottom: 20px;">
+                <label for="c-email">Электронная почта *</label>
+                <input type="email" id="c-email" value="alexander.sound@example.com" required>
+              </div>
+              <label class="custom-checkbox" style="margin-bottom: 24px;">
+                <input type="checkbox" checked>
+                <span>Создать аккаунт покупателя и начислить 1 500 приветственных бонусов</span>
+              </label>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn-brand" onclick="nextStep(2)">
+                  Продолжить к доставке
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="checkout-step-card" id="step-card-2" style="display: none;">
+              <div class="step-card-title">
+                <i class="bi bi-truck"></i>
+                Шаг 2 — Способ и адрес доставки
+              </div>
+              <div class="selection-tiles">
+                <div class="selection-tile active" onclick="selectTile(this)">
+                  <i class="bi bi-box-seam"></i>
+                  <strong>Курьером</strong>
+                  <span>До двери за 1–2 дня, 0 ₽</span>
+                </div>
+                <div class="selection-tile" onclick="selectTile(this)">
+                  <i class="bi bi-geo-alt"></i>
+                  <strong>Пункт СДЭК / ПВЗ</strong>
+                  <span>Более 2 000 пунктов, 0 ₽</span>
+                </div>
+                <div class="selection-tile" onclick="selectTile(this)">
+                  <i class="bi bi-shop"></i>
+                  <strong>Самовывоз</strong>
+                  <span>Сыктывкар, Суетная 67</span>
+                </div>
+              </div>
+              <div class="form-field" style="margin-bottom: 16px;">
+                <label for="c-city">Город *</label>
+                <input type="text" id="c-city" value="Москва">
+              </div>
+              <div class="form-field" style="margin-bottom: 24px;">
+                <label for="c-address">Улица, дом, квартира / офис *</label>
+                <input type="text" id="c-address" value="Ленинградский проспект, дом 48, кв. 112">
+              </div>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn-wenge" onclick="goToStep(1)">Назад</button>
+                <button type="button" class="btn-brand" onclick="nextStep(3)">
+                  Продолжить к оплате
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="checkout-step-card" id="step-card-3" style="display: none;">
+              <div class="step-card-title">
+                <i class="bi bi-credit-card"></i>
+                Шаг 3 — Выбор способа оплаты
+              </div>
+              <div class="selection-tiles">
+                <div class="selection-tile active" onclick="selectTile(this)">
+                  <i class="bi bi-qr-code"></i>
+                  <strong>Онлайн картой / СБП</strong>
+                  <span>Без комиссии, мгновенный чек</span>
+                </div>
+                <div class="selection-tile" onclick="selectTile(this)">
+                  <i class="bi bi-cash-stack"></i>
+                  <strong>При получении</strong>
+                  <span>Наличными или картой</span>
+                </div>
+                <div class="selection-tile" onclick="selectTile(this)">
+                  <i class="bi bi-credit-card-2-front"></i>
+                  <strong>Картой курьеру</strong>
+                  <span>Через мобильный терминал</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn-wenge" onclick="goToStep(2)">Назад</button>
+                <button type="button" class="btn-brand" onclick="nextStep(4)">
+                  Перейти к проверке
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="checkout-step-card" id="step-card-4" style="display: none;">
+              <div class="step-card-title">
+                <i class="bi bi-check2-circle"></i>
+                Шаг 4 — Подтверждение и оформление заказа
+              </div>
+              <div class="step4"
+                style="background: var(--wenge-surface); border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+                <div style="font-size: 14px; margin-bottom: 8px;"><strong>Получатель:</strong> Александр Воронов, +7
+                  (999) 820-14-32</div>
+                <div style="font-size: 14px; margin-bottom: 8px;"><strong>Доставка:</strong> Курьерская по адресу: г.
+                  Москва, Ленинградский пр-т, 48</div>
+                <div style="font-size: 14px;"><strong>Оплата:</strong> Онлайн (СБП / Банковская карта)</div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <button type="button" class="btn-wenge" onclick="goToStep(3)">Назад</button>
+                <button type="button" class="btn-brand" style="font-size: 16px; padding: 14px 28px;"
+                  onclick="confirmOrder()">
+                  <i class="bi bi-shield-lock-fill"></i>
+                  Подтвердить заказ
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="checkout-summary-box">
+          <div
+            style="font-size: 18px; font-weight: 800; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--wenge-border);">
+            Состав заказа
+          </div>
+          <div id="checkout-items-preview"
+            style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+          </div>
+          <div
+            style="border-top: 1px solid var(--wenge-border); padding-top: 14px; display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+            <span>Доставка:</span>
+            <span style="color: var(--accent-green);">Бесплатно</span>
+          </div>
+          <div
+            style="border-top: 1px solid var(--wenge-border); padding-top: 14px; display: flex; justify-content: space-between; align-items: flex-end;">
+            <span style="font-size: 16px; font-weight: 700;">Итого к оплате:</span>
+            <span id="checkout-total-price" style="font-size: 24px; font-weight: 800; color: var(--yellow-main);">0
+              ₽</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-backdrop-custom" id="order-success-modal">
+    <div class="modal-dialog-custom">
+      <div class="modal-icon-success">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <h2 style="font-size: 26px; font-weight: 800; margin-bottom: 12px;">Заказ успешно оформлен!</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        Номер вашего заказа: <strong id="modal-order-number" style="color: var(--yellow-main);">SW-10482</strong>
+      </p>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 28px;" id="modal-order-msg">
+        Мы отправили подтверждение на вашу почту. Менеджер свяжется с вами в течение 10 минут.
+      </p>
+      <div class="d-flex gap-3 justify-content-center">
+        <a href="account.php" class="btn-brand">
+          В личный кабинет
+          <i class="bi bi-arrow-right"></i>
+        </a>
+        <a href="/" class="btn-wenge">На главную</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 SOUNDWAVE. Все права защищены.</div>
+        <div>Сыктывкар, Суетная 67</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    let currentStep = 1;
+
+    function goToStep(step) {
+      currentStep = step;
+      for (let i = 1; i <= 4; i++) {
+        const card = document.querySelector('#step-card-' + i);
+        const nav = document.querySelector('#step-nav-' + i);
+        if (card && nav) {
+          if (i === step) {
+            card.style.display = 'block';
+            nav.classList.add('active');
+          } else {
+            card.style.display = 'none';
+            nav.classList.remove('active');
+            if (i < step) {
+              nav.classList.add('completed');
+            } else {
+              nav.classList.remove('completed');
+            }
+          }
+        }
+      }
+      if (step === 4) {
+        updateStep4Summary();
+      }
+    }
+
+    function nextStep(target) {
+      goToStep(target);
+    }
+
+    function selectTile(el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.selection-tile').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function updateStep4Summary() {
+      const name = document.querySelector('#c-name') ? document.querySelector('#c-name').value : 'Клиент';
+      const phone = document.querySelector('#c-phone') ? document.querySelector('#c-phone').value : '';
+      const city = document.querySelector('#c-city') ? document.querySelector('#c-city').value : '';
+      const address = document.querySelector('#c-address') ? document.querySelector('#c-address').value : '';
+
+      const step4Block = document.querySelector('.step4');
+      if (step4Block) {
+        step4Block.innerHTML = `
+          <div style="font-size: 14px; margin-bottom: 8px;"><strong>Получатель:</strong> ${name}, ${phone}</div>
+          <div style="font-size: 14px; margin-bottom: 8px;"><strong>Доставка:</strong> Курьерская доставка по адресу: ${city}, ${address}</div>
+          <div style="font-size: 14px;"><strong>Оплата:</strong> Онлайн картой / СБП (без комиссии)</div>
+        `;
+      }
+    }
+
+    function renderCheckoutSummary() {
+      const cart = getStoredCart();
+      const container = document.querySelector('#checkout-items-preview');
+      const totalEl = document.querySelector('#checkout-total-price');
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">Корзина пуста</div>';
+        if (totalEl) totalEl.textContent = '0 ₽';
+        return;
+      }
+
+      let html = '';
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const p = SOUNDWAVE_DATA.products.find(prod => prod.id === item.id) || {
+          title: 'Товар SOUNDWAVE',
+          price: 29990
+        };
+        const sum = p.price * item.quantity;
+        subtotal += sum;
+        html += `
+          <div class="d-flex justify-content-between align-items-center" style="font-size: 14px;">
+            <span>${p.title} × ${item.quantity}</span>
+            <strong style="color: var(--yellow-main);">${formatPrice(sum)}</strong>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      if (totalEl) totalEl.textContent = formatPrice(subtotal);
+    }
+
+    function confirmOrder() {
+      const cart = getStoredCart();
+      const name = document.querySelector('#c-name') ? document.querySelector('#c-name').value.trim() : 'Александр Воронов';
+      const phone = document.querySelector('#c-phone') ? document.querySelector('#c-phone').value.trim() : '+7 (999) 450-20-10';
+      const email = document.querySelector('#c-email') ? document.querySelector('#c-email').value.trim() : 'alexander.sound@example.com';
+      const city = document.querySelector('#c-city') ? document.querySelector('#c-city').value.trim() : 'Сыктывкар';
+      const address = document.querySelector('#c-address') ? document.querySelector('#c-address').value.trim() : 'ул. Суетная, 67';
+
+      const orderItems = cart.map(item => {
+        const prod = SOUNDWAVE_DATA.products.find(p => p.id === item.id) || {
+          title: 'Музыкальный инструмент',
+          price: 29990,
+          image: 'img/photo-1550291652-6ea9114a47b1.avif'
+        };
+        return {
+          id: item.id,
+          title: prod.title,
+          price: prod.price,
+          quantity: item.quantity,
+          image: prod.image
+        };
+      });
+
+      const totalSum = orderItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
+
+      const orderNum = 'SW-' + Math.floor(10000 + Math.random() * 90000);
+      const trackNum = '148' + Math.floor(10000 + Math.random() * 90000);
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      const newOrder = {
+        id: orderNum,
+        date: dateStr,
+        status: 'processing',
+        statusLabel: 'В обработке на складе',
+        trackNumber: trackNum,
+        deliveryType: 'Курьер СДЭК до двери',
+        deliveryAddress: `г. ${city}, ${address}`,
+        paymentMethod: 'Онлайн картой (МИР / СБП)',
+        items: orderItems,
+        total: totalSum > 0 ? totalSum : 118970,
+        createdAt: now.toISOString()
+      };
+
+      addStoredOrder(newOrder);
+
+      // Сохраняем адрес и имя в профиль пользователя
+      const user = getCurrentUser();
+      if (user) {
+        user.name = name;
+        user.phone = phone;
+        user.email = email;
+        user.city = city;
+        user.address = address;
+        saveCurrentUser(user);
+      }
+
+      // Очищаем корзину
+      localStorage.removeItem('soundwave_cart');
+      updateCartBadges();
+
+      // Модалка
+      const numEl = document.querySelector('#modal-order-number');
+      if (numEl) numEl.textContent = orderNum;
+
+      const msgEl = document.querySelector('#modal-order-msg');
+      if (msgEl) msgEl.textContent = `Мы отправили подтверждение на ${email}. Менеджер свяжется с вами по номеру ${phone} для подтверждения доставки.`;
+
+      const modal = document.querySelector('#order-success-modal');
+      modal.classList.add('show');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCheckoutSummary();
+
+      // Подтягиваем данные пользователя в форму
+      const user = getCurrentUser();
+      if (user) {
+        if (user.name && document.querySelector('#c-name')) document.querySelector('#c-name').value = user.name;
+        if (user.phone && document.querySelector('#c-phone')) document.querySelector('#c-phone').value = user.phone;
+        if (user.email && document.querySelector('#c-email')) document.querySelector('#c-email').value = user.email;
+        if (user.city && document.querySelector('#c-city')) document.querySelector('#c-city').value = user.city;
+        if (user.address && document.querySelector('#c-address')) document.querySelector('#c-address').value = user.address;
+      }
+    });
+  </script>
+</body>
+
+</html>

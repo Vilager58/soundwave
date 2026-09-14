@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Избранное | SOUNDWAVE</title>
+  <meta name="description"
+    content="Список сохранённых музыкальных инструментов и студийного оборудования в магазине SOUNDWAVE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/favorites.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="brand-logo">
+          <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
+          <span>SOUND<span>WAVE</span></span>
+        </a>
+
+        <div class="catalog-dropdown-wrapper">
+          <button class="catalog-btn" type="button">
+            <i class="bi bi-grid-fill"></i>
+            Каталог
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Гитары</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=electric">Электрогитары</a></li>
+                <li><a href="catalog.html?cat=acoustic">Акустические гитары</a></li>
+                <li><a href="catalog.html?cat=bass">Бас-гитары</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Клавишные</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=synths">Синтезаторы</a></li>
+                <li><a href="catalog.html?cat=pianos">Пианино</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Студия</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=mics">Микрофоны</a></li>
+                <li><a href="catalog.html?cat=amps">Усилители</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="catalog.html" class="nav-link-custom">Все товары</a>
+          <a href="about.html" class="nav-link-custom">О нас</a>
+          <a href="contacts.html" class="nav-link-custom">Контакты</a>
+        </nav>
+
+        <div class="header-search">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="header-search-input" placeholder="Поиск инструментов, брендов..." autocomplete="off">
+          <div id="search-autocomplete-box" class="search-autocomplete"></div>
+        </div>
+
+        <div class="header-actions">
+          <a href="favorites.html" class="action-btn" title="Избранное"
+            style="border-color: var(--yellow-main); color: var(--yellow-main);">
+            <i class="bi bi-heart"></i>
+            <span class="action-badge fav-count-badge">0</span>
+          </a>
+          <a href="cart.html" class="action-btn" title="Корзина">
+            <i class="bi bi-bag"></i>
+            <span class="action-badge cart-count-badge">0</span>
+          </a>
+          <a href="account.php" class="action-btn" title="Личный кабинет">
+            <i class="bi bi-person"></i>
+          </a>
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Открыть меню">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div class="mobile-drawer-header">
+      <span class="brand-logo" style="font-size: 20px;">
+        <span style="color: var(--yellow-main);"><i class="bi bi-soundwave"></i></span>
+        SOUNDWAVE
+      </span>
+      <button class="btn-icon-sq" id="mobile-drawer-close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="/">Главная</a></li>
+      <li><a href="catalog.html">Каталог товаров</a></li>
+      <li><a href="cart.html">Корзина</a></li>
+      <li><a href="favorites.html">Избранное</a></li>
+      <li><a href="account.php">Личный кабинет</a></li>
+      <li><a href="about.html">О нас</a></li>
+      <li><a href="contacts.html">Контакты</a></li>
+    </ul>
+  </aside>
+
+  <nav class="site-breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs-list">
+        <li><a href="/">Главная</a></li>
+        <li>Избранное</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="favorites-page-header">
+        <div>
+          <h1 class="section-title mb-1">Избранное</h1>
+          <p class="section-desc mb-0">Сохранённые инструменты для сравнения и будущих покупок</p>
+        </div>
+        <button class="btn-wenge" onclick="clearAllFavorites()">
+          <i class="bi bi-trash3"></i> Очистить избранное
+        </button>
+      </div>
+
+      <div class="favs-empty-view" id="favs-empty-view">
+        <i class="bi bi-heart"></i>
+        <h2>В избранном пока ничего нет</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">Нажмите на сердечко на карточке любого
+          понравившегося инструмента</p>
+        <a href="catalog.html" class="btn-brand">Перейти в каталог</a>
+      </div>
+
+      <div class="favorites-grid" id="favs-grid-container"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 SOUNDWAVE. Все права защищены.</div>
+        <div>Сыктывкар, Суетная 67</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function renderFavoritesPage() {
+      const favs = getStoredFavs();
+      const container = document.querySelector('#favs-grid-container');
+      const emptyView = document.querySelector('#favs-empty-view');
+
+      if (!favs || favs.length === 0) {
+        if (emptyView) emptyView.style.display = 'block';
+        if (container) container.innerHTML = '';
+        return;
+      }
+
+      if (emptyView) emptyView.style.display = 'none';
+
+      let html = '';
+      favs.forEach(id => {
+        const product = SOUNDWAVE_DATA.products.find(p => p.id === id) || {
+          id: id,
+          title: 'Товар SOUNDWAVE',
+          category: 'Оборудование',
+          price: 49990,
+          rating: 5.0,
+          reviews: 10,
+          image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'
+        };
+
+        html += `
+          <div class="product-card">
+            <div class="product-image-box">
+              <button class="product-fav-btn active" onclick="removeFromFavs('${product.id}')" title="Удалить из избранного">
+                <i class="bi bi-heart-fill"></i>
+              </button>
+              <a href="product.html?id=${product.id}">
+                <img src="${product.image}" alt="${product.title}">
+              </a>
+            </div>
+            <div class="product-content">
+              <div class="product-category-tag">${product.category}</div>
+              <a href="product.html?id=${product.id}" class="product-title">${product.title}</a>
+              <div class="product-rating">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <span class="rating-count">${product.rating || '4.9'}</span>
+                <span class="badge-stock">В наличии</span>
+              </div>
+              <div class="product-price-row">
+                <div class="price-box">
+                  <span class="current-price">${formatPrice(product.price)}</span>
+                </div>
+                <button class="btn-add-cart" onclick="addToCart('${product.id}')" title="В корзину">
+                  <i class="bi bi-bag-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function removeFromFavs(id) {
+      toggleFav(id);
+      renderFavoritesPage();
+    }
+
+    function clearAllFavorites() {
+      setStoredFavs([]);
+      renderFavoritesPage();
+      showToast('Избранное очищено');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFavoritesPage();
+    });
+  </script>
+</body>
+
+</html>

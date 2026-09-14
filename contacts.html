@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты | SOUNDWAVE</title>
+  <meta name="description"
+    content="Контакты флагманского музыкального салона SOUNDWAVE в Москве: адрес, график работы, телефон и форма связи.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/contacts.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="brand-logo">
+          <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
+          <span>SOUND<span>WAVE</span></span>
+        </a>
+
+        <div class="catalog-dropdown-wrapper">
+          <button class="catalog-btn" type="button">
+            <i class="bi bi-grid-fill"></i>
+            Каталог
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Гитары</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=electric">Электрогитары</a></li>
+                <li><a href="catalog.html?cat=acoustic">Акустические гитары</a></li>
+                <li><a href="catalog.html?cat=bass">Бас-гитары</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Клавишные</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=synths">Синтезаторы</a></li>
+                <li><a href="catalog.html?cat=pianos">Пианино</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Студия</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=mics">Микрофоны</a></li>
+                <li><a href="catalog.html?cat=amps">Усилители</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="catalog.html" class="nav-link-custom">Все товары</a>
+          <a href="about.html" class="nav-link-custom">О нас</a>
+          <a href="contacts.html" class="nav-link-custom">Контакты</a>
+        </nav>
+
+        <div class="header-search">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="header-search-input" placeholder="Поиск инструментов, брендов..." autocomplete="off">
+          <div id="search-autocomplete-box" class="search-autocomplete"></div>
+        </div>
+
+        <div class="header-actions">
+          <a href="favorites.html" class="action-btn" title="Избранное">
+            <i class="bi bi-heart"></i>
+            <span class="action-badge fav-count-badge">0</span>
+          </a>
+          <a href="cart.html" class="action-btn" title="Корзина">
+            <i class="bi bi-bag"></i>
+            <span class="action-badge cart-count-badge">0</span>
+          </a>
+          <a href="account.php" class="action-btn" title="Личный кабинет">
+            <i class="bi bi-person"></i>
+          </a>
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Открыть меню">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div class="mobile-drawer-header">
+      <span class="brand-logo" style="font-size: 20px;">
+        <span style="color: var(--yellow-main);"><i class="bi bi-soundwave"></i></span>
+        SOUNDWAVE
+      </span>
+      <button class="btn-icon-sq" id="mobile-drawer-close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="/">Главная</a></li>
+      <li><a href="catalog.html">Каталог товаров</a></li>
+      <li><a href="cart.html">Корзина</a></li>
+      <li><a href="favorites.html">Избранное</a></li>
+      <li><a href="account.php">Личный кабинет</a></li>
+      <li><a href="about.html">О нас</a></li>
+      <li><a href="contacts.html">Контакты</a></li>
+    </ul>
+  </aside>
+
+  <nav class="site-breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs-list">
+        <li><a href="/">Главная</a></li>
+        <li>Контакты</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div style="padding-top: 36px;">
+        <h1 class="section-title mb-1">Контакты</h1>
+        <p class="section-desc">Приходите послушать инструменты в наш флагманский шоурум или свяжитесь онлайн</p>
+      </div>
+
+      <div class="contacts-layout">
+        <aside class="contacts-info-card">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-telephone"></i></div>
+            <div class="contact-details">
+              <h4>Телефон</h4>
+              <a href="tel:+78000000000">+7 (800) 000-00-00</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-envelope"></i></div>
+            <div class="contact-details">
+              <h4>Электронная почта</h4>
+              <a href="mailto:hello@soundwave.ru">hello@soundwave.ru</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-geo-alt"></i></div>
+            <div class="contact-details">
+              <h4>Адрес шоурума</h4>
+              <span>Сыктывкар, Суетная 67</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-clock"></i></div>
+            <div class="contact-details">
+              <h4>График работы</h4>
+              <span>Пн–Пт: 10:00–20:00<br>Сб–Вс: 11:00–18:00</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="map-wrapper">
+          <script type="text/javascript" charset="utf-8" async
+            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aca6593950fd567bffdec721190ba2970710e5a564e72743ef4f5ec36f1a05e03&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+
+          <div class="map-pin-box">
+            <div class="map-pin-icon"><i class="bi bi-music-note-beamed"></i></div>
+            <div>
+              <strong style="color: #fff; font-size: 15px; display: block;">SOUNDWAVE Flagship Store</strong>
+              <span style="font-size: 13px; color: var(--text-secondary);">Сыктывкар, Суетная 67 • 3 минуты от
+                прихода</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="feedback-section">
+        <div style="margin-bottom: 28px;">
+          <h2 class="section-title" style="font-size: 26px;">Остались вопросы?</h2>
+          <p class="section-desc mb-0">Заполните форму, и наш звукоинженер свяжется с вами в течение 15 минут</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); showToast('Сообщение отправлено! Скоро ответим.'); this.reset();">
+          <div class="feedback-grid">
+            <div class="form-field">
+              <label for="fb-name">Ваше имя *</label>
+              <input type="text" id="fb-name" placeholder="Константин" required>
+            </div>
+            <div class="form-field">
+              <label for="fb-email">Email *</label>
+              <input type="email" id="fb-email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-field">
+              <label for="fb-phone">Номер телефона *</label>
+              <input type="tel" id="fb-phone" placeholder="+7 (999) 000-00-00" required>
+            </div>
+            <div class="form-field">
+              <label for="fb-topic">Тема вопроса</label>
+              <select id="fb-topic">
+                <option>Подбор гитары или комбоусилителя</option>
+                <option>Студийное звуковое оборудование</option>
+                <option>Вопрос по текущему заказу</option>
+                <option>Сотрудничество и оптовые поставки</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 24px;">
+            <label for="fb-msg">Сообщение или спецификация *</label>
+            <textarea id="fb-msg" rows="4" placeholder="Опишите ваши задачи или инструмент, который вы ищете..."
+              required></textarea>
+          </div>
+
+          <button type="submit" class="btn-brand">
+            Отправить сообщение
+            <i class="bi bi-send-fill"></i>
+          </button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 SOUNDWAVE. Все права защищены.</div>
+        <div>Сыктывкар, Суетная 67</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

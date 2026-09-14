@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корзина | SOUNDWAVE</title>
+  <meta name="description" content="Оформление заказа в магазине музыкальных инструментов SOUNDWAVE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/cart.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="brand-logo">
+          <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
+          <span>SOUND<span>WAVE</span></span>
+        </a>
+
+        <div class="catalog-dropdown-wrapper">
+          <button class="catalog-btn" type="button">
+            <i class="bi bi-grid-fill"></i>
+            Каталог
+          </button>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Гитары</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=electric">Электрогитары</a></li>
+                <li><a href="catalog.html?cat=acoustic">Акустические гитары</a></li>
+                <li><a href="catalog.html?cat=bass">Бас-гитары</a></li>
+                <li><a href="catalog.html?cat=classical">Классические гитары</a></li>
+                <li><a href="catalog.html?cat=amps">Комбоусилители</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Клавишные & Студия</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=synths">Синтезаторы</a></li>
+                <li><a href="catalog.html?cat=pianos">Цифровые пианино</a></li>
+                <li><a href="catalog.html?cat=midi">MIDI-клавиатуры</a></li>
+                <li><a href="catalog.html?cat=mics">Микрофоны</a></li>
+                <li><a href="catalog.html?cat=audio">Аудиоинтерфейсы</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Ударные & Аксессуары</h4>
+              <ul class="mega-menu-list">
+                <li><a href="catalog.html?cat=drums">Акустические барабаны</a></li>
+                <li><a href="catalog.html?cat=edrums">Электронные ударные</a></li>
+                <li><a href="catalog.html?cat=pedals">Педали эффектов</a></li>
+                <li><a href="catalog.html?cat=cables">Кабели и стойки</a></li>
+                <li><a href="catalog.html?cat=headphones">Студийные наушники</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="catalog.html" class="nav-link-custom">Все товары</a>
+          <a href="about.html" class="nav-link-custom">О нас</a>
+          <a href="contacts.html" class="nav-link-custom">Контакты</a>
+        </nav>
+
+        <div class="header-search">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="header-search-input" placeholder="Поиск инструментов, брендов..." autocomplete="off">
+          <div id="search-autocomplete-box" class="search-autocomplete"></div>
+        </div>
+
+        <div class="header-actions">
+          <a href="favorites.html" class="action-btn" title="Избранное">
+            <i class="bi bi-heart"></i>
+            <span class="action-badge fav-count-badge">0</span>
+          </a>
+          <a href="cart.html" class="action-btn" title="Корзина"
+            style="border-color: var(--yellow-main); color: var(--yellow-main);">
+            <i class="bi bi-bag"></i>
+            <span class="action-badge cart-count-badge">0</span>
+          </a>
+          <a href="account.php" class="action-btn" title="Личный кабинет">
+            <i class="bi bi-person"></i>
+          </a>
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Открыть меню">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div class="mobile-drawer-header">
+      <span class="brand-logo" style="font-size: 20px;">
+        <span style="color: var(--yellow-main);"><i class="bi bi-soundwave"></i></span>
+        SOUNDWAVE
+      </span>
+      <button class="btn-icon-sq" id="mobile-drawer-close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="/">Главная</a></li>
+      <li><a href="catalog.html">Каталог товаров</a></li>
+      <li><a href="cart.html">Корзина</a></li>
+      <li><a href="favorites.html">Избранное</a></li>
+      <li><a href="account.php">Личный кабинет</a></li>
+      <li><a href="about.html">О нас</a></li>
+      <li><a href="contacts.html">Контакты</a></li>
+    </ul>
+  </aside>
+
+  <nav class="site-breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs-list">
+        <li><a href="/">Главная</a></li>
+        <li>Корзина</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div style="padding-top: 36px;">
+        <h1 class="section-title mb-1">Корзина</h1>
+        <p class="section-desc">Проверьте состав заказа перед переходом к оплате</p>
+      </div>
+
+      <div class="empty-cart-view" id="empty-cart-view">
+        <i class="bi bi-bag-x"></i>
+        <h2>Ваша корзина пуста</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">Выберите подходящий инструмент из нашего каталога
+        </p>
+        <a href="catalog.html" class="btn-brand">Перейти в каталог</a>
+      </div>
+
+      <div class="cart-layout" id="cart-layout-container">
+        <div class="cart-items-list" id="cart-items-container"></div>
+
+        <aside class="cart-summary-card">
+          <div class="summary-title">Ваш заказ</div>
+
+          <div class="summary-row">
+            <span>Товары (<span id="summary-items-count">0</span>):</span>
+            <strong id="summary-subtotal">0 ₽</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Доставка по РФ:</span>
+            <strong style="color: var(--accent-green);">Бесплатно</strong>
+          </div>
+
+          <div class="summary-row" id="discount-row" style="display: none;">
+            <span>Скидка по промокоду:</span>
+            <strong style="color: var(--yellow-main);" id="discount-amount">-0 ₽</strong>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-total-row">
+            <span>Итого:</span>
+            <span class="summary-total-price" id="summary-grand-total">0 ₽</span>
+          </div>
+
+          <div class="promo-box">
+            <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Промокод на скидку:</div>
+            <form class="promo-form" id="promo-form" onsubmit="applyPromo(event)">
+              <input type="text" id="promo-input" placeholder="Введите SOUNDWAVE">
+              <button type="submit" class="btn-wenge">Применить</button>
+            </form>
+          </div>
+
+          <a href="checkout.html" class="btn-brand" style="width: 100%;">
+            Оформить заказ
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+          <a href="catalog.html" class="btn-wenge" style="width: 100%; text-align: center;">
+            Продолжить покупки
+          </a>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 SOUNDWAVE. Все права защищены.</div>
+        <div>Сыктывкар, Суетная 67</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    let appliedDiscountPercent = 0;
+
+    function renderCartPage() {
+      const cart = getStoredCart();
+      const container = document.querySelector('#cart-items-container');
+      const emptyView = document.querySelector('#empty-cart-view');
+      const layout = document.querySelector('#cart-layout-container');
+
+      if (!cart || cart.length === 0) {
+        if (emptyView) emptyView.style.display = 'block';
+        if (layout) layout.style.display = 'none';
+        return;
+      }
+
+      if (emptyView) emptyView.style.display = 'none';
+      if (layout) layout.style.display = 'grid';
+
+      let html = '';
+      let subtotal = 0;
+      let totalItems = 0;
+
+      cart.forEach(item => {
+        const product = SOUNDWAVE_DATA.products.find(p => p.id === item.id) || {
+          id: item.id,
+          title: 'Товар SOUNDWAVE',
+          category: 'Оборудование',
+          price: 29990,
+          image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'
+        };
+
+        const itemTotal = product.price * item.quantity;
+        subtotal += itemTotal;
+        totalItems += item.quantity;
+
+        html += `
+          <div class="cart-item-card">
+            <div class="cart-item-thumb">
+              <img src="${product.image}" alt="${product.title}">
+            </div>
+            <div class="cart-item-info">
+              <div class="cart-item-category">${product.category}</div>
+              <a href="product.html?id=${product.id}" class="cart-item-title">${product.title}</a>
+              <div class="cart-item-price-each">${formatPrice(product.price)} / шт.</div>
+            </div>
+            <div class="quantity-picker">
+              <button class="qty-btn" type="button" onclick="updateItemQty('${product.id}', -1)"><i class="bi bi-dash"></i></button>
+              <input type="number" value="${item.quantity}" readonly>
+              <button class="qty-btn" type="button" onclick="updateItemQty('${product.id}', 1)"><i class="bi bi-plus"></i></button>
+            </div>
+            <div class="cart-item-controls">
+              <div class="cart-item-total">${formatPrice(itemTotal)}</div>
+              <div class="cart-item-actions">
+                <button class="cart-action-btn" onclick="transferToFavs('${product.id}')" title="В избранное">
+                  <i class="bi bi-heart"></i>
+                </button>
+                <button class="cart-action-btn btn-remove" onclick="removeCartItem('${product.id}')" title="Удалить">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+
+      const discountVal = Math.round(subtotal * (appliedDiscountPercent / 100));
+      const grandTotal = subtotal - discountVal;
+
+      document.querySelector('#summary-items-count').textContent = totalItems;
+      document.querySelector('#summary-subtotal').textContent = formatPrice(subtotal);
+      document.querySelector('#summary-grand-total').textContent = formatPrice(grandTotal);
+
+      const discountRow = document.querySelector('#discount-row');
+      if (appliedDiscountPercent > 0) {
+        discountRow.style.display = 'flex';
+        document.querySelector('#discount-amount').textContent = '-' + formatPrice(discountVal);
+      } else {
+        discountRow.style.display = 'none';
+      }
+    }
+
+    function updateItemQty(id, delta) {
+      let cart = getStoredCart();
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+        setStoredCart(cart);
+        renderCartPage();
+      }
+    }
+
+    function removeCartItem(id) {
+      let cart = getStoredCart();
+      cart = cart.filter(i => i.id !== id);
+      setStoredCart(cart);
+      showToast('Товар удален из корзины');
+      renderCartPage();
+    }
+
+    function transferToFavs(id) {
+      removeCartItem(id);
+      let favs = getStoredFavs();
+      if (!favs.includes(id)) {
+        favs.push(id);
+        setStoredFavs(favs);
+      }
+      showToast('Перенесено в избранное');
+    }
+
+    function applyPromo(e) {
+      e.preventDefault();
+      const code = document.querySelector('#promo-input').value.trim().toUpperCase();
+      if (code === 'SOUNDWAVE' || code === 'PROMO') {
+        appliedDiscountPercent = 10;
+        showToast('Промокод применён: скидка 10%');
+        renderCartPage();
+      } else {
+        showToast('Неверный промокод');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCartPage();
+    });
+  </script>
+</body>
+
+</html>
