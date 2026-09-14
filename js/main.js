@@ -772,99 +772,18 @@ async function getCurrentUser() {
 };
 
 
-function getStoredOrders() {
-  // response = await fetch('/api/user_orders.php', {
-  //     method: 'GET',
-  //   })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     let user = {
-  //       name: data.message.firstname + ' ' + data.message.lastname + ' ' + data.message.patronymic,
-  //       email: data.message.email,
-  //       phone: data.message.phone,
-  //       birthday: data.message.birthday,
-  //       city: data.message.city,
-  //       address: data.message.adress,
-  //       instrument: data.message.instrument,
-  //       bonuses: data.message.bonus_balance,
-  //       ordersCount: 1
-  //     }
-
-  //     return user
-  //   })
-  //   .catch(error => {
-  //     showToast(error);
-  //   });
-  // return response
-
-  // SELECT
-  // o.order_number,
-  //   o.delivery_address_snapshot адрес,
-  //   os.id as Статус_заказа,
-  //   os.title,
-  //   o.final_total,
-  //   o.tracking_number,
-  //   dm.title,
-  //   pm.title,
-  // 	o.created_at
-  // FROM
-  // orders o
-  // JOIN order_statuses os ON os.id = o.status_id
-  // JOIN delivery_methods dm ON o.delivery_method_id = dm.id
-  // JOIN payment_methods pm ON o.payment_method_id = pm.id
-
-  // WHERE o.user_id = 5
-
-
-
-
-
-
-//   SELECT 
-// oi.variant_id,
-// oi.amount,
-// p.title,
-// pv.title,
-// pv.article,
-
-// oi.total_price
-
-// FROM
-// order_items oi
-// JOIN products_variants pv ON oi.variant_id = pv.id
-// JOIN products p ON pv.product_id = p.id
-
-// WHERE oi.order_id = 5
-
-
-
-  return [{
-    id: "SW-10482",
-    date: "8 марта 2026",
-    status: "delivering",
-    statusLabel: "В доставке курьером",
-    trackNumber: "14892019",
-    deliveryType: "Курьер СДЭК до двери",
-    deliveryAddress: "г. Сыктывкар, ул. Суетная, д. 67, кв. 42",
-    paymentMethod: "Онлайн картой (МИР)",
-    items: [{
-        id: "fender-strat",
-        quantity: 1,
-        price: 89990,
-        title: "Fender Player Stratocaster",
-        image: "img/photo-1550291652-6ea9114a47b1.avif"
-      },
-      {
-        id: "shure-sm58",
-        quantity: 2,
-        price: 14490,
-        title: "Shure SM58-LCE Динамический микрофон",
-        image: "img/photo-1590602847861-f357a9332bbc.jpg"
-      }
-    ],
-    total: 118970,
-    createdAt: "2026-03-08T10:30:00Z"
-  }];
+async function getStoredOrders() {
+  response = await fetch('/api/user_orders.php', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+  return response
 }
 
 function addStoredOrder(order) {

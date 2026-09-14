@@ -182,7 +182,7 @@
   <script src="js/main.js"></script>
   <script>
 
-    function logoutUser(e) {
+    async function logoutUser(e) {
       if (e) e.preventDefault();
 
       fetch('/api/logout.php', {
@@ -205,7 +205,7 @@
         });
     }
 
-    function switchAccountPane(e, paneId) {
+    async function switchAccountPane(e, paneId) {
       if (e) e.preventDefault();
       document.querySelectorAll('.account-menu a').forEach(a => a.classList.remove('active'));
       if (e && e.currentTarget) e.currentTarget.classList.add('active');
@@ -215,7 +215,7 @@
       if (target) target.classList.add('active');
     }
 
-    function copyTrackNumber(trackNum) {
+    async function copyTrackNumber(trackNum) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(trackNum).then(() => {
           showToast(`Трек-номер ${trackNum} скопирован!`);
@@ -227,8 +227,7 @@
       }
     }
 
-    function renderAccountOrders() {
-      const orders = getStoredOrders();
+    async function renderAccountOrders(orders) {
       const container = document.querySelector('#account-orders-list');
       const menuOrdersCount = document.querySelector('#menu-orders-count');
       const statOrdersCount = document.querySelector('#stat-orders-count');
@@ -333,7 +332,7 @@
       container.innerHTML = html;
     }
 
-    function renderAccountRecent() {
+    async function renderAccountRecent() {
       const grid = document.querySelector('#account-recent-grid');
       if (!grid) return;
 
@@ -452,7 +451,7 @@
 
     async function init() {
       loadUserProfile(await getCurrentUser());
-      renderAccountOrders();
+      renderAccountOrders(await getStoredOrders());
       renderAccountRecent();
     }
 
