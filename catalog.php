@@ -1,0 +1,542 @@
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог музыкальных инструментов | SOUNDWAVE</title>
+  <meta name="description"
+    content="Полный каталог музыкальных инструментов и студийного оборудования в магазине SOUNDWAVE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/catalog.css">
+</head>
+
+<body>
+
+  <?php require('./components/header.php') ?>
+
+  <nav class="site-breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs-list">
+        <li><a href="/">Главная</a></li>
+        <li>Каталог</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="catalog-layout">
+        <aside class="filters-sidebar" id="catalog-filters-sidebar">
+          <div class="filters-title">
+            <span>Фильтры</span>
+            <button class="filter-reset-btn" id="reset-filters">Сбросить</button>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-group-title">Категория</div>
+            <ul class="filter-list">
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="category-checkbox" data-cat="Электрогитары">
+                  <span>Электрогитары</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="category-checkbox" data-cat="Клавишные">
+                  <span>Клавишные (Пианино / Синтезаторы)</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="category-checkbox" data-cat="Микрофоны">
+                  <span>Микрофоны</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="category-checkbox" data-cat="Усилители">
+                  <span>Усилители</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="category-checkbox" data-cat="Ударные">
+                  <span>Ударные</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-group-title">Цена, ₽</div>
+            <div class="price-inputs-row">
+              <div class="price-input-box">
+                <span>от</span>
+                <input type="number" id="price-min" value="0" min="0">
+              </div>
+              <div class="price-input-box">
+                <span>до</span>
+                <input type="number" id="price-max" value="300000" max="500000">
+              </div>
+            </div>
+            <input type="range" class="price-slider" id="price-slider" min="0" max="300000" step="5000" value="300000">
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-group-title">Бренд</div>
+            <ul class="filter-list">
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="Fender">
+                  <span>Fender</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="Gibson">
+                  <span>Gibson</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="Yamaha">
+                  <span>Yamaha</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="Roland">
+                  <span>Roland</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="Shure">
+                  <span>Shure</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="Marshall">
+                  <span>Marshall</span>
+                </label>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="brand-checkbox" data-brand="TAMA">
+                  <span>TAMA</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-group-title">Наличие</div>
+            <ul class="filter-list">
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="filter-instock" checked>
+                  <span>Только в наличии</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-group-title">Рейтинг</div>
+            <ul class="filter-list">
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" class="rating-checkbox" data-rating="4.8">
+                  <span>Рейтинг от 4.8 ★</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          <button class="btn-brand mb-2" style="width: 100%;" id="btn-apply-filters">Применить фильтры</button>
+          <button class="btn-wenge" style="width: 100%;" id="btn-reset-filters">Сбросить фильтры</button>
+        </aside>
+
+        <section class="catalog-content">
+          <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+            <div>
+              <h1 class="section-title mb-1" style="font-size: 32px;">Музыкальные инструменты</h1>
+              <p class="section-desc mb-0">Качественные инструменты от ведущих мировых брендов</p>
+            </div>
+            <button class="mobile-filter-btn" id="mobile-filter-toggle">
+              <i class="bi bi-funnel"></i>
+              Фильтры
+            </button>
+          </div>
+
+          <div class="catalog-top-bar">
+            <div class="catalog-count">
+              Показано <strong>8</strong> из <strong>450</strong> товаров
+            </div>
+
+            <div class="sort-wrapper">
+              <label for="catalog-sort">Сортировка:</label>
+              <select id="catalog-sort" class="sort-select">
+                <option value="pop">По популярности</option>
+                <option value="price_asc">По цене: сначала дешёвые</option>
+                <option value="price_desc">По цене: сначала дорогие</option>
+                <option value="new">По новизне</option>
+                <option value="rating">По рейтингу</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row g-4" id="catalog-products-grid">
+
+          </div>
+
+          <nav class="pagination-nav" id="catalog-pagination">
+            <a href="#" class="page-btn active">1</a>
+            <a href="#" class="page-btn">2</a>
+            <a href="#" class="page-btn"><i class="bi bi-chevron-right"></i></a>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <?php require('./components/footer.php') ?>
+
+  <script src="js/main.js"></script>
+  <script>
+    let currentSort = 'pop';
+
+    function renderStars(rating) {
+      let stars = '';
+      for (let i = 1; i <= 5; i++) {
+        if (rating >= i) {
+          stars += '<i class="bi bi-star-fill"></i>';
+        } else if (rating >= i - 0.5) {
+          stars += '<i class="bi bi-star-half"></i>';
+        } else {
+          stars += '<i class="bi bi-star"></i>';
+        }
+      }
+      return stars;
+    }
+
+    function getSelectedCategories() {
+      return Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.getAttribute('data-cat'));
+    }
+
+    function getSelectedBrands() {
+      return Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.getAttribute('data-brand'));
+    }
+
+    function getFilteredAndSortedProducts() {
+      let list = [...SOUNDWAVE_DATA.products];
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('q');
+      const catParam = params.get('cat');
+      const brandParam = params.get('brand');
+      const sortParam = params.get('sort');
+
+      // const item = {
+      //   'case': 'updateQuanity',
+      //   'variant_id': id,
+      //   'delta': delta
+      // };
+      // const formData = new FormData();
+      // for (const key in item) {
+      //   if (item.hasOwnProperty(key)) {
+      //     formData.append(key, item[key]);
+      //   }
+      // }
+
+      // fetch('/api/user_cart.php', {
+      //   method: 'POST',
+      //   body: formData,
+      // })
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     renderCartPage();
+      //   })
+      //   .catch(error => {
+      //     showToast(error);
+      //   });
+
+
+
+
+
+
+      if (sortParam && ['pop', 'price_asc', 'price_desc', 'new', 'rating'].includes(sortParam)) {
+        currentSort = sortParam;
+        const sortSelect = document.querySelector('#catalog-sort');
+        if (sortSelect) sortSelect.value = currentSort;
+      }
+
+      if (q) {
+        const qLower = q.toLowerCase();
+        list = list.filter(p =>
+          p.title.toLowerCase().includes(qLower) ||
+          p.category.toLowerCase().includes(qLower) ||
+          (p.brand && p.brand.toLowerCase().includes(qLower)) ||
+          (p.desc && p.desc.toLowerCase().includes(qLower))
+        );
+      }
+
+      if (catParam) {
+        const slugMap = {
+          'electric': 'Электрогитары',
+          'acoustic': 'Акустические гитары',
+          'bass': 'Бас-гитары',
+          'classical': 'Классические гитары',
+          'synths': 'Клавишные',
+          'pianos': 'Клавишные',
+          'midi': 'Клавишные',
+          'mics': 'Микрофоны',
+          'amps': 'Усилители',
+          'drums': 'Ударные',
+          'edrums': 'Электронные ударные',
+          'audio': 'Аудиоинтерфейсы',
+          'pedals': 'Педали эффектов',
+          'cabels': 'Кабели и стойки',
+          'headphones': 'Студийные наушники',
+        };
+        const targetCat = slugMap[catParam];
+        if (targetCat) {
+          list = list.filter(p => p.category === targetCat || p.categorySlug === catParam);
+        }
+      }
+
+      if (brandParam) {
+        list = list.filter(p => p.brand && p.brand.toLowerCase() === brandParam.toLowerCase());
+      }
+
+      const selectedCats = getSelectedCategories();
+      if (selectedCats.length > 0) {
+        list = list.filter(p => selectedCats.includes(p.category));
+      }
+
+      const selectedBrands = getSelectedBrands();
+      if (selectedBrands.length > 0) {
+        list = list.filter(p => p.brand && selectedBrands.includes(p.brand));
+      }
+
+      const priceMinInput = document.querySelector('#price-min');
+      const priceMaxInput = document.querySelector('#price-max');
+      const minP = priceMinInput ? parseInt(priceMinInput.value, 10) || 0 : 0;
+      const maxP = priceMaxInput ? parseInt(priceMaxInput.value, 10) || 1000000 : 1000000;
+      list = list.filter(p => p.price >= minP && p.price <= maxP);
+
+      const stockCheckbox = document.querySelector('#filter-instock');
+      if (stockCheckbox && stockCheckbox.checked) {
+        list = list.filter(p => p.inStock);
+      }
+
+      const ratingCheckbox = document.querySelector('.rating-checkbox');
+      if (ratingCheckbox && ratingCheckbox.checked) {
+        const minRating = parseFloat(ratingCheckbox.getAttribute('data-rating')) || 4.8;
+        list = list.filter(p => p.rating >= minRating);
+      }
+
+      if (currentSort === 'price_asc') {
+        list.sort((a, b) => a.price - b.price);
+      } else if (currentSort === 'price_desc') {
+        list.sort((a, b) => b.price - a.price);
+      } else if (currentSort === 'new') {
+        list.sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0));
+      } else if (currentSort === 'rating') {
+        list.sort((a, b) => b.rating - a.rating);
+      } else {
+        list.sort((a, b) => (b.popularity || b.reviews) - (a.popularity || a.reviews));
+      }
+      return list;
+    }
+
+    function renderCatalog() {
+      const container = document.querySelector('#catalog-products-grid');
+      const countEl = document.querySelector('.catalog-count');
+      if (!container) return;
+
+      const products = getFilteredAndSortedProducts();
+      const favs = getStoredFavs();
+
+      if (countEl) {
+        countEl.innerHTML = `Показано <strong>${products.length}</strong> из <strong>${SOUNDWAVE_DATA.products.length}</strong> товаров`;
+      }
+
+      if (products.length === 0) {
+        container.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <i class="bi bi-funnel" style="font-size: 48px; color: var(--yellow-main); margin-bottom: 16px; display: inline-block;"></i>
+            <h3 style="font-weight: 800; margin-bottom: 8px;">Товары не найдены</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Попробуйте изменить параметры фильтров или сбросить их</p>
+            <button class="btn-brand" onclick="resetFilters()">Сбросить фильтры</button>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      products.forEach(p => {
+        const isFav = favs.includes(p.id);
+        html += `
+          <div class="col-xl-4 col-md-6">
+            <div class="product-card">
+              <div class="product-image-box">
+                <div class="product-badges">
+                  ${p.badge ? `<span class="badge-${p.badgeType || 'hit'}">${p.badge}</span>` : ''}
+                </div>
+                <button class="product-fav-btn ${isFav ? 'active' : ''}" data-id="${p.id}" aria-label="В избранное">
+                  <i class="bi bi-heart${isFav ? '-fill' : ''}"></i>
+                </button>
+                <a href="product.php?id=${p.id}">
+                  <img src="${p.image}" alt="${p.title}" loading="lazy">
+                </a>
+              </div>
+              <div class="product-content">
+                <div class="product-category-tag">${p.category} • ${p.brand || ''}</div>
+                <a href="product.php?id=${p.id}" class="product-title">${p.title}</a>
+                <p class="product-desc">${p.desc}</p>
+                <div class="product-rating">
+                  <div class="stars">
+                    ${renderStars(p.rating)}
+                  </div>
+                  <span class="rating-count">${p.rating} (${p.reviews})</span>
+                </div>
+                <div class="product-price-row">
+                  <div class="price-box">
+                    ${p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : ''}
+                    <span class="current-price">${formatPrice(p.price)}</span>
+                  </div>
+                  <button class="btn-add-cart" data-add-cart="${p.id}" title="В корзину">
+                    <i class="bi bi-bag-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      updateFavBadges();
+    }
+
+    function resetFilters() {
+      document.querySelectorAll('.category-checkbox').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.brand-checkbox').forEach(cb => cb.checked = false);
+      const stock = document.querySelector('#filter-instock');
+      if (stock) stock.checked = true;
+      const rating = document.querySelector('.rating-checkbox');
+      if (rating) rating.checked = false;
+
+      const pMin = document.querySelector('#price-min');
+      const pMax = document.querySelector('#price-max');
+      const slider = document.querySelector('#price-slider');
+      if (pMin) pMin.value = 0;
+      if (pMax) pMax.value = 300000;
+      if (slider) slider.value = 300000;
+
+      const sortSelect = document.querySelector('#catalog-sort');
+      if (sortSelect) {
+        sortSelect.value = 'pop';
+        currentSort = 'pop';
+      }
+
+      if (window.location.search) {
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+
+      renderCatalog();
+      showToast('Фильтры сброшены');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const sortSelect = document.querySelector('#catalog-sort');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+          currentSort = sortSelect.value;
+          renderCatalog();
+          showToast('Сортировка обновлена');
+        });
+      }
+
+      const slider = document.querySelector('#price-slider');
+      const pMax = document.querySelector('#price-max');
+      const pMin = document.querySelector('#price-min');
+
+      if (slider && pMax) {
+        slider.addEventListener('input', () => {
+          pMax.value = slider.value;
+          renderCatalog();
+        });
+      }
+
+      if (pMax && slider) {
+        pMax.addEventListener('change', () => {
+          slider.value = pMax.value;
+          renderCatalog();
+        });
+      }
+
+      if (pMin) {
+        pMin.addEventListener('change', () => {
+          renderCatalog();
+        });
+      }
+
+      const applyBtn = document.querySelector('#btn-apply-filters');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+          renderCatalog();
+          showToast('Фильтры применены');
+          const filterSidebar = document.querySelector('#catalog-filters-sidebar');
+          const overlay = document.querySelector('#drawer-overlay');
+          if (filterSidebar && filterSidebar.classList.contains('active')) {
+            filterSidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+          }
+        });
+      }
+
+      const resetBtn = document.querySelector('#btn-reset-filters');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', resetFilters);
+      }
+
+      const resetTopBtn = document.querySelector('#reset-filters');
+      if (resetTopBtn) {
+        resetTopBtn.addEventListener('click', resetFilters);
+      }
+
+      document.querySelectorAll('.category-checkbox, .brand-checkbox, #filter-instock, .rating-checkbox').forEach(cb => {
+        cb.addEventListener('change', renderCatalog);
+      });
+
+      const filterBtn = document.querySelector('#mobile-filter-toggle');
+      const filterSidebar = document.querySelector('#catalog-filters-sidebar');
+      const overlay = document.querySelector('#drawer-overlay');
+      if (filterBtn && filterSidebar && overlay) {
+        filterBtn.addEventListener('click', () => {
+          filterSidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+        });
+        overlay.addEventListener('click', () => {
+          filterSidebar.classList.remove('active');
+        });
+      }
+
+      renderCatalog();
+    });
+  </script>
+</body>
+
+</html>

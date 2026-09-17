@@ -52,7 +52,7 @@
                 Недавно смотрели</a></li>
             <li><a href="favorites.html"><i class="bi bi-heart"></i> Избранное (<span class="fav-count-badge"
                   style="display: inline-flex; font-size: 11px;">0</span>)</a></li>
-            <li><a href="cart.html"><i class="bi bi-bag"></i> Корзина (<span class="cart-count-badge"
+            <li><a href="cart.php"><i class="bi bi-bag"></i> Корзина (<span class="cart-count-badge"
                   style="display: inline-flex; font-size: 11px;">0</span>)</a></li>
             <li><a href="#" onclick="logoutUser(event)" style="color: var(--accent-red); margin-top: 16px;"><i
                   class="bi bi-box-arrow-right"></i> Выйти</a></li>
@@ -87,7 +87,7 @@
           <div class="account-section-pane active" id="orders-pane">
             <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
               <h2 style="font-size: 20px; font-weight: 800; margin: 0;">История заказов</h2>
-              <a href="catalog.html" class="btn-brand" style="font-size: 13px; padding: 8px 16px;">
+              <a href="catalog.php" class="btn-brand" style="font-size: 13px; padding: 8px 16px;">
                 <i class="bi bi-plus-lg"></i> Новый заказ
               </a>
             </div>
@@ -243,7 +243,7 @@
             <i class="bi bi-box-seam" style="font-size: 48px; color: var(--yellow-main); margin-bottom: 16px; display: inline-block;"></i>
             <h3>У вас пока нет заказов</h3>
             <p style="color: var(--text-secondary); margin-bottom: 24px;">Выберите подходящий инструмент в нашем каталоге</p>
-            <a href="catalog.html" class="btn-brand">Перейти в каталог</a>
+            <a href="catalog.php" class="btn-brand">Перейти в каталог</a>
           </div>
         `;
         return;
@@ -353,13 +353,13 @@
                 <button class="product-fav-btn" data-id="${p.id}" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=${p.id}">
+                <a href="product.php?id=${p.id}">
                   <img src="${p.image}" alt="${p.title}" style="max-height: 100%; object-fit: cover;;">
                 </a>
               </div>
               <div class="product-content">
                 <span class="product-category-tag">${p.category}</span>
-                <a href="product.html?id=${p.id}" class="product-title" style="font-size: 15px;">${p.title}</a>
+                <a href="product.php?id=${p.id}" class="product-title" style="font-size: 15px;">${p.title}</a>
                 <div class="product-price-row">
                   <span class="current-price" style="font-size: 17px;">${formatPrice(p.price)}</span>
                   <button class="btn-add-cart" data-add-cart="${p.id}" title="В корзину">
@@ -372,7 +372,6 @@
         `;
       });
       grid.innerHTML = html;
-      updateFavBadges();
     }
 
     async function handleSaveProfile(e) {
@@ -411,8 +410,8 @@
 
     }
 
-    function loadUserProfile(user) {
-      const firstName = user.name ? user.name.split(' ')[0] : 'Музыкант';
+    async function loadUserProfile(user) {
+      const firstName = user.name ? user.name.split(' ')[1] : 'Музыкант';
       const heading = document.querySelector('#account-welcome-heading');
       if (heading) heading.textContent = `Добро пожаловать, ${firstName}!`;
 
@@ -420,7 +419,7 @@
       if (sub) sub.textContent = `Инструмент: ${user.instrument || 'Электрогитара'} • Город: ${user.city || 'Сыктывкар'}`;
 
       const nameEl = document.querySelector('#user-display-name');
-      if (nameEl) nameEl.textContent = user.name.split(' ')[0] || 'Музыкант SOUNDWAVE';
+      if (nameEl) nameEl.textContent = user.name.split(' ')[1] || 'Музыкант SOUNDWAVE';
 
       const emailEl = document.querySelector('#user-display-email');
       if (emailEl) emailEl.textContent = user.email || 'user@example.com';
@@ -444,6 +443,7 @@
       if (document.querySelector('#prof-phone')) document.querySelector('#prof-phone').value = user.phone || '';
       if (document.querySelector('#prof-city')) document.querySelector('#prof-city').value = user.city || '';
       if (document.querySelector('#prof-address')) document.querySelector('#prof-address').value = user.address || '';
+      if (document.querySelector('#prof-birthdate')) document.querySelector('#prof-birthdate').value = user.birthdate || '';
       if (document.querySelector('#prof-instrument') && user.instrument) {
         document.querySelector('#prof-instrument').value = user.instrument;
       }

@@ -36,30 +36,30 @@
             <div class="mega-menu-col">
               <h4>Гитары</h4>
               <ul class="mega-menu-list">
-                <li><a href="catalog.html?cat=electric">Электрогитары</a></li>
-                <li><a href="catalog.html?cat=acoustic">Акустические гитары</a></li>
-                <li><a href="catalog.html?cat=bass">Бас-гитары</a></li>
+                <li><a href="catalog.php?cat=electric">Электрогитары</a></li>
+                <li><a href="catalog.php?cat=acoustic">Акустические гитары</a></li>
+                <li><a href="catalog.php?cat=bass">Бас-гитары</a></li>
               </ul>
             </div>
             <div class="mega-menu-col">
               <h4>Клавишные</h4>
               <ul class="mega-menu-list">
-                <li><a href="catalog.html?cat=synths">Синтезаторы</a></li>
-                <li><a href="catalog.html?cat=pianos">Пианино</a></li>
+                <li><a href="catalog.php?cat=synths">Синтезаторы</a></li>
+                <li><a href="catalog.php?cat=pianos">Пианино</a></li>
               </ul>
             </div>
             <div class="mega-menu-col">
               <h4>Студия</h4>
               <ul class="mega-menu-list">
-                <li><a href="catalog.html?cat=mics">Микрофоны</a></li>
-                <li><a href="catalog.html?cat=amps">Усилители</a></li>
+                <li><a href="catalog.php?cat=mics">Микрофоны</a></li>
+                <li><a href="catalog.php?cat=amps">Усилители</a></li>
               </ul>
             </div>
           </div>
         </div>
 
         <nav class="main-nav">
-          <a href="catalog.html" class="nav-link-custom">Все товары</a>
+          <a href="catalog.php" class="nav-link-custom">Все товары</a>
           <a href="about.html" class="nav-link-custom">О нас</a>
           <a href="contacts.html" class="nav-link-custom">Контакты</a>
         </nav>
@@ -76,7 +76,7 @@
             <i class="bi bi-heart"></i>
             <span class="action-badge fav-count-badge">0</span>
           </a>
-          <a href="cart.html" class="action-btn" title="Корзина">
+          <a href="cart.php" class="action-btn" title="Корзина">
             <i class="bi bi-bag"></i>
             <span class="action-badge cart-count-badge">0</span>
           </a>
@@ -102,8 +102,8 @@
     </div>
     <ul class="mobile-nav-links">
       <li><a href="/">Главная</a></li>
-      <li><a href="catalog.html">Каталог товаров</a></li>
-      <li><a href="cart.html">Корзина</a></li>
+      <li><a href="catalog.php">Каталог товаров</a></li>
+      <li><a href="cart.php">Корзина</a></li>
       <li><a href="favorites.html">Избранное</a></li>
       <li><a href="account.php">Личный кабинет</a></li>
       <li><a href="about.html">О нас</a></li>
@@ -137,7 +137,7 @@
         <h2>В избранном пока ничего нет</h2>
         <p style="color: var(--text-secondary); margin-bottom: 24px;">Нажмите на сердечко на карточке любого
           понравившегося инструмента</p>
-        <a href="catalog.html" class="btn-brand">Перейти в каталог</a>
+        <a href="catalog.php" class="btn-brand">Перейти в каталог</a>
       </div>
 
       <div class="favorites-grid" id="favs-grid-container"></div>
@@ -186,13 +186,13 @@
               <button class="product-fav-btn active" onclick="removeFromFavs('${product.id}')" title="Удалить из избранного">
                 <i class="bi bi-heart-fill"></i>
               </button>
-              <a href="product.html?id=${product.id}">
+              <a href="product.php?id=${product.id}">
                 <img src="${product.image}" alt="${product.title}">
               </a>
             </div>
             <div class="product-content">
               <div class="product-category-tag">${product.category}</div>
-              <a href="product.html?id=${product.id}" class="product-title">${product.title}</a>
+              <a href="product.php?id=${product.id}" class="product-title">${product.title}</a>
               <div class="product-rating">
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>

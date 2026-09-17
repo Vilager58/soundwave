@@ -6,12 +6,12 @@ $q = '
 SELECT
   o.id as order_id,
   o.order_number,
-  o.delivery_address_snapshot as адрес,
+  o.delivery_address_snapshot as adress,
   o.final_total,
   o.tracking_number,
   o.created_at,
 
-  os.id as Статус_заказа,
+  os.id as status_id,
   os.title as status_title,
   dm.title as delivery_title,
   pm.title as payment_title,
@@ -22,8 +22,10 @@ SELECT
   
   p.title as product_title,
   pv.title as variant_title,
-  pv.article
-
+  pv.article,
+  
+  pi.image_url
+  
 FROM orders o
      JOIN order_statuses os    ON os.id = o.status_id
      JOIN delivery_methods dm  ON o.delivery_method_id = dm.id
@@ -31,6 +33,10 @@ FROM orders o
 LEFT JOIN order_items oi       ON o.id = oi.order_id
 LEFT JOIN products_variants pv ON oi.variant_id = pv.id
 LEFT JOIN products p           ON pv.product_id = p.id
+
+LEFT JOIN product_images pi    
+  ON oi.variant_id = pi.variant_id 
+  AND pi.is_main = 1
 
 WHERE o.user_id = ?;
 ';
@@ -58,11 +64,11 @@ foreach ($rows as $row) {
         $ordersMap[$orderId] = (object) [
             'id' => $row['order_number'],
             'date' => $formattedDate,
-            'status' => $row['Статус_заказа'],
+            'status' => $row['status_id'],
             'statusLabel' => $row['status_title'],
             'trackNumber' => $row['tracking_number'],
             'deliveryType' => $row['delivery_title'],
-            'deliveryAddress' => $row['адрес'],
+            'deliveryAddress' => $row['adress'],
             'paymentMethod' => $row['payment_title'],
             'items' => [],
             'total' => (float) $row['final_total'],
@@ -80,7 +86,7 @@ foreach ($rows as $row) {
             'quantity' => (int) $row['amount'],
             'price' => (float) ($row['item_total_price'] / $row['amount']),
             'title' => $fullTitle,
-            'image' => "img/products/{$row['variant_id']}.jpg"
+            'image' => $row['image_url']
         ];
     }
 }

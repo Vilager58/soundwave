@@ -34,7 +34,7 @@
             компромиссов.
           </p>
           <div class="hero-buttons">
-            <a href="catalog.html" class="btn-brand">
+            <a href="catalog.php" class="btn-brand">
               Перейти в каталог
               <i class="bi bi-arrow-right"></i>
             </a>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="categories-grid">
-          <a href="catalog.html?cat=electric" class="category-card">
+          <a href="catalog.php?cat=electric" class="category-card">
             <img src="img/photo-1550291652-6ea9114a47b1.avif" alt="Электрогитары" class="category-bg">
             <div class="category-overlay"></div>
             <div class="category-info">
@@ -67,7 +67,7 @@
             </div>
           </a>
 
-          <a href="catalog.html?cat=acoustic" class="category-card">
+          <a href="catalog.php?cat=acoustic" class="category-card">
             <img src="img/photo-1510915361894-db8b60106cb1.avif" alt="Акустические гитары" class="category-bg">
             <div class="category-overlay"></div>
             <div class="category-info">
@@ -79,7 +79,7 @@
             </div>
           </a>
 
-          <a href="catalog.html?cat=bass" class="category-card">
+          <a href="catalog.php?cat=bass" class="category-card">
             <img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=800&q=80"
               alt="Бас-гитары" class="category-bg">
             <div class="category-overlay"></div>
@@ -92,7 +92,7 @@
             </div>
           </a>
 
-          <a href="catalog.html?cat=synths" class="category-card">
+          <a href="catalog.php?cat=synths" class="category-card">
             <img src="img/photo-1598488035138-bdab2431ce03.jpg" alt="Синтезаторы" class="category-bg">
             <div class="category-overlay"></div>
             <div class="category-info">
@@ -104,7 +104,7 @@
             </div>
           </a>
 
-          <a href="catalog.html?cat=drums" class="category-card">
+          <a href="catalog.php?cat=drums" class="category-card">
             <img src="img/photo-1519892300165-cb5542fb47c7.jpg" alt="Ударные" class="category-bg">
             <div class="category-overlay"></div>
             <div class="category-info">
@@ -116,7 +116,7 @@
             </div>
           </a>
 
-          <a href="catalog.html?cat=mics" class="category-card">
+          <a href="catalog.php?cat=mics" class="category-card">
             <img src="img/photo-1590602847861-f357a9332bbc.jpg" alt="Микрофоны" class="category-bg">
             <div class="category-overlay"></div>
             <div class="category-info">
@@ -139,7 +139,7 @@
             <h2 class="section-title mb-0">Хиты продаж</h2>
             <p class="section-desc mb-0">Инструменты, которые выбирают музыканты</p>
           </div>
-          <a href="catalog.html" class="btn-wenge">
+          <a href="catalog.php" class="btn-wenge">
             Все хиты <i class="bi bi-arrow-right"></i>
           </a>
         </div>
@@ -154,13 +154,13 @@
                 <button class="product-fav-btn" data-id="fender-strat" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=fender-strat">
+                <a href="product.php?id=fender-strat">
                   <img src="img/photo-1550291652-6ea9114a47b1.avif" alt="Fender Player Stratocaster">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Электрогитары</div>
-                <a href="product.html?id=fender-strat" class="product-title">Fender Player Stratocaster</a>
+                <a href="product.php?id=fender-strat" class="product-title">Fender Player Stratocaster</a>
                 <p class="product-desc">Классическое стекло Stratocaster с тремя звукоснимателями Alnico 5.</p>
                 <div class="product-rating">
                   <i class="bi bi-star-fill"></i>
@@ -192,13 +192,13 @@
                 <button class="product-fav-btn" data-id="yamaha-p225" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=yamaha-p225">
+                <a href="product.php?id=yamaha-p225">
                   <img src="img/photo-1525201548942-d8732f6617a0.jpg" alt="Yamaha P-225">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Цифровые пианино</div>
-                <a href="product.html?id=yamaha-p225" class="product-title">Yamaha P-225 Black</a>
+                <a href="product.php?id=yamaha-p225" class="product-title">Yamaha P-225 Black</a>
                 <p class="product-desc">Молоточковая механика GHC, тембр концертного рояля CFX.</p>
                 <div class="product-rating">
                   <i class="bi bi-star-fill"></i>
@@ -229,13 +229,13 @@
                 <button class="product-fav-btn" data-id="roland-juno-d" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=roland-juno-d">
+                <a href="product.php?id=roland-juno-d">
                   <img src="img/photo-1598488035139-bdbb2231ce04.jpg" alt="Roland JUNO-D">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Синтезаторы</div>
-                <a href="product.html?id=roland-juno-d" class="product-title">Roland JUNO-D6</a>
+                <a href="product.php?id=roland-juno-d" class="product-title">Roland JUNO-D6</a>
                 <p class="product-desc">Сценический синтезатор со звуками ZEN-Core и микрофонным входом.</p>
                 <div class="product-rating">
                   <i class="bi bi-star-fill"></i>
@@ -267,13 +267,13 @@
                 <button class="product-fav-btn" data-id="shure-sm58" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=shure-sm58">
+                <a href="product.php?id=shure-sm58">
                   <img src="img/photo-1590602847861-f357a9332bbc.jpg" alt="Shure SM58">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Микрофоны</div>
-                <a href="product.html?id=shure-sm58" class="product-title">Shure SM58-LCE</a>
+                <a href="product.php?id=shure-sm58" class="product-title">Shure SM58-LCE</a>
                 <p class="product-desc">Легендарный кардиоидный динамический вокальный микрофон.</p>
                 <div class="product-rating">
                   <i class="bi bi-star-fill"></i>
@@ -320,13 +320,13 @@
                   <button class="product-fav-btn" data-id="gibson-les-paul" aria-label="В избранное">
                     <i class="bi bi-heart"></i>
                   </button>
-                  <a href="product.html?id=gibson-les-paul">
+                  <a href="product.php?id=gibson-les-paul">
                     <img src="img/photo-1516924962500-2b4b3b99ea02.jpg" alt="Gibson Les Paul Studio">
                   </a>
                 </div>
                 <div class="product-content">
                   <div class="product-category-tag">Электрогитары</div>
-                  <a href="product.html?id=gibson-les-paul" class="product-title">Gibson Les Paul Studio</a>
+                  <a href="product.php?id=gibson-les-paul" class="product-title">Gibson Les Paul Studio</a>
                   <div class="product-price-row">
                     <div class="price-box">
                       <span class="old-price">169 990 ₽</span>
@@ -349,13 +349,13 @@
                   <button class="product-fav-btn" data-id="marshall-mg30gfx" aria-label="В избранное">
                     <i class="bi bi-heart"></i>
                   </button>
-                  <a href="product.html?id=marshall-mg30gfx">
+                  <a href="product.php?id=marshall-mg30gfx">
                     <img src="img/photo-1563245372-f21724e3856d.avif" alt="Marshall MG30GFX">
                   </a>
                 </div>
                 <div class="product-content">
                   <div class="product-category-tag">Усилители</div>
-                  <a href="product.html?id=marshall-mg30gfx" class="product-title">Marshall MG30GFX Gold</a>
+                  <a href="product.php?id=marshall-mg30gfx" class="product-title">Marshall MG30GFX Gold</a>
                   <div class="product-price-row">
                     <div class="price-box">
                       <span class="old-price">34 990 ₽</span>
@@ -378,13 +378,13 @@
                   <button class="product-fav-btn" data-id="yamaha-pacifica" aria-label="В избранное">
                     <i class="bi bi-heart"></i>
                   </button>
-                  <a href="product.html?id=yamaha-pacifica">
+                  <a href="product.php?id=yamaha-pacifica">
                     <img src="img/photo-1510915361894-db8b60106cb1.avif" alt="Yamaha Pacifica 112V">
                   </a>
                 </div>
                 <div class="product-content">
                   <div class="product-category-tag">Электрогитары</div>
-                  <a href="product.html?id=yamaha-pacifica" class="product-title">Yamaha Pacifica 112V</a>
+                  <a href="product.php?id=yamaha-pacifica" class="product-title">Yamaha Pacifica 112V</a>
                   <div class="product-price-row">
                     <div class="price-box">
                       <span class="old-price">44 990 ₽</span>
@@ -407,13 +407,13 @@
                   <button class="product-fav-btn" data-id="fender-strat" aria-label="В избранное">
                     <i class="bi bi-heart"></i>
                   </button>
-                  <a href="product.html?id=fender-strat">
+                  <a href="product.php?id=fender-strat">
                     <img src="img/photo-1550291652-6ea9114a47b1.avif" alt="Fender Player Stratocaster">
                   </a>
                 </div>
                 <div class="product-content">
                   <div class="product-category-tag">Электрогитары</div>
-                  <a href="product.html?id=fender-strat" class="product-title">Fender Stratocaster Sunburst</a>
+                  <a href="product.php?id=fender-strat" class="product-title">Fender Stratocaster Sunburst</a>
                   <div class="product-price-row">
                     <div class="price-box">
                       <span class="old-price">99 990 ₽</span>
@@ -490,7 +490,7 @@
             <div class="section-subtitle">Свежие поступления</div>
             <h2 class="section-title mb-0">Новинки</h2>
           </div>
-          <a href="catalog.html?filter=new" class="btn-wenge">Все новинки <i class="bi bi-arrow-right"></i></a>
+          <a href="catalog.php?filter=new" class="btn-wenge">Все новинки <i class="bi bi-arrow-right"></i></a>
         </div>
 
         <div class="row g-4">
@@ -503,13 +503,13 @@
                 <button class="product-fav-btn" data-id="tama-imperialstar" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=tama-imperialstar">
+                <a href="product.php?id=tama-imperialstar">
                   <img src="img/photo-1519892300165-cb5542fb47c7.jpg" alt="TAMA Imperialstar">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Ударные</div>
-                <a href="product.html?id=tama-imperialstar" class="product-title">TAMA Imperialstar 22</a>
+                <a href="product.php?id=tama-imperialstar" class="product-title">TAMA Imperialstar 22</a>
                 <p class="product-desc">Полный комплект акустических барабанов со стойками и тарелками Meinl.</p>
                 <div class="product-price-row">
                   <div class="price-box">
@@ -532,13 +532,13 @@
                 <button class="product-fav-btn" data-id="roland-juno-d" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=roland-juno-d">
+                <a href="product.php?id=roland-juno-d">
                   <img src="img/photo-1598488035139-bdbb2231ce04.jpg" alt="Roland JUNO-D6">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Клавишные</div>
-                <a href="product.html?id=roland-juno-d" class="product-title">Roland JUNO-D6 Synth</a>
+                <a href="product.php?id=roland-juno-d" class="product-title">Roland JUNO-D6 Synth</a>
                 <p class="product-desc">Синтезатор нового поколения со звуковым движком ZEN-Core.</p>
                 <div class="product-price-row">
                   <div class="price-box">
@@ -562,13 +562,13 @@
                 <button class="product-fav-btn" data-id="shure-sm58" aria-label="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <a href="product.html?id=shure-sm58">
+                <a href="product.php?id=shure-sm58">
                   <img src="img/photo-1590602847861-f357a9332bbc.jpg" alt="Shure SM58">
                 </a>
               </div>
               <div class="product-content">
                 <div class="product-category-tag">Микрофоны</div>
-                <a href="product.html?id=shure-sm58" class="product-title">Shure SM58 50th Edition</a>
+                <a href="product.php?id=shure-sm58" class="product-title">Shure SM58 50th Edition</a>
                 <p class="product-desc">Особая юбилейная серия микрофона в отделке темного венге с тиснением.</p>
                 <div class="product-price-row">
                   <div class="price-box">
@@ -586,89 +586,7 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-newsletter">
-        <div class="newsletter-text">
-          <h4>Подпишитесь на скидки и премьеры</h4>
-          <p>Получайте закрытые предложения, промокоды и гиды по студийному звуку.</p>
-        </div>
-        <form class="newsletter-form"
-          onsubmit="event.preventDefault(); showToast('Спасибо за подписку!'); this.reset();">
-          <input type="email" placeholder="Ваш рабочий email..." required>
-          <button type="submit" class="btn-brand">Подписаться</button>
-        </form>
-      </div>
-
-      <div class="footer-top">
-        <div class="footer-brand-info">
-          <a href="/" class="brand-logo">
-            <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
-            <span>SOUND<span>WAVE</span></span>
-          </a>
-          <p class="footer-desc">
-            Специализированный интернет-магазин инструментов и студийного оборудования для музыкантов, звукорежиссеров и
-            ценителей безупречного звучания.
-          </p>
-          <div class="social-links">
-            <a href="#" class="social-btn" aria-label="VK"><i class="bi bi-telegram"></i></a>
-            <a href="#" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-            <a href="#" class="social-btn" aria-label="VKontakte"><i class="bi bi-music-note-beamed"></i></a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h5>Каталог</h5>
-          <ul class="footer-links">
-            <li><a href="catalog.html?cat=electric">Гитары</a></li>
-            <li><a href="catalog.html?cat=synths">Клавишные</a></li>
-            <li><a href="catalog.html?cat=drums">Ударные</a></li>
-            <li><a href="catalog.html?cat=mics">Микрофоны</a></li>
-            <li><a href="catalog.html?cat=amps">Усилители</a></li>
-            <li><a href="catalog.html?cat=accessories">Аксессуары</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>Покупателям</h5>
-          <ul class="footer-links">
-            <li><a href="about.html#delivery">Доставка</a></li>
-            <li><a href="about.html#payment">Оплата</a></li>
-            <li><a href="about.html#returns">Возврат</a></li>
-            <li><a href="about.html#warranty">Гарантия</a></li>
-            <li><a href="contacts.html">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>Компания</h5>
-          <ul class="footer-links">
-            <li><a href="about.html">О нас</a></li>
-            <li><a href="contacts.html">Контакты</a></li>
-            <li><a href="contacts.html#stores">Магазины</a></li>
-            <li><a href="account.php">Кабинет</a></li>
-            <li><a href="404.html">404 страница</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>Поддержка</h5>
-          <ul class="footer-links">
-            <li><a href="contacts.html">Помощь</a></li>
-            <li><a href="contacts.html">Консультация</a></li>
-            <li><a href="contacts.html">Обратная связь</a></li>
-            <li><a href="tel:+78000000000">+7 (800) 000-00-00</a></li>
-            <li><a href="mailto:hello@soundwave.ru">hello@soundwave.ru</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div>© 2026 SOUNDWAVE. Все права защищены.</div>
-        <div>Сыктывкар, Суетная 67</div>
-      </div>
-    </div>
-  </footer>
+  <?php include('./components/footer_big.php') ?>
 
   <script src="js/main.js"></script>
 </body>

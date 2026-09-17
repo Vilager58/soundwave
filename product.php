@@ -1,0 +1,609 @@
+<?php session_start();?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fender Player Stratocaster | SOUNDWAVE</title>
+  <meta name="description"
+    content="Купить электрогитару Fender Player Stratocaster в магазине музыкальных инструментов SOUNDWAVE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/product.css">
+</head>
+
+<body>
+  
+  <?php require('./components/header.php')?>
+
+  <nav class="site-breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs-list" id="product-breadcrumbs">
+        <li><a href="/">Главная</a></li>
+        <li><a href="catalog.php">Каталог</a></li>
+        <li id="breadcrumb-category"><a href="catalog.php">Инструменты</a></li>
+        <li id="breadcrumb-title">Загрузка...</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="product-detail-layout">
+        <div class="product-gallery">
+          <div class="gallery-main-view" id="main-view-box">
+            <img src="img/photo-1550291652-6ea9114a47b1.avif" alt="Товар" id="main-product-img">
+          </div>
+          <div class="gallery-thumbs" id="gallery-thumbs-container"></div>
+        </div>
+
+        <div class="product-info-panel">
+          <div class="product-meta-row">
+            <div id="product-badge-box"></div>
+            <span class="product-sku" id="product-sku-box">Артикул: SW-10000</span>
+          </div>
+
+          <h1 class="product-title-large" id="product-title-heading">Загрузка товара...</h1>
+
+          <div class="product-rating-large">
+            <div class="stars" id="product-stars-box"></div>
+            <strong id="product-rating-val">5.0</strong>
+            <span style="color: var(--text-muted);" id="product-reviews-count">(0 отзывов)</span>
+            <span class="badge-stock" id="product-stock-status">В наличии на складе</span>
+          </div>
+
+          <div class="product-price-section">
+            <div class="product-price-large-row">
+              <span class="price-main" id="product-price-val">0 ₽</span>
+              <span class="price-old-large" id="product-old-price-val" style="display: none;">0 ₽</span>
+              <span class="badge-sale" id="product-discount-badge" style="display: none;">-10%</span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-secondary);" id="product-installment-text">
+              Доступна рассрочка 0-0-12
+            </div>
+          </div>
+
+          <div id="product-options-container"></div>
+
+          <div class="product-action-row">
+            <div class="quantity-picker">
+              <button class="qty-btn" type="button" onclick="adjustQty(-1)"><i class="bi bi-dash"></i></button>
+              <input type="number" id="product-quantity-input" value="1" min="1" readonly>
+              <button class="qty-btn" type="button" onclick="adjustQty(1)"><i class="bi bi-plus"></i></button>
+            </div>
+
+            <button class="btn-brand flex-grow-1" id="btn-add-to-cart" data-add-cart="">
+              <i class="bi bi-bag-plus"></i>
+              Добавить в корзину
+            </button>
+
+            <button class="btn-icon-sq product-fav-btn" id="btn-fav-toggle" data-id="" aria-label="В избранное">
+              <i class="bi bi-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <section class="tabs-section">
+        <div class="tabs-nav">
+          <button class="tab-btn active" onclick="switchTab(this, 'tab-desc')">Описание</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-specs')">Характеристики</button>
+          <button class="tab-btn" id="tab-btn-reviews" onclick="switchTab(this, 'tab-reviews')">Отзывы</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-delivery')">Доставка и возврат</button>
+        </div>
+
+        <div class="tab-pane active" id="tab-desc">
+          <div style="max-width: 800px; color: var(--text-secondary); line-height: 1.8;" id="tab-desc-content">
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-specs">
+          <table class="specs-table">
+            <tbody id="tab-specs-tbody">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="tab-reviews">
+          <div style="max-width: 800px;">
+            <div id="reviews-list-container"></div>
+            <div
+              style="margin-top: 36px; padding: 24px; background: var(--wenge-surface); border: 1px solid var(--wenge-border); border-radius: var(--radius-lg);">
+              <h4 style="margin-bottom: 16px; font-weight: 700; color: var(--text-primary);">Оставить отзыв о товаре
+              </h4>
+              <form id="new-review-form" onsubmit="handleNewReview(event)">
+                <div style="margin-bottom: 16px;">
+                  <label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Ваша
+                    оценка:</label>
+                  <div class="star-rating-select" id="star-picker"
+                    style="display: flex; gap: 8px; font-size: 22px; color: var(--yellow-main); cursor: pointer;">
+                    <i class="bi bi-star-fill" data-star="1"></i>
+                    <i class="bi bi-star-fill" data-star="2"></i>
+                    <i class="bi bi-star-fill" data-star="3"></i>
+                    <i class="bi bi-star-fill" data-star="4"></i>
+                    <i class="bi bi-star-fill" data-star="5"></i>
+                  </div>
+                  <input type="hidden" id="review-rating-val" value="5">
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                  <label for="review-author-name"
+                    style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Ваше
+                    имя:</label>
+                  <input type="text" id="review-author-name" required placeholder="Например, Александр"
+                    style="width: 100%; background: var(--wenge-dark); border: 1px solid var(--wenge-border); border-radius: var(--radius-sm); padding: 10px 14px; color: var(--text-primary); outline: none;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                  <label for="review-text-val"
+                    style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Текст
+                    отзыва:</label>
+                  <textarea id="review-text-val" required rows="4"
+                    placeholder="Поделитесь впечатлениями о звучании, сборке и удобстве инструмента..."
+                    style="width: 100%; background: var(--wenge-dark); border: 1px solid var(--wenge-border); border-radius: var(--radius-sm); padding: 10px 14px; color: var(--text-primary); outline: none; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+
+                <button type="submit" class="btn-brand">
+                  <i class="bi bi-send"></i> Опубликовать отзыв
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-delivery">
+          <div style="max-width: 800px; color: var(--text-secondary); line-height: 1.8;">
+            <h4 style="color: var(--text-primary); margin-bottom: 8px;">Условия доставки по РФ</h4>
+            <p style="margin-bottom: 16px;">
+              Бесплатная доставка по Москве, Санкт-Петербургу и Сыктывкару. В регионы России доставляем проверенными
+              курьерскими службами СДЭК, Деловые Линии и Boxberry с усиленной деревянной обрешеткой и страхованием груза
+              на полную стоимость.
+            </p>
+            <h4 style="color: var(--text-primary); margin-bottom: 8px;">Официальная гарантия и возврат</h4>
+            <p>
+              На все инструменты распространяется 2-летняя официальная гарантия SOUNDWAVE. В течение 14 дней с момента
+              получения вы можете вернуть или обменять инструмент без объяснения причин, если сохранен товарный вид и
+              заводская комплектация.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="related-products-section">
+        <div class="section-header">
+          <div class="section-subtitle">Рекомендуем</div>
+          <h2 class="section-title">Вам также может понравиться</h2>
+        </div>
+        <div class="row g-4" id="related-products-grid"></div>
+      </section>
+
+      <section class="related-products-section" id="recent-products-section" style="padding-top: 20px;">
+        <div class="section-header">
+          <div class="section-subtitle">История</div>
+          <h2 class="section-title">Вы недавно смотрели</h2>
+        </div>
+        <div class="row g-4" id="recent-products-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <?php require('./components/footer.php')?>
+
+  <script src="js/main.js"></script>
+  <script>
+    let currentProduct = null;
+    let basePrice = 0;
+    let extraPackagePrice = 0;
+
+    function renderStars(rating) {
+      let stars = '';
+      for (let i = 1; i <= 5; i++) {
+        if (rating >= i) {
+          stars += '<i class="bi bi-star-fill"></i>';
+        } else if (rating >= i - 0.5) {
+          stars += '<i class="bi bi-star-half"></i>';
+        } else {
+          stars += '<i class="bi bi-star"></i>';
+        }
+      }
+      return stars;
+    }
+
+    function changeImage(el, src) {
+      document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+      if (el) el.classList.add('active');
+      const img = document.querySelector('#main-product-img');
+      if (img) img.src = src;
+    }
+
+    function selectColor(el, name) {
+      document.querySelectorAll('.color-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      const label = document.querySelector('#selected-color-name');
+      if (label) label.textContent = name;
+    }
+
+    function selectConfig(el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.config-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function selectPackage(el, extra) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.config-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      extraPackagePrice = extra || 0;
+      updateDisplayedPrice();
+    }
+
+    function updateDisplayedPrice() {
+      if (!currentProduct) return;
+      const total = basePrice + extraPackagePrice;
+      const priceVal = document.querySelector('#product-price-val');
+      if (priceVal) priceVal.textContent = formatPrice(total);
+
+      const installText = document.querySelector('#product-installment-text');
+      if (installText) {
+        installText.textContent = `Доступна рассрочка 0-0-12 от ${formatPrice(Math.round(total / 12))}/мес без переплат`;
+      }
+    }
+
+    function adjustQty(delta) {
+      const input = document.querySelector('#product-quantity-input');
+      let val = parseInt(input.value, 10) || 1;
+      val = Math.max(1, val + delta);
+      input.value = val;
+    }
+
+    function switchTab(btn, paneId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const targetPane = document.querySelector('#' + paneId);
+      if (targetPane) targetPane.classList.add('active');
+    }
+
+    function renderReviews() {
+      if (!currentProduct) return;
+      const container = document.querySelector('#reviews-list-container');
+      const countHeader = document.querySelector('#product-reviews-count');
+      const tabBtnReviews = document.querySelector('#tab-btn-reviews');
+      const reviews = getProductReviews(currentProduct.id);
+
+      if (countHeader) countHeader.textContent = `(${reviews.length} отзывов)`;
+      if (tabBtnReviews) tabBtnReviews.textContent = `Отзывы (${reviews.length})`;
+
+      if (!container) return;
+
+      if (reviews.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-secondary);">Будьте первым, кто оставит отзыв об этом инструменте!</p>';
+        return;
+      }
+
+      let html = '';
+      reviews.forEach(r => {
+        html += `
+          <div class="review-item" style="border-bottom: 1px solid var(--wenge-border);">
+            <div class="review-header" style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <strong class="reviewer-name" style="color: var(--text-primary); font-size: 15px;">
+                ${r.author} ${r.verified ? '<i class="bi bi-patch-check-fill" title="Проверенный покупатель" style="color: var(--accent-green); font-size: 13px;"></i>' : ''}
+              </strong>
+              <span class="review-date" style="font-size: 13px; color: var(--text-muted);">${r.date}</span>
+            </div>
+            <div style="color: var(--yellow-main); margin-bottom: 8px; font-size: 14px;">
+              ${renderStars(r.rating)}
+            </div>
+            <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">${r.text}</p>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function handleNewReview(e) {
+      e.preventDefault();
+      if (!currentProduct) return;
+      const author = document.querySelector('#review-author-name').value.trim();
+      const text = document.querySelector('#review-text-val').value.trim();
+      const rating = parseInt(document.querySelector('#review-rating-val').value, 10) || 5;
+
+      if (!author || !text) return;
+
+      addProductReview(currentProduct.id, { author, text, rating });
+      document.querySelector('#review-text-val').value = '';
+      renderReviews();
+    }
+
+    function initStarPicker() {
+      const picker = document.querySelector('#star-picker');
+      const valInput = document.querySelector('#review-rating-val');
+      if (!picker || !valInput) return;
+
+      const stars = picker.querySelectorAll('i');
+      stars.forEach(s => {
+        s.addEventListener('click', () => {
+          const rating = parseInt(s.getAttribute('data-star'), 10);
+          valInput.value = rating;
+          stars.forEach((st, idx) => {
+            if (idx < rating) {
+              st.className = 'bi bi-star-fill';
+            } else {
+              st.className = 'bi bi-star';
+            }
+          });
+        });
+      });
+    }
+
+    function renderRecommendations() {
+      const recGrid = document.querySelector('#related-products-grid');
+      if (!recGrid || !currentProduct) return;
+
+      const others = SOUNDWAVE_DATA.products.filter(p => p.id !== currentProduct.id).slice(0, 4);
+      let html = '';
+      others.forEach(p => {
+        html += `
+          <div class="col-lg-3 col-sm-6">
+            <div class="product-card">
+              <div class="product-image-box" style="height: 180px;">
+                <button class="product-fav-btn" data-id="${p.id}" aria-label="В избранное">
+                  <i class="bi bi-heart"></i>
+                </button>
+                <a href="product.php?id=${p.id}">
+                  <img src="${p.image}" alt="${p.title}" style="max-height: 100%; object-fit: cover;;">
+                </a>
+              </div>
+              <div class="product-content">
+                <span class="product-category-tag">${p.category}</span>
+                <a href="product.php?id=${p.id}" class="product-title" style="font-size: 15px;">${p.title}</a>
+                <div class="product-price-row">
+                  <span class="current-price" style="font-size: 17px;">${formatPrice(p.price)}</span>
+                  <button class="btn-add-cart" data-add-cart="${p.id}" title="В корзину">
+                    <i class="bi bi-bag-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      recGrid.innerHTML = html;
+    }
+
+    function renderRecentlyViewed() {
+      const recentSection = document.querySelector('#recent-products-section');
+      const recentGrid = document.querySelector('#recent-products-grid');
+      if (!recentGrid || !currentProduct) return;
+
+      const recents = getRecentProducts().filter(id => id !== currentProduct.id).slice(0, 4);
+      if (recents.length === 0) {
+        if (recentSection) recentSection.style.display = 'none';
+        return;
+      }
+
+      if (recentSection) recentSection.style.display = 'block';
+
+      let html = '';
+      recents.forEach(id => {
+        const p = SOUNDWAVE_DATA.products.find(item => item.id === id);
+        if (!p) return;
+        html += `
+          <div class="col-lg-3 col-sm-6">
+            <div class="product-card">
+              <div class="product-image-box" style="height: 180px;">
+                <button class="product-fav-btn" data-id="${p.id}" aria-label="В избранное">
+                  <i class="bi bi-heart"></i>
+                </button>
+                <a href="product.php?id=${p.id}">
+                  <img src="${p.image}" alt="${p.title}" style="max-height: 100%; object-fit: cover;;">
+                </a>
+              </div>
+              <div class="product-content">
+                <span class="product-category-tag">${p.category}</span>
+                <a href="product.php?id=${p.id}" class="product-title" style="font-size: 15px;">${p.title}</a>
+                <div class="product-price-row">
+                  <span class="current-price" style="font-size: 17px;">${formatPrice(p.price)}</span>
+                  <button class="btn-add-cart" data-add-cart="${p.id}" title="В корзину">
+                    <i class="bi bi-bag-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      recentGrid.innerHTML = html;
+    }
+
+    function renderProductPage() {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id') || 'fender-strat';
+
+      currentProduct = SOUNDWAVE_DATA.products.find(p => p.id === productId) || SOUNDWAVE_DATA.products[0];
+      if (!currentProduct) return;
+
+      basePrice = currentProduct.price;
+      extraPackagePrice = 0;
+
+      document.title = `${currentProduct.title} | SOUNDWAVE`;
+      const catBreadcrumb = document.querySelector('#breadcrumb-category');
+      if (catBreadcrumb) {
+        catBreadcrumb.innerHTML = `<a href="catalog.php?cat=${currentProduct.categorySlug || ''}">${currentProduct.category}</a>`;
+      }
+      const titleBreadcrumb = document.querySelector('#breadcrumb-title');
+      if (titleBreadcrumb) titleBreadcrumb.textContent = currentProduct.title;
+
+      const mainImg = document.querySelector('#main-product-img');
+      if (mainImg) {
+        mainImg.src = currentProduct.image;
+        mainImg.alt = currentProduct.title;
+      }
+
+      const thumbsContainer = document.querySelector('#gallery-thumbs-container');
+      if (thumbsContainer) {
+        const galleryImgs = currentProduct.gallery || [currentProduct.image];
+        let thumbsHtml = '';
+        galleryImgs.forEach((src, idx) => {
+          thumbsHtml += `
+            <div class="gallery-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage(this, '${src}')">
+              <img src="${src}" alt="Ракурс ${idx + 1}">
+            </div>
+          `;
+        });
+        thumbsContainer.innerHTML = thumbsHtml;
+      }
+
+      const badgeBox = document.querySelector('#product-badge-box');
+      if (badgeBox) {
+        badgeBox.innerHTML = currentProduct.badge ? `<span class="badge-${currentProduct.badgeType || 'hit'}">${currentProduct.badge}</span>` : '';
+      }
+
+      const skuBox = document.querySelector('#product-sku-box');
+      if (skuBox) skuBox.textContent = `Артикул: ${currentProduct.sku || 'SW-' + currentProduct.id}`;
+
+      const titleHeading = document.querySelector('#product-title-heading');
+      if (titleHeading) titleHeading.textContent = currentProduct.title;
+
+      const starsBox = document.querySelector('#product-stars-box');
+      if (starsBox) starsBox.innerHTML = renderStars(currentProduct.rating);
+
+      const ratingVal = document.querySelector('#product-rating-val');
+      if (ratingVal) ratingVal.textContent = currentProduct.rating;
+
+      const stockStatus = document.querySelector('#product-stock-status');
+      if (stockStatus) {
+        stockStatus.textContent = currentProduct.inStock ? 'В наличии на складе' : 'Под заказ';
+        stockStatus.className = currentProduct.inStock ? 'badge-stock' : 'badge-stock out';
+      }
+
+      const oldPriceVal = document.querySelector('#product-old-price-val');
+      const discountBadge = document.querySelector('#product-discount-badge');
+      if (currentProduct.oldPrice) {
+        if (oldPriceVal) {
+          oldPriceVal.textContent = formatPrice(currentProduct.oldPrice);
+          oldPriceVal.style.display = 'inline-block';
+        }
+        if (discountBadge) {
+          const discountPercent = Math.round((1 - currentProduct.price / currentProduct.oldPrice) * 100);
+          discountBadge.textContent = `-${discountPercent}%`;
+          discountBadge.style.display = 'inline-block';
+        }
+      } else {
+        if (oldPriceVal) oldPriceVal.style.display = 'none';
+        if (discountBadge) discountBadge.style.display = 'none';
+      }
+      updateDisplayedPrice();
+
+      const optionsContainer = document.querySelector('#product-options-container');
+      if (optionsContainer) {
+        let optHtml = '';
+
+        if (currentProduct.colors && currentProduct.colors.length > 0) {
+          optHtml += `
+            <div class="option-group">
+              <div class="option-label">Цвет корпуса: <span id="selected-color-name">${currentProduct.colors[0].name}</span></div>
+              <div class="color-options">
+                ${currentProduct.colors.map((c, i) => `
+                  <div class="color-pill ${i === 0 ? 'active' : ''}" onclick="selectColor(this, '${c.name}')">
+                    <span class="color-dot" style="background: ${c.dot};"></span>
+                    ${c.name}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        if (currentProduct.configs && currentProduct.configs.length > 0) {
+          optHtml += `
+            <div class="option-group">
+              <div class="option-label">Конфигурация:</div>
+              <div class="config-options">
+                ${currentProduct.configs.map((cfg, i) => `
+                  <button type="button" class="config-btn ${i === 0 ? 'active' : ''}" onclick="selectConfig(this)">${cfg}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        if (currentProduct.packages && currentProduct.packages.length > 0) {
+          optHtml += `
+            <div class="option-group">
+              <div class="option-label">Комплектация:</div>
+              <div class="config-options">
+                ${currentProduct.packages.map((pkg, i) => `
+                  <button type="button" class="config-btn ${i === 0 ? 'active' : ''}" onclick="selectPackage(this, ${pkg.extraPrice})">
+                    ${pkg.name} ${pkg.extraPrice > 0 ? '(+' + formatPrice(pkg.extraPrice) + ')' : ''}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        optionsContainer.innerHTML = optHtml;
+      }
+
+      const addCartBtn = document.querySelector('#btn-add-to-cart');
+      if (addCartBtn) addCartBtn.setAttribute('data-add-cart', currentProduct.id);
+
+      const favBtn = document.querySelector('#btn-fav-toggle');
+      if (favBtn) favBtn.setAttribute('data-id', currentProduct.id);
+
+      const descContent = document.querySelector('#tab-desc-content');
+      if (descContent) {
+        descContent.innerHTML = `
+          <p style="margin-bottom: 16px; font-size: 16px; color: var(--text-primary); font-weight: 600;">
+            ${currentProduct.desc}
+          </p>
+          <p style="margin-bottom: 16px;">
+            ${currentProduct.fullDesc || ''}
+          </p>
+          <p>
+            Каждый инструмент перед отправкой покупателю проходит обязательную предпродажную проверку нашими мастерами в сервисном центре SOUNDWAVE: отстройку мензуры, высоты струн и проверку электронной схемы.
+          </p>
+        `;
+      }
+      const specsTbody = document.querySelector('#tab-specs-tbody');
+      if (specsTbody) {
+        let specsHtml = '';
+        const specs = currentProduct.specs || [
+          { label: "Бренд", value: currentProduct.brand || "SOUNDWAVE" },
+          { label: "Категория", value: currentProduct.category },
+          { label: "Артикул", value: currentProduct.sku || 'SW-' + currentProduct.id },
+          { label: "Гарантия", value: "2 года официальной гарантии" }
+        ];
+        specs.forEach(s => {
+          specsHtml += `
+            <tr>
+              <td>${s.label}</td>
+              <td>${s.value}</td>
+            </tr>
+          `;
+        });
+        specsTbody.innerHTML = specsHtml;
+      }
+      renderReviews();
+      initStarPicker();
+      renderRecommendations();
+      renderRecentlyViewed();
+      addRecentProduct(currentProduct.id);
+      updateFavBadges();
+      updateCartBadges();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProductPage();
+    });
+  </script>
+</body>
+
+</html>

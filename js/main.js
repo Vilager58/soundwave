@@ -11,7 +11,7 @@ const SOUNDWAVE_DATA = {
       badgeType: "hit",
       rating: 4.9,
       reviews: 128,
-      inStock: true,
+      inStock: false,
       sku: "SW-10482",
       popularity: 98,
       dateAdded: "2026-01-15",
@@ -639,28 +639,18 @@ const SOUNDWAVE_DATA = {
   ]
 };
 
-function getStoredCart() {
-  const data = localStorage.getItem("soundwave_cart");
-  if (data) {
-    try {
-      return JSON.parse(data);
-    } catch (e) {
-      return [];
-    }
-  }
-  return [{
-      id: "fender-strat",
-      quantity: 1
-    },
-    {
-      id: "shure-sm58",
-      quantity: 2
-    },
-    {
-      id: "marshall-mg30gfx",
-      quantity: 1
-    }
-  ];
+async function getStoredCart() {
+    response = await fetch('/api/user_cart.php', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+  return response
 }
 
 function setStoredCart(cart) {
@@ -668,7 +658,7 @@ function setStoredCart(cart) {
   updateCartBadges();
 }
 
-function addToCart(productId, quantity = 1) {
+function addToCart(variant_id, quantity = 1) {
   const cart = getStoredCart();
   const existing = cart.find((item) => item.id === productId);
   if (existing) {
@@ -686,14 +676,7 @@ function addToCart(productId, quantity = 1) {
   }
 }
 
-function updateCartBadges() {
-  const cart = getStoredCart();
-  const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  document.querySelectorAll(".cart-count-badge").forEach((badge) => {
-    badge.textContent = totalCount;
-    badge.style.display = totalCount > 0 ? "flex" : "none";
-  });
-}
+
 
 function getStoredFavs() {
   const data = localStorage.getItem("soundwave_favs");
@@ -709,7 +692,6 @@ function getStoredFavs() {
 
 function setStoredFavs(favs) {
   localStorage.setItem("soundwave_favs", JSON.stringify(favs));
-  updateFavBadges();
 }
 
 function toggleFav(productId) {
@@ -727,22 +709,26 @@ function toggleFav(productId) {
   }
 }
 
-function updateFavBadges() {
-  const favs = getStoredFavs();
-  document.querySelectorAll(".fav-count-badge").forEach((badge) => {
-    badge.textContent = favs.length;
-    badge.style.display = favs.length > 0 ? "flex" : "none";
-  });
-  document.querySelectorAll(".product-fav-btn").forEach((btn) => {
-    const id = btn.getAttribute("data-id");
-    if (id && favs.includes(id)) {
-      btn.classList.add("active");
-      btn.innerHTML = '<i class="bi bi-heart-fill"></i>';
-    } else if (id) {
-      btn.classList.remove("active");
-      btn.innerHTML = '<i class="bi bi-heart"></i>';
-    }
-  });
+async function updateHeaderBadges() {
+  response = await fetch('/api/countHandledItems.php', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+      const favscount = data.message.favCount
+      const totalCount = data.message.cartCount
+      document.querySelectorAll(".fav-count-badge").forEach((badge) => {
+        badge.textContent = favscount;
+        badge.style.display = favscount > 0 ? "flex" : "none";
+      });
+      document.querySelectorAll(".cart-count-badge").forEach((badge) => {
+        badge.textContent = totalCount;
+        badge.style.display = totalCount > 0 ? "flex" : "none";
+      });
+    })
+    .catch(error => {
+      showToast(error);
+    });
 }
 
 async function getCurrentUser() {
@@ -755,7 +741,7 @@ async function getCurrentUser() {
         name: data.message.firstname + ' ' + data.message.lastname + ' ' + data.message.patronymic,
         email: data.message.email,
         phone: data.message.phone,
-        birthday: data.message.birthday,
+        birthdate: data.message.birthdate,
         city: data.message.city,
         address: data.message.adress,
         instrument: data.message.instrument,
@@ -819,7 +805,7 @@ function repeatOrder(orderId) {
   setStoredCart(cart);
   showToast("Товары из заказа добавлены в корзину!");
   setTimeout(() => {
-    window.location.href = "cart.html";
+    window.location.href = "cart.php";
   }, 700);
 }
 
@@ -1006,9 +992,7 @@ function showToast(message) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  updateCartBadges();
-  updateFavBadges();
-
+  updateHeaderBadges();
 
   document.addEventListener("click", (e) => {
     const addBtn = e.target.closest("[data-add-cart]");
@@ -1048,7 +1032,7 @@ document.addEventListener("DOMContentLoaded", () => {
           let html = "";
           matches.slice(0, 4).forEach((item) => {
             html += `
-              <a href="product.html?id=${item.id}" class="autocomplete-item">
+              <a href="product.php?id=${item.id}" class="autocomplete-item">
                 <div>
                   <strong>${item.title}</strong>
                   <div style="font-size: 11px; color: var(--text-muted);">${item.category} • ${item.brand || ''}</div>
@@ -1057,7 +1041,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </a>
             `;
           });
-          html += `<a href="catalog.html?q=${encodeURIComponent(val)}" class="autocomplete-footer">Показать все результаты (${matches.length})</a>`;
+          html += `<a href="catalog.php?q=${encodeURIComponent(val)}" class="autocomplete-footer">Показать все результаты (${matches.length})</a>`;
           searchResults.innerHTML = html;
           searchResults.classList.add("active");
         } else {
