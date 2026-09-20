@@ -69,7 +69,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         'case' => 'rmv',
         ''
     ];
-}
+} 
+// elseif ($_POST['case'] == 'addItem') {
+//     $q = '
+//         INSERT INTO products_cart()
+//         DELETE FROM products_cart WHERE user_id = ? AND variant_id = ?
+//     ';
+//     $query = $pdo->prepare($q);
+//     $query->execute([$_SESSION['uid'], $_POST['variant_id']]);
+//     $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+//     $result = [
+//         'case' => 'rmv',
+//         ''
+//     ];
+// }
 ;
 
 

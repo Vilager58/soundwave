@@ -21,14 +21,40 @@ JOIN categories c         ON p.category_id = c.id
 JOIN brands b             ON p.brand_id = b.id
 JOIN product_images pi    ON pv.id = pi.variant_id AND pi.is_main = 1 
 
-WHERE
-    pv.is_active = 1
-AND pv.amount > 0
+WHERE 1=1
 ';
 
-$query = $pdo->prepare($q);
-$query->execute([]);
-$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $params = [];
+
+    if ($_POST['query'] != 'null') {
+        $q .= 'AND p.title LIKE :query';
+        $params['query'] = '%' . $_POST['query'] . '%';
+    };
+
+    if ($_POST['selectedCats'] != '') {
+        $cats = explode(',', $_POST['selectedCats']);
+        foreach ($cats as $index => $cat_id) {
+            $placeholder_name = "cat_" . $index;
+            $placeholders[] = ":" . $placeholder_name;
+            $params[$placeholder_name] = (int) $cat_id;
+        }
+        $sql .= 'AND c.slug IN (:cats)';
+        $params['cats'] = implode(', ', $placeholders);
+    };
+
+
+    $query = $pdo->prepare($q);
+    $query->execute($params);
+    $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+
+} else {
+    $query = $pdo->prepare($q);
+    $query->execute([]);
+    $rows = $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 $products = [];
 

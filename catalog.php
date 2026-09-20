@@ -238,134 +238,34 @@
       return Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.getAttribute('data-brand'));
     }
 
-    function getFilteredAndSortedProducts() {
-      let list = [...SOUNDWAVE_DATA.products];
+    function getFilterParams() {
       const params = new URLSearchParams(window.location.search);
-      const q = params.get('q');
-      const catParam = params.get('cat');
-      const brandParam = params.get('brand');
-      const sortParam = params.get('sort');
-
-      // const item = {
-      //   'case': 'updateQuanity',
-      //   'variant_id': id,
-      //   'delta': delta
-      // };
-      // const formData = new FormData();
-      // for (const key in item) {
-      //   if (item.hasOwnProperty(key)) {
-      //     formData.append(key, item[key]);
-      //   }
-      // }
-
-      // fetch('/api/user_cart.php', {
-      //   method: 'POST',
-      //   body: formData,
-      // })
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     renderCartPage();
-      //   })
-      //   .catch(error => {
-      //     showToast(error);
-      //   });
-
-
-
-
-
-
-      if (sortParam && ['pop', 'price_asc', 'price_desc', 'new', 'rating'].includes(sortParam)) {
-        currentSort = sortParam;
-        const sortSelect = document.querySelector('#catalog-sort');
-        if (sortSelect) sortSelect.value = currentSort;
-      }
-
-      if (q) {
-        const qLower = q.toLowerCase();
-        list = list.filter(p =>
-          p.title.toLowerCase().includes(qLower) ||
-          p.category.toLowerCase().includes(qLower) ||
-          (p.brand && p.brand.toLowerCase().includes(qLower)) ||
-          (p.desc && p.desc.toLowerCase().includes(qLower))
-        );
-      }
-
-      if (catParam) {
-        const slugMap = {
-          'electric': 'Электрогитары',
-          'acoustic': 'Акустические гитары',
-          'bass': 'Бас-гитары',
-          'classical': 'Классические гитары',
-          'synths': 'Клавишные',
-          'pianos': 'Клавишные',
-          'midi': 'Клавишные',
-          'mics': 'Микрофоны',
-          'amps': 'Усилители',
-          'drums': 'Ударные',
-          'edrums': 'Электронные ударные',
-          'audio': 'Аудиоинтерфейсы',
-          'pedals': 'Педали эффектов',
-          'cabels': 'Кабели и стойки',
-          'headphones': 'Студийные наушники',
-        };
-        const targetCat = slugMap[catParam];
-        if (targetCat) {
-          list = list.filter(p => p.category === targetCat || p.categorySlug === catParam);
-        }
-      }
-
-      if (brandParam) {
-        list = list.filter(p => p.brand && p.brand.toLowerCase() === brandParam.toLowerCase());
-      }
-
-      const selectedCats = getSelectedCategories();
-      if (selectedCats.length > 0) {
-        list = list.filter(p => selectedCats.includes(p.category));
-      }
-
-      const selectedBrands = getSelectedBrands();
-      if (selectedBrands.length > 0) {
-        list = list.filter(p => p.brand && selectedBrands.includes(p.brand));
-      }
-
       const priceMinInput = document.querySelector('#price-min');
       const priceMaxInput = document.querySelector('#price-max');
-      const minP = priceMinInput ? parseInt(priceMinInput.value, 10) || 0 : 0;
-      const maxP = priceMaxInput ? parseInt(priceMaxInput.value, 10) || 1000000 : 1000000;
-      list = list.filter(p => p.price >= minP && p.price <= maxP);
 
-      const stockCheckbox = document.querySelector('#filter-instock');
-      if (stockCheckbox && stockCheckbox.checked) {
-        list = list.filter(p => p.inStock);
+      const filterParams = {
+        query: params.get('q'),
+        category: params.get('cat'),
+        brand: params.get('brand'),
+        sort: params.get('sort'),
+        selectedCats: getSelectedCategories(),
+        selectedBrands: getSelectedBrands(),
+        minP: priceMinInput ? parseInt(priceMinInput.value, 10) || 0 : 0,
+        maxP: priceMaxInput ? parseInt(priceMaxInput.value, 10) || 1000000 : 1000000,
+        onlyStock: document.querySelector('#filter-instock').checked,
+        aboveRating: document.querySelector('.rating-checkbox').checked,
       }
-
-      const ratingCheckbox = document.querySelector('.rating-checkbox');
-      if (ratingCheckbox && ratingCheckbox.checked) {
-        const minRating = parseFloat(ratingCheckbox.getAttribute('data-rating')) || 4.8;
-        list = list.filter(p => p.rating >= minRating);
-      }
-
-      if (currentSort === 'price_asc') {
-        list.sort((a, b) => a.price - b.price);
-      } else if (currentSort === 'price_desc') {
-        list.sort((a, b) => b.price - a.price);
-      } else if (currentSort === 'new') {
-        list.sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0));
-      } else if (currentSort === 'rating') {
-        list.sort((a, b) => b.rating - a.rating);
-      } else {
-        list.sort((a, b) => (b.popularity || b.reviews) - (a.popularity || a.reviews));
-      }
-      return list;
+      console.log(filterParams);
+      return filterParams;
     }
 
-    function renderCatalog() {
+    async function renderCatalog() {
       const container = document.querySelector('#catalog-products-grid');
       const countEl = document.querySelector('.catalog-count');
       if (!container) return;
 
-      const products = getFilteredAndSortedProducts();
+      // const products = getFilteredAndSortedProducts();
+      const products = await getProdcts(getFilterParams());
       const favs = getStoredFavs();
 
       if (countEl) {
@@ -398,18 +298,18 @@
                   <i class="bi bi-heart${isFav ? '-fill' : ''}"></i>
                 </button>
                 <a href="product.php?id=${p.id}">
-                  <img src="${p.image}" alt="${p.title}" loading="lazy">
+                  <img src="${p.image}" alt="${p.productTitle}" loading="lazy">
                 </a>
               </div>
               <div class="product-content">
-                <div class="product-category-tag">${p.category} • ${p.brand || ''}</div>
-                <a href="product.php?id=${p.id}" class="product-title">${p.title}</a>
-                <p class="product-desc">${p.desc}</p>
+                <div class="product-category-tag">${p.category}</div>
+                <a href="product.php?id=${p.id}" class="product-title">${p.productTitle}</a>
+                <p class="product-desc">${p.shortDescription}</p>
                 <div class="product-rating">
                   <div class="stars">
                     ${renderStars(p.rating)}
                   </div>
-                  <span class="rating-count">${p.rating} (${p.reviews})</span>
+                  <span class="rating-count">${p.rating == null ? 0 : p.rating} (${p.reviewsCount})</span>
                 </div>
                 <div class="product-price-row">
                   <div class="price-box">
@@ -427,7 +327,7 @@
       });
 
       container.innerHTML = html;
-      updateFavBadges();
+      // updateFavBadgess();
     }
 
     function resetFilters() {
@@ -465,7 +365,6 @@
         sortSelect.addEventListener('change', () => {
           currentSort = sortSelect.value;
           renderCatalog();
-          showToast('Сортировка обновлена');
         });
       }
 

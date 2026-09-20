@@ -640,7 +640,7 @@ const SOUNDWAVE_DATA = {
 };
 
 async function getStoredCart() {
-    response = await fetch('/api/user_cart.php', {
+  response = await fetch('/api/user_cart.php', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -676,7 +676,29 @@ function addToCart(variant_id, quantity = 1) {
   }
 }
 
+async function getProdcts(params) {
 
+  const formData = new FormData();
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      formData.append(key, params[key]);
+    }
+  }
+
+  const response = fetch('/api/catalog.php', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+
+  return response
+}
 
 function getStoredFavs() {
   const data = localStorage.getItem("soundwave_favs");
