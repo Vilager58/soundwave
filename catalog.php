@@ -42,38 +42,7 @@
 
           <div class="filter-group">
             <div class="filter-group-title">Категория</div>
-            <ul class="filter-list">
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="category-checkbox" data-cat="Электрогитары">
-                  <span>Электрогитары</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="category-checkbox" data-cat="Клавишные">
-                  <span>Клавишные (Пианино / Синтезаторы)</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="category-checkbox" data-cat="Микрофоны">
-                  <span>Микрофоны</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="category-checkbox" data-cat="Усилители">
-                  <span>Усилители</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="category-checkbox" data-cat="Ударные">
-                  <span>Ударные</span>
-                </label>
-              </li>
-            </ul>
+            <ul class="filter-list" id="category-filter-list"></ul>
           </div>
 
           <div class="filter-group">
@@ -88,55 +57,12 @@
                 <input type="number" id="price-max" value="300000" max="500000">
               </div>
             </div>
-            <input type="range" class="price-slider" id="price-slider" min="0" max="300000" step="5000" value="300000">
+            <input type="range" class="price-slider" id="price-slider" min="0" max="300000" step="100" value="300000">
           </div>
 
           <div class="filter-group">
             <div class="filter-group-title">Бренд</div>
-            <ul class="filter-list">
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="Fender">
-                  <span>Fender</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="Gibson">
-                  <span>Gibson</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="Yamaha">
-                  <span>Yamaha</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="Roland">
-                  <span>Roland</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="Shure">
-                  <span>Shure</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="Marshall">
-                  <span>Marshall</span>
-                </label>
-              </li>
-              <li>
-                <label class="custom-checkbox">
-                  <input type="checkbox" class="brand-checkbox" data-brand="TAMA">
-                  <span>TAMA</span>
-                </label>
-              </li>
-            </ul>
+            <ul class="filter-list" id="brand-filter-list"></ul>
           </div>
 
           <div class="filter-group">
@@ -238,6 +164,55 @@
       return Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.getAttribute('data-brand'));
     }
 
+    function renderFilters(filters) {
+      console.log(filters);
+      const brandList = document.querySelector('#brand-filter-list');
+      const categoryList = document.querySelector('#category-filter-list');
+
+      const slider = document.querySelector('#price-slider');
+      const pMax = document.querySelector('#price-max');
+      const pMin = document.querySelector('#price-min');
+
+      slider.min = filters.availableMin;
+      slider.max = filters.availableMax;
+
+      pMax.value = filters.availableMax;
+      pMin.value = filters.availableMin;
+
+      if (Object.keys(filters.availableBrands).length == 0) {
+        brandList.innerHTML = 'Бренды не найдены';
+      } else {
+        brandList.innerHTML = '';
+        for (const [id, value] of Object.entries(filters.availableBrands)) {
+          brandList.innerHTML += `
+            <li>
+              <label class="custom-checkbox">
+                  <input type="checkbox" class="category-checkbox" data-cat="${id}">
+                  <span>${value}</span>
+              </label>
+            </li>`;
+        }
+      }
+
+      if (Object.keys(filters.availableCategories).length == 0) {
+        categoryList.innerHTML = 'Категории не найдены';
+      } else {
+        categoryList.innerHTML = '';
+        for (const [id, value] of Object.entries(filters.availableCategories)) {
+          categoryList.innerHTML += `
+          <li>
+            <label class="custom-checkbox">
+              <input type="checkbox" class="brand-checkbox" data-brand="${id}">
+              <span>${value}</span>
+            </label>
+          </li>`;
+        }
+      }
+      document.querySelectorAll('.category-checkbox, .brand-checkbox, #filter-instock, .rating-checkbox').forEach(cb => {
+        cb.addEventListener('change', renderCatalog);
+      });
+    }
+
     function getFilterParams() {
       const params = new URLSearchParams(window.location.search);
       const priceMinInput = document.querySelector('#price-min');
@@ -255,7 +230,6 @@
         onlyStock: document.querySelector('#filter-instock').checked,
         aboveRating: document.querySelector('.rating-checkbox').checked,
       }
-      console.log(filterParams);
       return filterParams;
     }
 
@@ -265,6 +239,8 @@
       if (!container) return;
 
       // const products = getFilteredAndSortedProducts();
+      const filters = await getFilters(getFilterParams());
+      renderFilters(filters);
       const products = await getProdcts(getFilterParams());
       const favs = getStoredFavs();
 
@@ -415,10 +391,6 @@
       if (resetTopBtn) {
         resetTopBtn.addEventListener('click', resetFilters);
       }
-
-      document.querySelectorAll('.category-checkbox, .brand-checkbox, #filter-instock, .rating-checkbox').forEach(cb => {
-        cb.addEventListener('change', renderCatalog);
-      });
 
       const filterBtn = document.querySelector('#mobile-filter-toggle');
       const filterSidebar = document.querySelector('#catalog-filters-sidebar');

@@ -39,8 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $placeholders[] = ":" . $placeholder_name;
             $params[$placeholder_name] = (int) $cat_id;
         }
-        $sql .= 'AND c.slug IN (:cats)';
-        $params['cats'] = implode(', ', $placeholders);
+        $q .= 'AND c.slug IN (' . implode(', ', $placeholders) . ')';
     };
 
 

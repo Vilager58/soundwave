@@ -678,16 +678,26 @@ function addToCart(variant_id, quantity = 1) {
 
 async function getProdcts(params) {
 
-  const formData = new FormData();
-  for (const key in params) {
-    if (params.hasOwnProperty(key)) {
-      formData.append(key, params[key]);
-    }
-  }
-
   const response = fetch('/api/catalog.php', {
       method: 'POST',
-      body: formData,
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+
+  return response
+}
+
+async function getFilters(params) {
+
+  const response = fetch('/api/catalog_filters.php', {
+      method: 'POST',
+      body: prepareData(params),
     })
     .then(response => response.json())
     .then(data => {
@@ -1011,6 +1021,16 @@ function showToast(message) {
     toast.style.transform = "translateY(20px)";
     setTimeout(() => toast.remove(), 400);
   }, 2400);
+}
+
+function prepareData(data) {
+  const formData = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      formData.append(key, data[key]);
+    }
+  }
+  return formData
 }
 
 document.addEventListener("DOMContentLoaded", () => {
