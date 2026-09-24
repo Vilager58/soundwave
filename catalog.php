@@ -167,7 +167,6 @@
       const pMax = document.querySelector('#price-max');
       const pMin = document.querySelector('#price-min');
       const slider = document.querySelector('#price-slider');
-      console.log(cur);
       if (slider) {
         slider.min = min;
         slider.max = max;
@@ -179,7 +178,6 @@
     }
 
     function renderFilters(filters) {
-      console.log(filters);
 
       const currentBrands = getSelectedBrands();
       const currentCategories = getSelectedCategories();
@@ -281,6 +279,7 @@
       const filters = await getFilters(getFilterParams());
       renderFilters(filters);
       const products = await getProducts(getFilterParams());
+      console.log(products);
       const favs = getStoredFavs();
 
       if (countEl) {
@@ -328,8 +327,8 @@
                 </div>
                 <div class="product-price-row">
                   <div class="price-box">
-                    ${p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : ''}
-                    <span class="current-price">${formatPrice(p.price)}</span>
+                    ${p.oldPrice ? `<span class="old-price">${formatPrice(p.variants[0].oldPrice)}</span>` : ''}
+                    <span class="current-price">${formatPrice(p.variants[0].price)}</span>
                   </div>
                   <button class="btn-add-cart" data-add-cart="${p.id}" title="В корзину">
                     <i class="bi bi-bag-plus"></i>

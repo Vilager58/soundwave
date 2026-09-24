@@ -789,6 +789,23 @@ async function getCurrentUser() {
   return response
 };
 
+async function getProduct(params) {
+
+  const response = fetch('/api/catalog.php', {
+      method: 'POST',
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast('Ошибка', error, 'danger');
+    });
+
+  return response
+}
+
 
 async function getStoredOrders() {
   response = await fetch('/api/user_orders.php', {

@@ -5,11 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Управление товарами | SOUNDWAVE ADMIN</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
-    rel="stylesheet">
+  >
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -249,7 +245,6 @@
                 <tr>
                   <th style="width: 40px;"><input type="checkbox" title="Выбрать все"></th>
                   <th>Товар / Модель</th>
-                  <th>Категория</th>
                   <th>Бренд</th>
                   <th>Цена продажи</th>
                   <th>Остаток</th>
@@ -257,209 +252,7 @@
                   <th style="text-align: right;">Действия</th>
                 </tr>
               </thead>
-              <tbody>
-                <!-- Product 1 -->
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>
-                    <div class="table-product-cell">
-                      <img
-                        src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&auto=format&fit=crop&q=80"
-                        alt="Sony" class="product-thumbnail">
-                      <div class="product-cell-info">
-                        <span class="product-cell-title">Беспроводные наушники Sony WH-1000XM5</span>
-                        <span class="product-cell-sku">WH1000XM5 • 2 модификации (Black, Silver)</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-purple">Наушники</span></td>
-                  <td><strong>Sony</strong></td>
-                  <td class="price-cell">
-                    <span class="price-current">37 990 ₽</span>
-                    <span class="price-old">42 990 ₽</span>
-                  </td>
-                  <td><span class="stock-badge stock-in">23 шт.</span></td>
-                  <td>
-                    <span class="badge badge-success">Активен</span>
-                    <span class="badge badge-brand">ХИТ</span>
-                  </td>
-                  <td>
-                    <div class="table-actions" style="justify-content: flex-end;">
-                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal">
-                        <i class="bi bi-pencil-fill"></i>
-                      </button>
-                      <button class="table-action-btn" title="Копировать"
-                        onclick="showToast('Копирование', 'Создана копия карточки товара', 'info')">
-                        <i class="bi bi-copy"></i>
-                      </button>
-                      <button class="table-action-btn delete-btn" title="Удалить"
-                        onclick="showToast('Удаление', 'Товар перемещен в архив', 'danger')">
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- Product 2 -->
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>
-                    <div class="table-product-cell">
-                      <img
-                        src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=100&auto=format&fit=crop&q=80"
-                        alt="Sennheiser" class="product-thumbnail">
-                      <div class="product-cell-info">
-                        <span class="product-cell-title">Открытые наушники Sennheiser HD 660S2</span>
-                        <span class="product-cell-sku">HD660S2 • Матовый черный / 300 Ом</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-purple">Наушники</span></td>
-                  <td><strong>Sennheiser</strong></td>
-                  <td class="price-cell">
-                    <span class="price-current">54 990 ₽</span>
-                    <span class="price-old">59 990 ₽</span>
-                  </td>
-                  <td><span class="stock-badge stock-low">5 шт.</span></td>
-                  <td>
-                    <span class="badge badge-success">Активен</span>
-                    <span class="badge badge-brand">ХИТ</span>
-                  </td>
-                  <td>
-                    <div class="table-actions" style="justify-content: flex-end;">
-                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal">
-                        <i class="bi bi-pencil-fill"></i>
-                      </button>
-                      <button class="table-action-btn" title="Копировать">
-                        <i class="bi bi-copy"></i>
-                      </button>
-                      <button class="table-action-btn delete-btn" title="Удалить">
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- Product 3 -->
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>
-                    <div class="table-product-cell">
-                      <img
-                        src="https://images.unsplash.com/photo-1545454675-3531b543be5d?w=100&auto=format&fit=crop&q=80"
-                        alt="Marshall" class="product-thumbnail">
-                      <div class="product-cell-info">
-                        <span class="product-cell-title">Беспроводная колонка Marshall Stanmore III</span>
-                        <span class="product-cell-sku">STANMORE-III • 2 цвета (Black, Cream)</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-purple">Акустические системы</span></td>
-                  <td><strong>Marshall</strong></td>
-                  <td class="price-cell">
-                    <span class="price-current">41 990 ₽</span>
-                  </td>
-                  <td><span class="stock-badge stock-in">16 шт.</span></td>
-                  <td>
-                    <span class="badge badge-success">Активен</span>
-                    <span class="badge badge-brand">ХИТ</span>
-                  </td>
-                  <td>
-                    <div class="table-actions" style="justify-content: flex-end;">
-                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal">
-                        <i class="bi bi-pencil-fill"></i>
-                      </button>
-                      <button class="table-action-btn" title="Копировать">
-                        <i class="bi bi-copy"></i>
-                      </button>
-                      <button class="table-action-btn delete-btn" title="Удалить">
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- Product 4 -->
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>
-                    <div class="table-product-cell">
-                      <img
-                        src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=100&auto=format&fit=crop&q=80"
-                        alt="Audio-Technica" class="product-thumbnail">
-                      <div class="product-cell-info">
-                        <span class="product-cell-title">Виниловый проигрыватель Audio-Technica AT-LP120XUSB</span>
-                        <span class="product-cell-sku">ATLP120XUSB • Black / Silver</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-purple">Виниловые проигрыватели</span></td>
-                  <td><strong>Audio-Technica</strong></td>
-                  <td class="price-cell">
-                    <span class="price-current">39 990 ₽</span>
-                    <span class="price-old">44 990 ₽</span>
-                  </td>
-                  <td><span class="stock-badge stock-in">10 шт.</span></td>
-                  <td>
-                    <span class="badge badge-success">Активен</span>
-                  </td>
-                  <td>
-                    <div class="table-actions" style="justify-content: flex-end;">
-                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal">
-                        <i class="bi bi-pencil-fill"></i>
-                      </button>
-                      <button class="table-action-btn" title="Копировать">
-                        <i class="bi bi-copy"></i>
-                      </button>
-                      <button class="table-action-btn delete-btn" title="Удалить">
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- Product 5 -->
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>
-                    <div class="table-product-cell">
-                      <img
-                        src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=100&auto=format&fit=crop&q=80"
-                        alt="Shure" class="product-thumbnail">
-                      <div class="product-cell-info">
-                        <span class="product-cell-title">Динамический студийный микрофон Shure SM7B</span>
-                        <span class="product-cell-sku">SM7B • Классический кардиоидный</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-purple">Студийное оборудование</span></td>
-                  <td><strong>Shure</strong></td>
-                  <td class="price-cell">
-                    <span class="price-current">46 990 ₽</span>
-                    <span class="price-old">49 990 ₽</span>
-                  </td>
-                  <td><span class="stock-badge stock-in">20 шт.</span></td>
-                  <td>
-                    <span class="badge badge-success">Активен</span>
-                    <span class="badge badge-brand">ХИТ</span>
-                  </td>
-                  <td>
-                    <div class="table-actions" style="justify-content: flex-end;">
-                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal">
-                        <i class="bi bi-pencil-fill"></i>
-                      </button>
-                      <button class="table-action-btn" title="Копировать">
-                        <i class="bi bi-copy"></i>
-                      </button>
-                      <button class="table-action-btn delete-btn" title="Удалить">
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- Product 6 -->
-
+              <tbody id="products-list">
               </tbody>
             </table>
           </div>
@@ -483,12 +276,15 @@
   <!-- ==========================================================================
        MODAL: CREATE / EDIT PRODUCT
        ========================================================================== -->
-  <div class="modal-backdrop" id="product-modal">
-    <div class="admin-modal modal-xl">
+  <div class="modal-backdrop" id="product-modal"></div>
+  <div class="modal-backdrop" id="select-brand-modal"></div>
+  <div class="modal-backdrop" id="select-category-modal"></div>
+  <div class="modal-backdrop" id="edit-brand-modal">
+    <div class="admin-modal modal-lg">
       <div class="modal-header">
         <div class="modal-title">
-          <i class="bi bi-headphones" style="color: var(--brand-yellow);"></i>
-          <span>Карточка товара: Sony WH-1000XM5</span>
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Управление брендом</span>
         </div>
         <button class="modal-close-btn" type="button">
           <i class="bi bi-x-lg"></i>
@@ -496,258 +292,60 @@
       </div>
 
       <div class="modal-body">
-        <!-- Tabs Navigation -->
-        <div class="nav-tabs">
-          <button class="tab-btn active" data-tab="tab-general">
-            <i class="bi bi-info-circle"></i> Основное
-          </button>
-          <button class="tab-btn" data-tab="tab-variants">
-            <i class="bi bi-tags"></i> Модификации и цены (2)
-          </button>
-          <button class="tab-btn" data-tab="tab-attributes">
-            <i class="bi bi-sliders"></i> Характеристики (8)
-          </button>
-          <button class="tab-btn" data-tab="tab-gallery">
-            <i class="bi bi-images"></i> Фото и медиа (3)
-          </button>
-        </div>
-
-        <!-- TAB 1: GENERAL -->
-        <div class="tab-pane active" id="tab-general">
-          <form id="product-general-form">
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-              <div class="form-group">
-                <label class="form-label">Полное название товара <span class="required">*</span></label>
-                <input type="text" class="form-control" name="title" value="Беспроводные наушники Sony WH-1000XM5"
-                  required>
-                <div class="form-hint">Отображается в заголовке страницы каталога и поиске</div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">ЧПУ-алиас (Slug) <span class="required">*</span></label>
-                <input type="text" class="form-control" name="slug" value="sony-wh-1000xm5"
-                  style="font-family: var(--font-mono);" required>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-              <div class="form-group">
-                <label class="form-label">Бренд производителя <span class="required">*</span></label>
-                <select class="form-control" name="brand_id" required>
-                  <option value="2" selected>Sony (Япония)</option>
-                  <option value="1">Sennheiser (Германия)</option>
-                  <option value="3">Marshall (Великобритания)</option>
-                  <option value="4">Audio-Technica (Япония)</option>
-                  <option value="5">Beyerdynamic (Германия)</option>
-                  <option value="6">Shure (США)</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Категория каталога <span class="required">*</span></label>
-                <select class="form-control" name="category_id" required>
-                  <option value="2" selected>Наушники &gt; Полноразмерные</option>
-                  <option value="3">Наушники &gt; TWS и беспроводные</option>
-                  <option value="4">Акустические системы</option>
-                  <option value="5">Виниловые проигрыватели</option>
-                  <option value="6">Студийное оборудование</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Модельный код производителя</label>
-                <input type="text" class="form-control" name="model_code" value="WH1000XM5"
-                  style="font-family: var(--font-mono);">
-              </div>
+        <form id="brand-form">
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Название бренда <span class="required">*</span></label>
+              <input type="text" class="form-control" name="title" value="Sennheiser" required>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Краткое описание (для сниппетов и карточек каталога)</label>
-              <textarea class="form-control" name="short_description"
-                rows="2">Флагманские полноразмерные наушники с лучшим на рынке шумоподавлением и поддержкой LDAC.</textarea>
+              <label class="form-label">ЧПУ-алиас (Slug) <span class="required">*</span></label>
+              <input type="text" class="form-control" name="slug" value="sennheiser"
+                style="font-family: var(--font-mono);" required>
             </div>
-
-            <div class="form-group">
-              <label class="form-label">Полное описание с разметкой</label>
-              <textarea class="form-control" name="description"
-                rows="4">Наушники Sony WH-1000XM5 переписывают правила персонального прослушивания без отвлекающих факторов. 2 процессора управляют 8 микрофонами для беспрецедентного шумоподавления и безупречного качества звонков.</textarea>
-            </div>
-
-            <div style="display: flex; gap: 32px; padding: 12px 0;">
-              <label class="switch-label">
-                <input type="checkbox" class="switch-input" name="is_active" checked>
-                <span class="switch-slider"></span>
-                <span>Отображать на сайте (Активен)</span>
-              </label>
-
-              <label class="switch-label">
-                <input type="checkbox" class="switch-input" name="is_featured" checked>
-                <span class="switch-slider"></span>
-                <span>Хит продаж / Рекомендованный товар</span>
-              </label>
-            </div>
-          </form>
-        </div>
-
-        <!-- TAB 2: VARIANTS & PRICING -->
-        <div class="tab-pane" id="tab-variants">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <p style="color: var(--text-secondary); font-size: 0.88rem;">Модификации определяют цвета, сопротивление
-              (Ом) и индивидуальные складские остатки.</p>
-            <button class="btn btn-brand btn-sm" type="button"
-              onclick="showToast('Новый вариант', 'Добавлена строка для новой модификации', 'info')">
-              <i class="bi bi-plus-lg"></i> Добавить модификацию
-            </button>
           </div>
 
-          <div class="table-responsive">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Название варианта</th>
-                  <th>Артикул (SKU)</th>
-                  <th>Штрих-код (EAN-13)</th>
-                  <th>Цена (₽)</th>
-                  <th>Старая цена (₽)</th>
-                  <th>Остаток (шт)</th>
-                  <th>Действие</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="text" class="form-control" value="Черный матовый (Black)" style="min-width: 170px;">
-                  </td>
-                  <td><input type="text" class="form-control" value="SNY-WHXM5-BLK"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="text" class="form-control" value="4548736132566"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="number" class="form-control" value="37990" style="width: 110px; font-weight: 700;">
-                  </td>
-                  <td><input type="number" class="form-control" value="42990" style="width: 110px;"></td>
-                  <td><input type="number" class="form-control" value="15" style="width: 80px; font-weight: 700;"></td>
-                  <td>
-                    <button class="table-action-btn delete-btn" title="Удалить вариант"><i
-                        class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="form-control" value="Серебристый платиновый (Silver)"
-                      style="min-width: 170px;"></td>
-                  <td><input type="text" class="form-control" value="SNY-WHXM5-SLV"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="text" class="form-control" value="4548736132573"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="number" class="form-control" value="37990" style="width: 110px; font-weight: 700;">
-                  </td>
-                  <td><input type="number" class="form-control" value="42990" style="width: 110px;"></td>
-                  <td><input type="number" class="form-control" value="8" style="width: 80px; font-weight: 700;"></td>
-                  <td>
-                    <button class="table-action-btn delete-btn" title="Удалить вариант"><i
-                        class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TAB 3: ATTRIBUTES -->
-        <div class="tab-pane" id="tab-attributes">
-          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px;">
-            Технические характеристики участвуют в фильтрах каталога интернет-магазина.
-          </p>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group">
-              <label class="form-label">Частотный диапазон (Гц)</label>
-              <input type="text" class="form-control" value="4 - 40 000 Гц">
+              <label class="form-label">Страна происхождения</label>
+              <input type="text" class="form-control" name="country" value="Германия"
+                placeholder="Например: Япония, США">
             </div>
 
             <div class="form-group">
-              <label class="form-label">Импеданс / Сопротивление (Ом)</label>
-              <input type="number" class="form-control" value="48">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Активное шумоподавление (ANC)</label>
-              <select class="form-control">
-                <option value="1" selected>Да (Присутствует)</option>
-                <option value="0">Нет</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Время работы от аккумулятора (ч)</label>
-              <input type="number" class="form-control" value="30">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Тип подключения</label>
-              <input type="text" class="form-control" value="Bluetooth 5.2 / Mini-Jack 3.5 mm">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Вес (г)</label>
-              <input type="number" class="form-control" value="250">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Поддерживаемые аудиокодеки</label>
-              <input type="text" class="form-control" value="LDAC, AAC, SBC">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Наличие микрофона</label>
-              <select class="form-control">
-                <option value="1" selected>Да (8 микрофонов с шумоподавлением)</option>
-                <option value="0">Нет</option>
-              </select>
+              <label class="form-label">Логотип (URL или путь)</label>
+              <input type="text" class="form-control" name="logo_url" value="/assets/brands/sennheiser.svg"
+                style="font-family: var(--font-mono);">
             </div>
           </div>
-        </div>
 
-        <!-- TAB 4: GALLERY & MEDIA -->
-        <div class="tab-pane" id="tab-gallery">
-          <div class="dropzone-box"
-            onclick="showToast('Загрузка фото', 'Выберите изображения WEBP/JPG/PNG до 10 МБ', 'info')">
-            <i class="bi bi-cloud-arrow-up-fill dropzone-icon"></i>
-            <div class="dropzone-text">Перетащите фотографии сюда или нажмите для выбора</div>
-            <div class="dropzone-subtext">Поддерживаются WebP, PNG, JPG высокой четкости</div>
+          <div class="form-group">
+            <label class="form-label">Описание бренда для витрины</label>
+            <textarea class="form-control" name="description"
+              rows="3">Легендарный немецкий производитель премиальной аудиоаппаратуры и микрофонов с 1945 года.</textarea>
           </div>
 
-          <div class="gallery-grid">
-            <div class="gallery-item is-main">
-              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&auto=format&fit=crop&q=80"
-                alt="Sony Black Main">
-              <span class="gallery-item-badge">Главное</span>
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=200&auto=format&fit=crop&q=80"
-                alt="Sony Black Side">
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80"
-                alt="Sony Silver">
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-            </div>
+          <div class="form-group">
+            <label class="switch-label">
+              <input type="checkbox" class="switch-input" name="is_active" checked>
+              <span class="switch-slider"></span>
+              <span>Бренд активен и отображается в фильтрах каталога</span>
+            </label>
           </div>
-        </div>
-
+        </form>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
         <button class="btn btn-brand" type="button"
-          onclick="closeModal('product-modal'); showToast('Товар сохранен', 'Данные товара успешно обновлены в базе', 'success');">
-          <i class="bi bi-check2"></i> Сохранить изменения
+          onclick="closeModal('brand-modal'); showToast('Бренд сохранен', 'Информация о бренде обновлена', 'success');">
+          <i class="bi bi-check2"></i> Сохранить бренд
         </button>
       </div>
     </div>
   </div>
+
 
   <script src="js/admin.js"></script>
   <script>
@@ -756,34 +354,38 @@
       const currentBrand = document.querySelector('#filter-brand');
     }
     async function renderCatalog() {
-      const products = await getProducts(getFilterParams());
+      const box = document.querySelector('#products-list');
+      products = await getProducts(getFilterParams());
       console.log(products);
-      html = ` <tr>
+      let html = '';
+      products.forEach(p => {
+        html += ` <tr>
                   <td><input type="checkbox"></td>
                   <td>
                     <div class="table-product-cell">
                       <img
-                        src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=100&auto=format&fit=crop&q=80"
-                        alt="Beyerdynamic" class="product-thumbnail">
+                        src="${p.variants[0].image}"
+                        alt="${p.brand}" class="product-thumbnail">
                       <div class="product-cell-info">
-                        <span class="product-cell-title">Студийные наушники Beyerdynamic DT 770 PRO</span>
-                        <span class="product-cell-sku">DT770PRO • 80 Ом / 250 Ом</span>
+                        <span class="product-cell-title">${p.productTitle}</span>
+                        <span class="product-cell-sku">${p.category}</span>
                       </div>
                     </div>
                   </td>
-                  <td><span class="badge badge-purple">Студийное оборудование</span></td>
-                  <td><strong>Beyerdynamic</strong></td>
+                  <td><strong>${p.brand}</strong></td>
                   <td class="price-cell">
-                    <span class="price-current">18 990 ₽</span>
-                    <span class="price-old">21 990 ₽</span>
+                    <span class="price-current">${formatPrice(p.variants[0].price)}</span>
+                    <span class="price-old">${formatPrice(p.variants[0].oldPrice)}</span>
                   </td>
-                  <td><span class="stock-badge stock-in">43 шт.</span></td>
+                  <td><span class="stock-badge stock-in">${p.amount} шт.</span></td>
                   <td>
-                    <span class="badge badge-success">Активен</span>
+                    ${p.isActive == '1' ? '<span class="badge badge-success">Активен</span>' : '<span class="badge badge-muted">Не активен</span>'}
+                    ${p.isFeatured == '1' ? '<span class="badge badge-brand">Хит</span>' : ''}
+                    
                   </td>
                   <td>
                     <div class="table-actions" style="justify-content: flex-end;">
-                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="product-modal" data-modal-product-id='${p.id}'>
                         <i class="bi bi-pencil-fill"></i>
                       </button>
                       <button class="table-action-btn" title="Копировать">
@@ -795,6 +397,9 @@
                     </div>
                   </td>
                 </tr>`
+      });
+      box.innerHTML = html;
+      initModals();
     }
     document.addEventListener('DOMContentLoaded', () => {
       renderCatalog();

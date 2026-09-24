@@ -4,6 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  let products = [];
   initSidebar();
   initModals();
   initTabs();
@@ -49,7 +50,350 @@ function initSidebar() {
 /* ==========================================================================
    MODAL MANAGEMENT
    ========================================================================== */
-function openModal(modalId) {
+function openModal(modalId, targetBtn) {
+  // console.log(modalId, targetBtn);
+  const modalBox = document.querySelector('#' + modalId);
+  switch (modalId) {
+    case 'product-modal':
+      const productId = targetBtn.getAttribute('data-modal-product-id');
+      const product = products.find(p => p.id == productId);
+      console.log(product);
+      modalBox.innerHTML = `<div class="admin-modal modal-xl">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-pencil-fill" style="color: var(--brand-yellow);"></i>
+          <span>Редактирование товара</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tabs Navigation -->
+        <div class="nav-tabs">
+          <button class="tab-btn active" data-tab="tab-general">
+            <i class="bi bi-info-circle"></i> Основное
+          </button>
+          <button class="tab-btn" data-tab="tab-variants">
+            <i class="bi bi-tags"></i> Модификации и цены (2)
+          </button>
+          <button class="tab-btn" data-tab="tab-attributes">
+            <i class="bi bi-sliders"></i> Характеристики (8)
+          </button>
+          <button class="tab-btn" data-tab="tab-gallery">
+            <i class="bi bi-images"></i> Фото и медиа (3)
+          </button>
+        </div>
+
+        <!-- TAB 1: GENERAL -->
+        <div class="tab-pane active" id="tab-general">
+          <form id="product-general-form">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+              <div class="form-group">
+                <label class="form-label">Полное название товара <span class="required">*</span></label>
+                <input type="text" class="form-control" name="title" value="${product.productTitle}"
+                  required>
+                <div class="form-hint">Отображается в заголовке страницы каталога и поиске</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Алиас (Slug) <span class="required">*</span></label>
+                <input type="text" class="form-control" name="slug" value="${product.slug}"
+                  style="font-family: var(--font-mono);" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+              <div class="form-group">
+                <label for="data-modal-brand-id" class="form-label">Бренд производителя <span class="required">*</span></label>
+                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand-modal" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="brand_id" required></input>
+              </div>
+
+              <div class="form-group">
+                <label for="data-modal-category-id" class="form-label">Категория каталога <span class="required">*</span></label>
+                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category-modal" value="${product.category}" data-modal-category-id="${product.categoryId}" name="category_id" required></input>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Модельный код производителя</label>
+                <input type="text" class="form-control" name="model_code" value="${product.modelCode}"
+                  style="font-family: var(--font-mono);">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Краткое описание (для сниппетов и карточек каталога)</label>
+              <textarea class="form-control" name="short_description"
+                rows="2">${product.shortDescription}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Полное описание с разметкой</label>
+              <textarea class="form-control" name="description"
+                rows="4">${product.description}</textarea>
+            </div>
+
+            <div style="display: flex; gap: 32px; padding: 12px 0;">
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" name="is_active" ${product.isActive == '1' ? 'checked' : ''}>
+                <span class="switch-slider"></span>
+                <span>Отображать на сайте (Активен)</span>
+              </label>
+
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" name="is_featured" ${product.isFeatured == '1' ? 'checked' : ''}>
+                <span class="switch-slider"></span>
+                <span>Хит продаж / Рекомендованный товар</span>
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 2: VARIANTS & PRICING -->
+        <div class="tab-pane" id="tab-variants">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Модификации определяют цвета, сопротивление
+              (Ом) и индивидуальные складские остатки.</p>
+            <button class="btn btn-brand btn-sm" type="button"
+              onclick="showToast('Новый вариант', 'Добавлена строка для новой модификации', 'info')">
+              <i class="bi bi-plus-lg"></i> Добавить модификацию
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Название варианта</th>
+                  <th>Артикул (SKU)</th>
+                  <th>Штрих-код (EAN-13)</th>
+                  <th>Цена (₽)</th>
+                  <th>Старая цена (₽)</th>
+                  <th>Остаток (шт)</th>
+                  <th>Действие</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="text" class="form-control" value="Черный матовый (Black)" style="min-width: 170px;">
+                  </td>
+                  <td><input type="text" class="form-control" value="SNY-WHXM5-BLK"
+                      style="font-family: var(--font-mono); width: 140px;"></td>
+                  <td><input type="text" class="form-control" value="4548736132566"
+                      style="font-family: var(--font-mono); width: 140px;"></td>
+                  <td><input type="number" class="form-control" value="37990" style="width: 110px; font-weight: 700;">
+                  </td>
+                  <td><input type="number" class="form-control" value="42990" style="width: 110px;"></td>
+                  <td><input type="number" class="form-control" value="15" style="width: 80px; font-weight: 700;"></td>
+                  <td>
+                    <button class="table-action-btn delete-btn" title="Удалить вариант"><i
+                        class="bi bi-trash"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="form-control" value="Серебристый платиновый (Silver)"
+                      style="min-width: 170px;"></td>
+                  <td><input type="text" class="form-control" value="SNY-WHXM5-SLV"
+                      style="font-family: var(--font-mono); width: 140px;"></td>
+                  <td><input type="text" class="form-control" value="4548736132573"
+                      style="font-family: var(--font-mono); width: 140px;"></td>
+                  <td><input type="number" class="form-control" value="37990" style="width: 110px; font-weight: 700;">
+                  </td>
+                  <td><input type="number" class="form-control" value="42990" style="width: 110px;"></td>
+                  <td><input type="number" class="form-control" value="8" style="width: 80px; font-weight: 700;"></td>
+                  <td>
+                    <button class="table-action-btn delete-btn" title="Удалить вариант"><i
+                        class="bi bi-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: ATTRIBUTES -->
+        <div class="tab-pane" id="tab-attributes">
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px;">
+            Технические характеристики участвуют в фильтрах каталога интернет-магазина.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+            <div class="form-group">
+              <label class="form-label">Частотный диапазон (Гц)</label>
+              <input type="text" class="form-control" value="4 - 40 000 Гц">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Импеданс / Сопротивление (Ом)</label>
+              <input type="number" class="form-control" value="48">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Активное шумоподавление (ANC)</label>
+              <select class="form-control">
+                <option value="1" selected>Да (Присутствует)</option>
+                <option value="0">Нет</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Время работы от аккумулятора (ч)</label>
+              <input type="number" class="form-control" value="30">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Тип подключения</label>
+              <input type="text" class="form-control" value="Bluetooth 5.2 / Mini-Jack 3.5 mm">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Вес (г)</label>
+              <input type="number" class="form-control" value="250">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Поддерживаемые аудиокодеки</label>
+              <input type="text" class="form-control" value="LDAC, AAC, SBC">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Наличие микрофона</label>
+              <select class="form-control">
+                <option value="1" selected>Да (8 микрофонов с шумоподавлением)</option>
+                <option value="0">Нет</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: GALLERY & MEDIA -->
+        <div class="tab-pane" id="tab-gallery">
+          <div class="dropzone-box"
+            onclick="showToast('Загрузка фото', 'Выберите изображения WEBP/JPG/PNG до 10 МБ', 'info')">
+            <i class="bi bi-cloud-arrow-up-fill dropzone-icon"></i>
+            <div class="dropzone-text">Перетащите фотографии сюда или нажмите для выбора</div>
+            <div class="dropzone-subtext">Поддерживаются WebP, PNG, JPG высокой четкости</div>
+          </div>
+
+          <div class="gallery-grid">
+            <div class="gallery-item is-main">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&auto=format&fit=crop&q=80"
+                alt="Sony Black Main">
+              <span class="gallery-item-badge">Главное</span>
+              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
+            </div>
+
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=200&auto=format&fit=crop&q=80"
+                alt="Sony Black Side">
+              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
+            </div>
+
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80"
+                alt="Sony Silver">
+              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
+        <button class="btn btn-brand" type="button"
+          onclick="closeModal('product-modal'); showToast('Товар сохранен', 'Данные товара успешно обновлены в базе', 'success');">
+          <i class="bi bi-check2"></i> Сохранить изменения
+        </button>
+      </div>
+    </div>`
+      initTabs();
+      break;
+
+    case 'select-brand-modal':
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-lg">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Выбор бренда</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="brand-form">
+          <div class="form-group">
+            <label class="form-label">Введите название бренда</label>
+            <input type="text" class="form-control" name="title" value="." required>
+          </div>
+        </form>
+        <button class="brand-card" data-brand-id="2" onclick="closeModal('select-brand-modal', 2)">
+          <div>
+            <div class="brand-card-select">
+              <div class="brand-card-select">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-mic-fill"></i>
+                </div>
+                <div class="brand-card-title">Shure</div>
+                <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> США</div>
+              </div>
+            </div>
+          </div>
+        </button>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" onclick="closeModal('select-brand-modal')">Отмена</button>
+        </div>
+      </div>
+    </div>`
+      break;
+    
+      case 'select-category-modal':
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-lg">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Выбор категории</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="brand-form">
+          <div class="form-group">
+            <label class="form-label">Введите название категории</label>
+            <input type="text" class="form-control" name="title" value="." required>
+          </div>
+        </form>
+        <button class="brand-card" data-brand-id="2" onclick="closeModal('select-category-modal', 2)">
+          <div>
+            <div class="brand-card-select">
+              <div class="brand-card-select">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-mic-fill"></i>
+                </div>
+                <div class="brand-card-title">Shure</div>
+                <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> США</div>
+              </div>
+            </div>
+          </div>
+        </button>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" onclick="closeModal('select-category-modal')">Отмена</button>
+        </div>
+      </div>
+    </div>`
+      break;
+  }
+
   const backdrop = document.getElementById(modalId);
   if (!backdrop) return;
   backdrop.style.display = 'flex';
@@ -57,7 +401,13 @@ function openModal(modalId) {
   document.body.style.overflow = 'hidden';
 }
 
-function closeModal(modalId) {
+function closeModal(modalId, save = 'none') {
+  if (save != 'none') {
+    switch (modalId) {
+      case 'select-brand-modal':
+        document.querySelector('input#data-modal-brand-id').setAttribute('data-modal-brand-id', save)
+    }
+  }
   const backdrop = document.getElementById(modalId);
   if (!backdrop) return;
   backdrop.classList.remove('show');
@@ -68,44 +418,28 @@ function closeModal(modalId) {
 }
 
 function initModals() {
-  // Modal trigger buttons with data-modal-target
-  document.querySelectorAll('[data-modal-target]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-modal-target]');
+    if (trigger) {
       e.preventDefault();
-      const targetId = btn.getAttribute('data-modal-target');
-      openModal(targetId);
-    });
-  });
+      const targetId = trigger.getAttribute('data-modal-target');
+      openModal(targetId, trigger);
+      return;
+    }
 
-  // Modal close buttons
-  document.querySelectorAll('.modal-close-btn, [data-modal-close]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const backdrop = btn.closest('.modal-backdrop');
-      if (backdrop) {
-        closeModal(backdrop.id);
-      }
-    });
-  });
+    const closeBtn = e.target.closest('.modal-close-btn, [data-modal-close]');
+    if (closeBtn) {
+      const backdrop = closeBtn.closest('.modal-backdrop');
+      if (backdrop) closeModal(backdrop.id);
+      return;
+    }
 
-  // Close on clicking outer backdrop
-  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-    backdrop.addEventListener('click', (e) => {
-      if (e.target === backdrop) {
-        closeModal(backdrop.id);
-      }
-    });
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      const activeBackdrop = document.querySelector('.modal-backdrop.show');
-      if (activeBackdrop) {
-        closeModal(activeBackdrop.id);
-      }
+    if (e.target.classList.contains('modal-backdrop')) {
+      closeModal(e.target.id);
     }
   });
-}
+};
+
 
 /* ==========================================================================
    TABS SWITCHER
@@ -621,4 +955,8 @@ function prepareData(data) {
     }
   }
   return formData
+}
+
+function formatPrice(num) {
+  return (num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
 }

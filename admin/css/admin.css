@@ -1659,7 +1659,7 @@ textarea.form-control {
 }
 
 .admin-modal.modal-xl {
-  max-width: 1040px;
+  max-width: 1280px;
 }
 
 .modal-header {
@@ -2200,6 +2200,74 @@ input[type='checkbox']:checked::after {
   margin-top: 16px;
 }
 
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .brand-card {
+      width: 100%;
+      margin-bottom: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-fast);
+    }
+    .brand-card:hover {
+      border-color: var(--border-highlight);
+      transform: translateY(-2px);
+    }
+    .brand-card-select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+    }
+    .brand-logo-preview {
+      width: 54px;
+      height: 54px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-base);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--brand-yellow);
+      flex-shrink: 0;
+    }
+    .brand-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .brand-card-country {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .brand-card-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .brand-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
 
 
 /* ==========================================================================
