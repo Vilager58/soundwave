@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOUNDWAVE ADMIN | Панель управления магазином</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link active">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">12</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Дашборд</span>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск товаров, заказов или клиентов...">
+        </div>
+
+        <div class="header-right">
+          <div class="showroom-badge-selector">
+            <span class="dot-status"></span>
+            <span>Шоурум Арбат</span>
+          </div>
+
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <!-- Page Title & Actions -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Обзор магазина Soundwave</h1>
+            <p>Сводная аналитика продаж, текущий статус заказов и складские уведомления</p>
+          </div>
+          <div class="page-actions">
+            <a href="pickup.html" class="btn btn-brand">
+              <i class="bi bi-upc-scan"></i>
+              Терминал выдачи
+            </a>
+            <a href="products.html" class="btn btn-secondary">
+              <i class="bi bi-plus-lg"></i>
+              Добавить товар
+            </a>
+          </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <section class="stats-grid">
+          <!-- Stat 1 -->
+          <div class="stat-card brand-accent">
+            <div class="stat-header">
+              <span class="stat-title">Выручка за сентябрь</span>
+            </div>
+            <div class="stat-value">1 842 500 ₽</div>
+            <div class="stat-footer">
+              <span class="stat-trend positive"><i class="bi bi-arrow-up-short"></i> +18.4%</span>
+              <span class="stat-desc">к прошлому месяцу</span>
+            </div>
+          </div>
+
+          <!-- Stat 2 -->
+          <div class="stat-card success-accent">
+            <div class="stat-header">
+              <span class="stat-title">Новые заказы</span>
+            </div>
+            <div class="stat-value">148</div>
+            <div class="stat-footer">
+              <span class="stat-trend positive"><i class="bi bi-arrow-up-short"></i> +12%</span>
+              <span class="stat-desc">конверсия 3.8%</span>
+            </div>
+          </div>
+
+          <!-- Stat 3 -->
+          <div class="stat-card info-accent">
+            <div class="stat-header">
+              <span class="stat-title">К выдаче сегодня</span>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-footer">
+              <span class="stat-desc">В шоурумах Арбат и Невский</span>
+            </div>
+          </div>
+
+          <!-- Stat 4 -->
+          <div class="stat-card purple-accent">
+            <div class="stat-header">
+              <span class="stat-title">Низкий остаток</span>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="stat-footer">
+              <span class="stat-trend negative"><i class="bi bi-arrow-down-short"></i> &lt; 5 шт.</span>
+              <span class="stat-desc">требуется закупка</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quick Order Lookup & Fulfillment Callout -->
+        <div class="terminal-search-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h2 style="font-size: 1.25rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px;">
+                <i class="bi bi-lightning-charge-fill" style="color: var(--brand-yellow);"></i>
+                Оперативная выдача заказа клиенту
+              </h2>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">
+                Введите номер заказа, телефон покупателя или отсканируйте штрих-код для мгновенного перехода к выдаче
+              </p>
+            </div>
+            <a href="pickup.html" class="btn btn-outline-brand btn-sm">
+              Открыть полный POS-терминал <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+
+          <div class="terminal-input-wrapper">
+            <i class="bi bi-upc-scan terminal-input-icon"></i>
+            <input type="text" class="terminal-input" placeholder="SW-2026-0002..." id="quick-order-input">
+            <a href="pickup.html" class="btn btn-brand terminal-search-submit" onclick="sessionStorage.setItem('pickupSearch', document.getElementById('quick-order-input').value);">
+              Найти заказ
+            </a>
+          </div>
+
+          <div class="quick-scan-chips">
+            <span class="quick-scan-label">Тестовые заказы для проверки:</span>
+            <a href="pickup.html" class="scan-chip" onclick="sessionStorage.setItem('pickupSearch', 'SW-2026-0002');">SW-2026-0002 (Шоурум СПб, Marshall)</a>
+            <a href="pickup.html" class="scan-chip" onclick="sessionStorage.setItem('pickupSearch', 'SW-2026-0001');">SW-2026-0001 (Выдан, Sony)</a>
+            <a href="pickup.html" class="scan-chip" onclick="sessionStorage.setItem('pickupSearch', 'SW-2026-0003');">SW-2026-0003 (Шоурум Флакон, DT 770)</a>
+          </div>
+        </div>
+
+        <div class="card-vert-holder">
+          
+          <!-- Recent Orders Card -->
+          <div class="admin-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <i class="bi bi-clock-history" style="color: var(--brand-yellow);"></i>
+                  Последние заказы
+                </div>
+                <div class="card-subtitle">Оперативные изменения в заказах интернет-магазина</div>
+              </div>
+              <a href="orders.html" class="btn btn-ghost btn-sm">
+                Все заказы <i class="bi bi-chevron-right"></i>
+              </a>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Номер</th>
+                      <th>Клиент</th>
+                      <th>Доставка</th>
+                      <th>Сумма</th>
+                      <th>Статус</th>
+                      <th>Действие</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong style="font-family: var(--font-mono); color: var(--text-primary);">SW-2026-0003</strong></td>
+                      <td>
+                        <div style="color: var(--text-primary); font-weight: 600;">Михаил Аудиофилов</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">+7 999 555-66-77</div>
+                      </td>
+                      <td><span class="badge badge-purple">СДЭК ПВЗ</span></td>
+                      <td class="price-cell"><span class="price-current">19 340 ₽</span></td>
+                      <td><span class="badge badge-info">Оплачен / Сборка</span></td>
+                      <td>
+                        <a href="orders.html" class="table-action-btn edit-btn" title="Подробнее">
+                          <i class="bi bi-eye"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong style="font-family: var(--font-mono); color: var(--text-primary);">SW-2026-0002</strong></td>
+                      <td>
+                        <div style="color: var(--text-primary); font-weight: 600;">Анна Меломанова</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">+7 999 666-77-88</div>
+                      </td>
+                      <td><span class="badge badge-brand">Шоурум СПб</span></td>
+                      <td class="price-cell"><span class="price-current">41 990 ₽</span></td>
+                      <td><span class="badge badge-info">Готов к выдаче</span></td>
+                      <td>
+                        <a href="pickup.html" class="table-action-btn" style="color: var(--brand-yellow);" title="Выдать заказ">
+                          <i class="bi bi-upc-scan"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong style="font-family: var(--font-mono); color: var(--text-primary);">SW-2026-0001</strong></td>
+                      <td>
+                        <div style="color: var(--text-primary); font-weight: 600;">Михаил Аудиофилов</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">+7 999 555-66-77</div>
+                      </td>
+                      <td><span class="badge badge-muted">Курьер Мск</span></td>
+                      <td class="price-cell"><span class="price-current">37 990 ₽</span></td>
+                      <td><span class="badge badge-success">Доставлен</span></td>
+                      <td>
+                        <a href="orders.html" class="table-action-btn" title="Просмотр">
+                          <i class="bi bi-eye"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Low Stock Alert Card -->
+          <div class="admin-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <i class="bi bi-boxes" style="color: var(--warning);"></i>
+                  Заканчиваются на складе
+                </div>
+                <div class="card-subtitle">Остаток менее 5 единиц</div>
+              </div>
+              <a href="products.html" class="btn btn-ghost btn-sm">
+                В каталог <i class="bi bi-chevron-right"></i>
+              </a>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Товар</th>
+                      <th>Остаток</th>
+                      <th>Действие</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="table-product-cell">
+                          <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?w=100&auto=format&fit=crop&q=80" class="product-thumbnail" alt="Marshall">
+                          <div class="product-cell-info">
+                            <span class="product-cell-title">Marshall Stanmore III</span>
+                            <span class="product-cell-sku">Cream (MSH-STAN3-CRM)</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td><span class="stock-badge stock-low">4 шт.</span></td>
+                      <td>
+                        <button class="btn btn-secondary btn-sm" onclick="showToast('Заказ поставщику', 'Сформирована заявка на 10 шт. Marshall Stanmore III Cream', 'info')">
+                          Заказать
+                        </button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="table-product-cell">
+                          <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=100&auto=format&fit=crop&q=80" class="product-thumbnail" alt="Audio-Technica">
+                          <div class="product-cell-info">
+                            <span class="product-cell-title">Audio-Technica LP120X</span>
+                            <span class="product-cell-sku">Silver (AT-LP120X-SV)</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td><span class="stock-badge stock-out">3 шт.</span></td>
+                      <td>
+                        <button class="btn btn-secondary btn-sm" onclick="showToast('Заказ поставщику', 'Сформирована заявка на 5 шт. Audio-Technica LP120X Silver', 'info')">
+                          Заказать
+                        </button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="table-product-cell">
+                          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&auto=format&fit=crop&q=80" class="product-thumbnail" alt="Sennheiser">
+                          <div class="product-cell-info">
+                            <span class="product-cell-title">Sennheiser HD 660S2</span>
+                            <span class="product-cell-sku">Black (SNN-HD660S2-BLK)</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td><span class="stock-badge stock-low">5 шт.</span></td>
+                      <td>
+                        <button class="btn btn-secondary btn-sm" onclick="showToast('Заказ поставщику', 'Сформирована заявка на 8 шт. Sennheiser HD 660S2', 'info')">
+                          Заказать
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

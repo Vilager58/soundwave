@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выдача заказов в шоуруме | SOUNDWAVE POS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight active">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Терминал выдачи заказов</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="showroom-badge-selector">
+            <span class="dot-status"></span>
+            <span>Текущая точка: <strong>Шоурум Soundwave СПб (Невский, 54)</strong></span>
+          </div>
+
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <!-- Search & Scanner Box -->
+        <div class="terminal-search-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h1 style="font-size: 1.5rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px;">
+                <i class="bi bi-upc-scan" style="color: var(--brand-yellow);"></i>
+                Терминал выдачи самовывоза (POS)
+              </h1>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">
+                Отсканируйте штрих-код на бланке клиента или введите номер заказа / телефон
+              </p>
+            </div>
+            <span class="badge badge-info" style="font-size: 0.8rem; padding: 6px 12px;">
+              <i class="bi bi-clock-history"></i> Смена открыта: 10:00 - 21:00
+            </span>
+          </div>
+
+          <div class="terminal-input-wrapper">
+            <i class="bi bi-search terminal-input-icon"></i>
+            <input type="text" class="terminal-input" id="pickup-order-search" value="SW-2026-0002" placeholder="SW-2026-0002..." autofocus>
+            <button class="btn btn-brand terminal-search-submit" type="button" id="pickup-search-btn">
+              <i class="bi bi-search"></i> Найти заказ
+            </button>
+          </div>
+
+          <div class="quick-scan-chips">
+            <span class="quick-scan-label">Быстрый выбор для демонстрации:</span>
+            <button type="button" class="scan-chip" data-order-code="SW-2026-0002">
+              <i class="bi bi-arrow-right-short"></i> SW-2026-0002 (Готов к выдаче, Marshall Stanmore III)
+            </button>
+            <button type="button" class="scan-chip" data-order-code="SW-2026-0003">
+              <i class="bi bi-arrow-right-short"></i> SW-2026-0003 (Готов к выдаче, DT 770 PRO)
+            </button>
+            <button type="button" class="scan-chip" data-order-code="SW-2026-0001">
+              <i class="bi bi-arrow-right-short"></i> SW-2026-0001 (Уже выдан ранее, Sony WH-1000XM5)
+            </button>
+          </div>
+        </div>
+
+        <!-- 2-Column POS Fulfillment Area -->
+        <div class="pickup-terminal-grid">
+          
+          <!-- LEFT COLUMN: Order Verification Checklist -->
+          <div class="order-verification-card">
+            <div class="verification-header">
+              <div class="order-code-display">
+                <i class="bi bi-box-seam" style="font-size: 1.6rem; color: var(--brand-yellow);"></i>
+                <div>
+                  <div class="order-code-title" id="display-order-number">SW-2026-0002</div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">
+                    Самовывоз • Оформлен: 10.09.2026 11:45
+                  </div>
+                </div>
+              </div>
+              <span class="badge badge-info" id="order-status-badge">Готов к выдаче</span>
+            </div>
+
+            <!-- Showroom and Customer notes -->
+            <div style="padding: 16px 26px; background: rgba(255, 255, 255, 0.02); border-bottom: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px;">
+              <div style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <i class="bi bi-geo-alt-fill" style="color: var(--brand-yellow);"></i>
+                <span>Пункт: <strong>г. Санкт-Петербург, Невский проспект, д. 54 (Шоурум Soundwave СПб)</strong></span>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--brand-yellow); background: var(--brand-yellow-subtle); padding: 8px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--brand-yellow);">
+                <i class="bi bi-chat-left-quote-fill"></i> Комментарий клиента: <em>«Заберу в пятницу вечером после работы.»</em>
+              </div>
+            </div>
+
+            <!-- Items to check -->
+            <div style="padding: 18px 26px 8px 26px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-weight: 700; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);">
+                Проверка комплектации перед выдачей (1 товар)
+              </span>
+              <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                Отметьте галочкой после осмотра:
+              </span>
+            </div>
+
+            <div class="items-check-list" id="order-items-checklist">
+              <div class="check-item-row" id="item-row-1">
+                <div class="check-item-left">
+                  <input type="checkbox" class="check-checkbox" id="item-chk-1">
+                  <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?w=150&auto=format&fit=crop&q=80" alt="Marshall Stanmore III" class="check-item-img">
+                  <div>
+                    <div class="check-item-title">Беспроводная колонка Marshall Stanmore III</div>
+                    <div class="check-item-meta">
+                      Классический черный (Black) • Артикул: <strong>MSH-STAN3-BLK</strong> • Штрих-код: 7340055385671
+                    </div>
+                  </div>
+                </div>
+                <div class="check-item-qty">1 шт.</div>
+              </div>
+            </div>
+
+            <!-- Quality check notice -->
+            <div style="padding: 16px 26px; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); display: flex; align-items: center; gap: 12px;">
+              <i class="bi bi-shield-check" style="font-size: 1.25rem; color: var(--success);"></i>
+              <div style="font-size: 0.82rem; color: var(--text-secondary);">
+                Проверьте целостность заводских пломб упаковки и комплект поставки (кабель питания, документация) вместе с покупателем в зоне прослушивания.
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Customer & Payment & Confirmation -->
+          <div class="terminal-summary-card">
+            
+            <!-- Customer Card -->
+            <div class="customer-info-box">
+              <div class="customer-info-header">
+                <i class="bi bi-person-circle" style="font-size: 1.4rem; color: var(--brand-yellow);"></i>
+                <div>
+                  <div class="customer-name" id="customer-display-name">Анна Игоревна Меломанова</div>
+                  <div class="customer-phone" id="customer-display-phone">+7 (999) 666-77-88</div>
+                </div>
+              </div>
+              <div class="bonus-pill">
+                <i class="bi bi-gem"></i>
+                <span id="customer-display-bonuses">1 250 баллов</span> Soundwave Club
+              </div>
+            </div>
+
+            <!-- Payment Status -->
+            <div style="margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">
+                  Статус оплаты
+                </span>
+                <span id="payment-status-badge" class="badge badge-warning">
+                  <i class="bi bi-clock"></i> Ожидает оплаты на кассе
+                </span>
+              </div>
+
+              <!-- Payment Method Selector (if payment required at pickup) -->
+              <div id="payment-choice-block" class="payment-method-selector">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Способ расчета в кассе шоурума:</span>
+                <div class="payment-options-grid">
+                  <button type="button" class="payment-option-btn active">
+                    <i class="bi bi-credit-card-2-front"></i>
+                    Терминал
+                  </button>
+                  <button type="button" class="payment-option-btn">
+                    <i class="bi bi-qr-code"></i>
+                    СБП QR
+                  </button>
+                  <button type="button" class="payment-option-btn">
+                    <i class="bi bi-cash-stack"></i>
+                    Наличные
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Financial Totals -->
+            <div class="total-due-row">
+              <div class="total-due-label">Итого к выдаче:</div>
+              <div class="total-due-amount" id="display-order-total">41 990 ₽</div>
+            </div>
+
+            <!-- Complete Action Buttons -->
+            <button type="button" class="btn btn-brand btn-complete-fulfillment" id="complete-pickup-btn">
+              <i class="bi bi-box-seam"></i> Подтвердить и выдать заказ
+            </button>
+
+            <button type="button" class="btn btn-secondary" style="width: 100%; justify-content: center;" id="print-receipt-btn">
+              <i class="bi bi-printer"></i> Распечатать товарный чек / накладную
+            </button>
+
+            <p style="font-size: 0.76rem; color: var(--text-muted); text-align: center; margin-top: 12px;">
+              При нажатии кнопки заказ переводится в статус «Выдан», списывается складской остаток и начисляются бонусы покупателю.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Section: Today's Issued Orders Log -->
+        <div class="admin-card" style="margin-top: 28px;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <i class="bi bi-clock-history" style="color: var(--brand-yellow);"></i>
+                Журнал выданных заказов за сегодня (Шоурум СПб)
+              </div>
+              <div class="card-subtitle">Заказы, врученные клиентам в текущую смену</div>
+            </div>
+          </div>
+
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Номер заказа</th>
+                    <th>Время выдачи</th>
+                    <th>Покупатель</th>
+                    <th>Состав</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                    <th>Чек</th>
+                  </tr>
+                </thead>
+                <tbody id="today-log-tbody">
+                  <tr>
+                    <td><strong style="font-family: var(--font-mono); color: var(--text-primary);">SW-2026-0001</strong></td>
+                    <td>14:20</td>
+                    <td>Михаил Аудиофилов</td>
+                    <td>1 товар (Sony XM5)</td>
+                    <td class="price-cell"><span class="price-current">37 990 ₽</span></td>
+                    <td><span class="badge badge-success">Выдан</span></td>
+                    <td>
+                      <button class="table-action-btn" title="Печать чека" onclick="openModal('receipt-modal')">
+                        <i class="bi bi-printer"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: PRINTABLE RECEIPT
+       ========================================================================== -->
+  <div class="modal-backdrop" id="receipt-modal">
+    <div class="admin-modal" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-printer" style="color: var(--brand-yellow);"></i>
+          <span>Товарный чек для печати</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Physical Receipt Simulation -->
+        <div class="receipt-paper" id="printable-area">
+          <div class="receipt-header">
+            <div class="receipt-logo">★ SOUNDWAVE AUDIO ★</div>
+            <div>ООО «Саундвейв Ритейл»</div>
+            <div>ИНН: 7701928374 / КПП: 770101001</div>
+            <div>Шоурум Soundwave СПб, Невский пр-кт, 54</div>
+            <div style="margin-top: 6px;">ККТ 00049281938 • Кассир: Громов А.В.</div>
+          </div>
+
+          <div class="receipt-line">
+            <span>ЗАКАЗ:</span>
+            <strong id="receipt-order-num">SW-2026-0002</strong>
+          </div>
+          <div class="receipt-line">
+            <span>ДАТА ВЫДАЧИ:</span>
+            <span id="receipt-date">14.09.2026 18:45</span>
+          </div>
+          <div class="receipt-line">
+            <span>ПОКУПАТЕЛЬ:</span>
+            <span>Анна Меломанова</span>
+          </div>
+
+          <div class="receipt-items" id="receipt-items-list" style="margin-top: 12px;">
+            <div class="receipt-line">
+              <span>Marshall Stanmore III Black</span>
+            </div>
+            <div class="receipt-line" style="color: #555; font-size: 11px;">
+              <span>1 шт x 41 990.00 ₽</span>
+              <span>41 990.00 ₽</span>
+            </div>
+          </div>
+
+          <div class="receipt-line receipt-total">
+            <span>ИТОГО К ОПЛАТЕ:</span>
+            <span id="receipt-total-sum">41 990.00 ₽</span>
+          </div>
+          <div class="receipt-line" style="font-size: 11px;">
+            <span>СПОСОБ ОПЛАТЫ:</span>
+            <span>БЕЗНАЛИЧНЫМИ (ТЕРМИНАЛ)</span>
+          </div>
+
+          <div class="receipt-footer">
+            <div style="font-weight: 700; margin-bottom: 4px;">СПАСИБО ЗА ПОКУПКУ ЗВУКА!</div>
+            <div>Гарантия на оборудование — 24 месяца</div>
+            <div>www.soundwave.ru • +7 (800) 555-35-35</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Закрыть</button>
+        <button class="btn btn-brand" type="button" onclick="window.print();">
+          <i class="bi bi-printer-fill"></i> Отправить на принтер
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

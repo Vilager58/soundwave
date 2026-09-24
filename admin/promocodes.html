@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Промокоды и скидки | SOUNDWAVE ADMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link active">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Промокоды и скидки</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Промокоды и маркетинговые акции</h1>
+            <p>Создание скидочных купонов, ограничение по сумме чека и лимиту использований</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-brand" data-modal-target="promocode-modal">
+              <i class="bi bi-plus-lg"></i>
+              Создать промокод
+            </button>
+          </div>
+        </div>
+
+        <!-- Promocodes Card -->
+        <div class="admin-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="toolbar-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Поиск по коду..." data-table-search="#promocodes-table">
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table" id="promocodes-table">
+              <thead>
+                <tr>
+                  <th>Код купона</th>
+                  <th>Тип скидки</th>
+                  <th>Размер скидки</th>
+                  <th>Мин. сумма заказа</th>
+                  <th>Использований</th>
+                  <th>Действует до</th>
+                  <th>Статус</th>
+                  <th style="text-align: right;">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow); font-size: 1rem;">WELCOME10</strong></td>
+                  <td><span class="badge badge-purple">Процент</span></td>
+                  <td><strong style="font-size: 1.05rem;">10 %</strong></td>
+                  <td>10 000 ₽</td>
+                  <td>
+                    <div><strong>42</strong> / 500</div>
+                    <div style="width: 100px; height: 4px; background: var(--bg-surface); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                      <div style="width: 8.4%; height: 100%; background: var(--brand-yellow);"></div>
+                    </div>
+                  </td>
+                  <td>31.12.2026</td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="promocode-modal"><i class="bi bi-pencil-fill"></i></button>
+                      <button class="table-action-btn delete-btn" title="Деактивировать"><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow); font-size: 1rem;">SOUND3000</strong></td>
+                  <td><span class="badge badge-info">Фиксированная</span></td>
+                  <td><strong style="font-size: 1.05rem;">3 000 ₽</strong></td>
+                  <td>40 000 ₽</td>
+                  <td>
+                    <div><strong>15</strong> / 100</div>
+                    <div style="width: 100px; height: 4px; background: var(--bg-surface); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                      <div style="width: 15%; height: 100%; background: var(--info);"></div>
+                    </div>
+                  </td>
+                  <td>31.12.2026</td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="promocode-modal"><i class="bi bi-pencil-fill"></i></button>
+                      <button class="table-action-btn delete-btn" title="Деактивировать"><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE PROMOCODE -->
+  <div class="modal-backdrop" id="promocode-modal">
+    <div class="admin-modal modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-ticket-perforated-fill" style="color: var(--brand-yellow);"></i>
+          <span>Создание промокода</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="promocode-form">
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Код промокода <span class="required">*</span></label>
+              <input type="text" class="form-control" name="code" value="AUTUMN2026" style="font-family: var(--font-mono); text-transform: uppercase;" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Тип скидки</label>
+              <select class="form-control" name="discount_type">
+                <option value="percentage">Процент от суммы заказа (%)</option>
+                <option value="fixed">Фиксированная сумма (₽)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Размер скидки <span class="required">*</span></label>
+              <input type="number" class="form-control" name="discount_value" value="15" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Мин. сумма заказа (₽)</label>
+              <input type="number" class="form-control" name="min_order_amount" value="15000">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Лимит использований</label>
+              <input type="number" class="form-control" name="max_uses" value="200" placeholder="Безлимитно">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Срок действия купона</label>
+            <input type="date" class="form-control" name="expires_at" value="2026-11-30">
+          </div>
+
+          <div class="form-group">
+            <label class="switch-label">
+              <input type="checkbox" class="switch-input" name="is_active" checked>
+              <span class="switch-slider"></span>
+              <span>Промокод активен для применения в корзине</span>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
+        <button class="btn btn-brand" type="button" onclick="closeModal('promocode-modal'); showToast('Промокод сохранен', 'Купон доступен для применения покупателями', 'success');">
+          <i class="bi bi-check2"></i> Сохранить промокод
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

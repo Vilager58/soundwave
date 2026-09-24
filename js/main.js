@@ -676,7 +676,7 @@ function addToCart(variant_id, quantity = 1) {
   }
 }
 
-async function getProdcts(params) {
+async function getProducts(params) {
 
   const response = fetch('/api/catalog.php', {
       method: 'POST',

@@ -90,6 +90,10 @@
   transition: var(--transition);
 }
 
+.custom-checkbox input:disabled {
+  background: var(--text-muted);
+}
+
 .custom-checkbox input:checked {
   background: var(--yellow-main);
   border-color: var(--yellow-main);

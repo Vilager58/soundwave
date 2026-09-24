@@ -163,55 +163,94 @@
     function getSelectedBrands() {
       return Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.getAttribute('data-brand'));
     }
+    function setSlider(min, max, cur) {
+      const pMax = document.querySelector('#price-max');
+      const pMin = document.querySelector('#price-min');
+      const slider = document.querySelector('#price-slider');
+      console.log(cur);
+      if (slider) {
+        slider.min = min;
+        slider.max = max;
+        slider.value = cur;
+      };
+
+      if (pMax) pMax.value = max;
+      if (pMin) pMin.value = min;
+    }
 
     function renderFilters(filters) {
       console.log(filters);
+
+      const currentBrands = getSelectedBrands();
+      const currentCategories = getSelectedCategories();
+
       const brandList = document.querySelector('#brand-filter-list');
       const categoryList = document.querySelector('#category-filter-list');
 
-      const slider = document.querySelector('#price-slider');
-      const pMax = document.querySelector('#price-max');
-      const pMin = document.querySelector('#price-min');
-
-      slider.min = filters.availableMin;
-      slider.max = filters.availableMax;
-
-      pMax.value = filters.availableMax;
-      pMin.value = filters.availableMin;
-
-      if (Object.keys(filters.availableBrands).length == 0) {
+      if (Object.keys(filters.availableBrands).length === 0) {
         brandList.innerHTML = 'Бренды не найдены';
       } else {
-        brandList.innerHTML = '';
-        for (const [id, value] of Object.entries(filters.availableBrands)) {
-          brandList.innerHTML += `
-            <li>
-              <label class="custom-checkbox">
-                  <input type="checkbox" class="category-checkbox" data-cat="${id}">
-                  <span>${value}</span>
-              </label>
-            </li>`;
+        const brandListCheckboxes = brandList.querySelectorAll('.brand-checkbox');
+        if (brandListCheckboxes.length === 0) {
+          brandList.innerHTML = '';
+          for (const [id, value] of Object.entries(filters.availableBrands)) {
+            brandList.innerHTML += `
+                    <li>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="brand-checkbox" data-brand="${id}">
+                            <span>${value}</span>
+                        </label>
+                    </li>`;
+          }
+          setSlider(filters.availableMin, filters.availableMax, filters.availableMax);
+
+        } else {
+          brandListCheckboxes.forEach((c) => {
+            const elid = c.getAttribute('data-brand');
+            const isAvailable = Object.keys(filters.availableBrands).includes(elid);
+            c.disabled = !isAvailable;
+            c.checked = currentBrands.includes(elid);
+          });
         }
       }
 
-      if (Object.keys(filters.availableCategories).length == 0) {
+      if (Object.keys(filters.availableCategories).length === 0) {
         categoryList.innerHTML = 'Категории не найдены';
       } else {
-        categoryList.innerHTML = '';
-        for (const [id, value] of Object.entries(filters.availableCategories)) {
-          categoryList.innerHTML += `
-          <li>
-            <label class="custom-checkbox">
-              <input type="checkbox" class="brand-checkbox" data-brand="${id}">
-              <span>${value}</span>
-            </label>
-          </li>`;
+        const categoryListCheckboxes = categoryList.querySelectorAll('.category-checkbox');
+        if (categoryListCheckboxes.length === 0) {
+          categoryList.innerHTML = '';
+          for (const [id, value] of Object.entries(filters.availableCategories)) {
+            categoryList.innerHTML += `
+                    <li>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="category-checkbox" data-cat="${id}">
+                            <span>${value}</span>
+                        </label>
+                    </li>`;
+          }
+        } else {
+          categoryListCheckboxes.forEach((c) => {
+            const elid = c.getAttribute('data-cat');
+            const isAvailable = Object.keys(filters.availableCategories).includes(elid);
+            c.disabled = !isAvailable;
+            c.checked = currentCategories.includes(elid);
+          });
         }
+      };
+      const pf = JSON.parse(localStorage.getItem('lastFilter'));
+      if (pf == null || JSON.stringify(currentCategories) != JSON.stringify(pf.selectedCats) ||
+       JSON.stringify(currentBrands) != JSON.stringify(pf.selectedBrands)) {
+        setSlider(filters.availableMin, filters.availableMax, filters.availableMax);
+        localStorage.setItem('lastFilter', JSON.stringify({selectedBrands: currentBrands, selectedCats: currentCategories}));
       }
+      
       document.querySelectorAll('.category-checkbox, .brand-checkbox, #filter-instock, .rating-checkbox').forEach(cb => {
+        cb.removeEventListener('change', renderCatalog);
         cb.addEventListener('change', renderCatalog);
       });
     }
+
 
     function getFilterParams() {
       const params = new URLSearchParams(window.location.search);
@@ -241,7 +280,7 @@
       // const products = getFilteredAndSortedProducts();
       const filters = await getFilters(getFilterParams());
       renderFilters(filters);
-      const products = await getProdcts(getFilterParams());
+      const products = await getProducts(getFilterParams());
       const favs = getStoredFavs();
 
       if (countEl) {
@@ -349,7 +388,7 @@
       const pMin = document.querySelector('#price-min');
 
       if (slider && pMax) {
-        slider.addEventListener('input', () => {
+        slider.addEventListener('mouseup', () => {
           pMax.value = slider.value;
           renderCatalog();
         });

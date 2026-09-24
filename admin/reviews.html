@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Модерация отзывов | SOUNDWAVE ADMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: var(--transition-fast);
+    }
+    .review-card:hover {
+      border-color: var(--border-base);
+    }
+    .review-card.pending {
+      border-left: 4px solid var(--warning);
+    }
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .review-stars {
+      color: var(--brand-yellow);
+      font-size: 1.1rem;
+      display: flex;
+      gap: 3px;
+    }
+    .review-section-block {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .review-section-block strong {
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link active">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Модерация отзывов</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Модерация отзывов покупателей</h1>
+            <p>Проверка качества отзывов, оценок товаров и ответы службы поддержки</p>
+          </div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="nav-tabs">
+          <button class="tab-btn active">Все отзывы (3)</button>
+          <button class="tab-btn">Ожидают проверки (1)</button>
+          <button class="tab-btn">Одобренные (2)</button>
+        </div>
+
+        <!-- Review 1 (Pending moderation) -->
+        <div class="review-card pending">
+          <div class="review-header">
+            <div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+                <span class="badge badge-warning"><i class="bi bi-hourglass-split"></i> На модерации</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">13.09.2026 14:10</span>
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+                Beyerdynamic DT 770 PRO 80 Ом
+              </h3>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                Автор: <strong>Дмитрий Смирнов</strong> (Покупатель подтвержден)
+              </div>
+            </div>
+
+            <div style="text-align: right;">
+              <div class="review-stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star"></i>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Оценка: 4 из 5</div>
+            </div>
+          </div>
+
+          <div class="review-section-block">
+            <strong>Достоинства:</strong> Невероятно ровная АЧХ, детальный верх и собранный бас. Велюровые амбушюры не давят даже при многочасовом сведении.
+          </div>
+          <div class="review-section-block">
+            <strong>Недостатки:</strong> Кабель несъемный, в полевых условиях нужно быть аккуратным при переноске в рюкзаке.
+          </div>
+          <div class="review-section-block" style="margin-top: 12px; padding: 14px; background: var(--bg-surface); border-radius: var(--radius-md); border-left: 3px solid var(--border-highlight);">
+            Покупал специально для студии звукозаписи. Для домашнего прослушивания со смартфона 80 Ом будет туговато, но с внешней звуковой картой Focusrite раскрываются в полной мере. Рекомендую Soundwave за быструю доставку!
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Отклонено', 'Отзыв отклонен модератором', 'danger')">
+              <i class="bi bi-x-circle"></i> Отклонить
+            </button>
+            <button class="btn btn-brand btn-sm" onclick="showToast('Одобрено', 'Отзыв опубликован в карточке товара', 'success')">
+              <i class="bi bi-check2"></i> Одобрить и опубликовать
+            </button>
+          </div>
+        </div>
+
+        <!-- Review 2 (Approved) -->
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+                <span class="badge badge-success"><i class="bi bi-check-circle-fill"></i> Опубликован</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">04.09.2026 15:30</span>
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+                Беспроводные наушники Sony WH-1000XM5
+              </h3>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                Автор: <strong>Михаил Аудиофилов</strong>
+              </div>
+            </div>
+
+            <div style="text-align: right;">
+              <div class="review-stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Оценка: 5 из 5</div>
+            </div>
+          </div>
+
+          <div class="review-section-block">
+            <strong>Достоинства:</strong> Невероятный шумодав, очень легкие и удобные, автономность до 30 часов, шикарные микрофоны для созвонов.
+          </div>
+          <div class="review-section-block">
+            <strong>Недостатки:</strong> Кейс стал больше по сравнению с XM4, не складываются внутрь оголовья.
+          </div>
+          <div class="review-section-block" style="margin-top: 12px; padding: 14px; background: var(--bg-surface); border-radius: var(--radius-md);">
+            Перешел с четвертого поколения XM4. Звук стал чище и прозрачнее в средних и высоких частотах. В метро тишина полная, даже в старых вагонах. Однозначно стоят каждого рубля!
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

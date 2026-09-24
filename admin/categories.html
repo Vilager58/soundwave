@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Управление категориями | SOUNDWAVE ADMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link active">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="products.html">Каталог</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Категории</span>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск категорий..." data-table-search="#categories-table">
+        </div>
+
+        <div class="header-right">
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <!-- Page Title & Actions -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Категории товаров</h1>
+            <p>Иерархическая структура разделов каталога, ЧПУ-алиасы и порядок сортировки</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-brand" data-modal-target="category-modal">
+              <i class="bi bi-plus-lg"></i>
+              Создать категорию
+            </button>
+          </div>
+        </div>
+
+        <!-- Categories Table Card -->
+        <div class="admin-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="toolbar-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Поиск по названию или ЧПУ..." data-table-search="#categories-table">
+              </div>
+            </div>
+            <div class="toolbar-right">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Всего категорий: <strong>6</strong></span>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table" id="categories-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">ID</th>
+                  <th>Название категории</th>
+                  <th>ЧПУ (Slug)</th>
+                  <th>Родительский раздел</th>
+                  <th>Товаров</th>
+                  <th>Сортировка</th>
+                  <th>Статус</th>
+                  <th style="text-align: right;">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Cat 1 -->
+                <tr style="background: rgba(255, 255, 255, 0.02);">
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#1</strong></td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                      <i class="bi bi-headphones" style="color: var(--brand-yellow);"></i>
+                      Наушники
+                    </div>
+                  </td>
+                  <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">headphones</code></td>
+                  <td><span class="badge badge-muted">Корневая</span></td>
+                  <td><span class="stock-badge stock-in">35 товаров</span></td>
+                  <td><span style="font-family: var(--font-mono);">10</span></td>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="category-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Удалить">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Subcat 2 -->
+                <tr>
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#2</strong></td>
+                  <td>
+                    <div style="padding-left: 28px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-primary);">
+                      <i class="bi bi-arrow-return-right" style="color: var(--border-highlight);"></i>
+                      Полноразмерные наушники
+                    </div>
+                  </td>
+                  <td><code style="color: var(--text-secondary); font-family: var(--font-mono);">over-ear-headphones</code></td>
+                  <td><span class="badge badge-purple">Наушники</span></td>
+                  <td><span class="stock-badge stock-in">22 товара</span></td>
+                  <td><span style="font-family: var(--font-mono);">11</span></td>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="category-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Удалить">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Subcat 3 -->
+                <tr>
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#3</strong></td>
+                  <td>
+                    <div style="padding-left: 28px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-primary);">
+                      <i class="bi bi-arrow-return-right" style="color: var(--border-highlight);"></i>
+                      TWS и беспроводные наушники
+                    </div>
+                  </td>
+                  <td><code style="color: var(--text-secondary); font-family: var(--font-mono);">tws-wireless-headphones</code></td>
+                  <td><span class="badge badge-purple">Наушники</span></td>
+                  <td><span class="stock-badge stock-in">13 товаров</span></td>
+                  <td><span style="font-family: var(--font-mono);">12</span></td>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="category-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Удалить">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Cat 4 -->
+                <tr style="background: rgba(255, 255, 255, 0.02);">
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#4</strong></td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                      <i class="bi bi-speaker" style="color: var(--brand-yellow);"></i>
+                      Акустические системы
+                    </div>
+                  </td>
+                  <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">speakers</code></td>
+                  <td><span class="badge badge-muted">Корневая</span></td>
+                  <td><span class="stock-badge stock-in">18 товаров</span></td>
+                  <td><span style="font-family: var(--font-mono);">20</span></td>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="category-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Удалить">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Cat 5 -->
+                <tr style="background: rgba(255, 255, 255, 0.02);">
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#5</strong></td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                      <i class="bi bi-disc" style="color: var(--brand-yellow);"></i>
+                      Виниловые проигрыватели
+                    </div>
+                  </td>
+                  <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">turntables</code></td>
+                  <td><span class="badge badge-muted">Корневая</span></td>
+                  <td><span class="stock-badge stock-in">14 товаров</span></td>
+                  <td><span style="font-family: var(--font-mono);">30</span></td>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="category-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Удалить">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Cat 6 -->
+                <tr style="background: rgba(255, 255, 255, 0.02);">
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#6</strong></td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                      <i class="bi bi-mic" style="color: var(--brand-yellow);"></i>
+                      Студийное оборудование
+                    </div>
+                  </td>
+                  <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">studio-gear</code></td>
+                  <td><span class="badge badge-muted">Корневая</span></td>
+                  <td><span class="stock-badge stock-in">27 товаров</span></td>
+                  <td><span style="font-family: var(--font-mono);">40</span></td>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="category-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Удалить">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: CREATE / EDIT CATEGORY
+       ========================================================================== -->
+  <div class="modal-backdrop" id="category-modal">
+    <div class="admin-modal modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-diagram-3-fill" style="color: var(--brand-yellow);"></i>
+          <span>Управление категорией каталога</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="category-form">
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Название категории <span class="required">*</span></label>
+              <input type="text" class="form-control" name="title" value="Наушники" placeholder="Например: Студийные мониторы" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ЧПУ-алиас (Slug) <span class="required">*</span></label>
+              <input type="text" class="form-control" name="slug" value="headphones" style="font-family: var(--font-mono);" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Родительская категория</label>
+              <select class="form-control" name="parent_id">
+                <option value="" selected>— Корневая категория —</option>
+                <option value="1">Наушники</option>
+                <option value="4">Акустические системы</option>
+                <option value="5">Виниловые проигрыватели</option>
+                <option value="6">Студийное оборудование</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Порядок сортировки (sort_order)</label>
+              <input type="number" class="form-control" name="sort_order" value="10" style="font-family: var(--font-mono);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Описание раздела (для SEO и сниппетов)</label>
+            <textarea class="form-control" name="description" rows="3">Полноразмерные, внутриканальные, беспроводные и аудиофильские наушники от ведущих мировых брендов.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="switch-label">
+              <input type="checkbox" class="switch-input" name="is_active" checked>
+              <span class="switch-slider"></span>
+              <span>Категория активна и видна в каталоге</span>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
+        <button class="btn btn-brand" type="button" onclick="closeModal('category-modal'); showToast('Категория сохранена', 'Изменения в структуре каталога сохранены', 'success');">
+          <i class="bi bi-check2"></i> Сохранить категорию
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

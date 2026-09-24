@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Управление брендами | SOUNDWAVE ADMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .brand-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-fast);
+    }
+    .brand-card:hover {
+      border-color: var(--border-highlight);
+      transform: translateY(-2px);
+    }
+    .brand-card-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .brand-logo-preview {
+      width: 54px;
+      height: 54px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-base);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--brand-yellow);
+      flex-shrink: 0;
+    }
+    .brand-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .brand-card-country {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .brand-card-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .brand-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link active">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="products.html">Каталог</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Бренды</span>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск брендов...">
+        </div>
+
+        <div class="header-right">
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <!-- Page Title & Actions -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Бренды производителей</h1>
+            <p>Справочник производителей аудиотехники, логотипы и официальные описания</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-brand" data-modal-target="brand-modal">
+              <i class="bi bi-plus-lg"></i>
+              Добавить бренд
+            </button>
+          </div>
+        </div>
+
+        <!-- Brands Grid -->
+        <div class="brands-grid">
+          
+          <!-- Brand 1: Sennheiser -->
+          <div class="brand-card">
+            <div>
+              <div class="brand-card-top">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-soundwave"></i>
+                </div>
+                <div>
+                  <div class="brand-card-title">Sennheiser</div>
+                  <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> Германия</div>
+                </div>
+              </div>
+              <p class="brand-card-desc">
+                Легендарный немецкий производитель премиальной аудиоаппаратуры и микрофонов с 1945 года. Эталон открытых наушников.
+              </p>
+            </div>
+            <div class="brand-card-footer">
+              <span class="badge badge-purple">18 товаров</span>
+              <div class="table-actions">
+                <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="brand-modal"><i class="bi bi-pencil-fill"></i></button>
+                <button class="table-action-btn delete-btn" title="Удалить"><i class="bi bi-trash-fill"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brand 2: Sony -->
+          <div class="brand-card">
+            <div>
+              <div class="brand-card-top">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-speaker"></i>
+                </div>
+                <div>
+                  <div class="brand-card-title">Sony</div>
+                  <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> Япония</div>
+                </div>
+              </div>
+              <p class="brand-card-desc">
+                Мировой технологический гигант, признанный лидер в технологиях активного шумоподавления и аудио высокой четкости Hi-Res.
+              </p>
+            </div>
+            <div class="brand-card-footer">
+              <span class="badge badge-purple">24 товара</span>
+              <div class="table-actions">
+                <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="brand-modal"><i class="bi bi-pencil-fill"></i></button>
+                <button class="table-action-btn delete-btn" title="Удалить"><i class="bi bi-trash-fill"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brand 3: Marshall -->
+          <div class="brand-card">
+            <div>
+              <div class="brand-card-top">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-boombox"></i>
+                </div>
+                <div>
+                  <div class="brand-card-title">Marshall</div>
+                  <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> Великобритания</div>
+                </div>
+              </div>
+              <p class="brand-card-desc">
+                Культовый британский рок-н-ролльный бренд с фирменным винтажным гитарным дизайном и мощным драйвовым звуком.
+              </p>
+            </div>
+            <div class="brand-card-footer">
+              <span class="badge badge-purple">12 товаров</span>
+              <div class="table-actions">
+                <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="brand-modal"><i class="bi bi-pencil-fill"></i></button>
+                <button class="table-action-btn delete-btn" title="Удалить"><i class="bi bi-trash-fill"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brand 4: Audio-Technica -->
+          <div class="brand-card">
+            <div>
+              <div class="brand-card-top">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-disc"></i>
+                </div>
+                <div>
+                  <div class="brand-card-title">Audio-Technica</div>
+                  <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> Япония</div>
+                </div>
+              </div>
+              <p class="brand-card-desc">
+                Один из главных мировых производителей картриджей, проигрывателей винила и легендарных мониторных наушников.
+              </p>
+            </div>
+            <div class="brand-card-footer">
+              <span class="badge badge-purple">16 товаров</span>
+              <div class="table-actions">
+                <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="brand-modal"><i class="bi bi-pencil-fill"></i></button>
+                <button class="table-action-btn delete-btn" title="Удалить"><i class="bi bi-trash-fill"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brand 5: Beyerdynamic -->
+          <div class="brand-card">
+            <div>
+              <div class="brand-card-top">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-headphones"></i>
+                </div>
+                <div>
+                  <div class="brand-card-title">Beyerdynamic</div>
+                  <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> Германия</div>
+                </div>
+              </div>
+              <p class="brand-card-desc">
+                Изобретатели динамических наушников, эталон студийного звука ручной сборки в Хайльбронне.
+              </p>
+            </div>
+            <div class="brand-card-footer">
+              <span class="badge badge-purple">14 товаров</span>
+              <div class="table-actions">
+                <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="brand-modal"><i class="bi bi-pencil-fill"></i></button>
+                <button class="table-action-btn delete-btn" title="Удалить"><i class="bi bi-trash-fill"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brand 6: Shure -->
+          <div class="brand-card">
+            <div>
+              <div class="brand-card-top">
+                <div class="brand-logo-preview">
+                  <i class="bi bi-mic-fill"></i>
+                </div>
+                <div>
+                  <div class="brand-card-title">Shure</div>
+                  <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> США</div>
+                </div>
+              </div>
+              <p class="brand-card-desc">
+                Мировой золотой стандарт вокальных, вещательных и студийных микрофонов с непревзойденной надежностью.
+              </p>
+            </div>
+            <div class="brand-card-footer">
+              <span class="badge badge-purple">10 товаров</span>
+              <div class="table-actions">
+                <button class="table-action-btn edit-btn" title="Редактировать" data-modal-target="brand-modal"><i class="bi bi-pencil-fill"></i></button>
+                <button class="table-action-btn delete-btn" title="Удалить"><i class="bi bi-trash-fill"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: CREATE / EDIT BRAND
+       ========================================================================== -->
+  <div class="modal-backdrop" id="brand-modal">
+    <div class="admin-modal modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Управление брендом</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="brand-form">
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Название бренда <span class="required">*</span></label>
+              <input type="text" class="form-control" name="title" value="Sennheiser" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ЧПУ-алиас (Slug) <span class="required">*</span></label>
+              <input type="text" class="form-control" name="slug" value="sennheiser" style="font-family: var(--font-mono);" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Страна происхождения</label>
+              <input type="text" class="form-control" name="country" value="Германия" placeholder="Например: Япония, США">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Логотип (URL или путь)</label>
+              <input type="text" class="form-control" name="logo_url" value="/assets/brands/sennheiser.svg" style="font-family: var(--font-mono);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Описание бренда для витрины</label>
+            <textarea class="form-control" name="description" rows="3">Легендарный немецкий производитель премиальной аудиоаппаратуры и микрофонов с 1945 года.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="switch-label">
+              <input type="checkbox" class="switch-input" name="is_active" checked>
+              <span class="switch-slider"></span>
+              <span>Бренд активен и отображается в фильтрах каталога</span>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
+        <button class="btn btn-brand" type="button" onclick="closeModal('brand-modal'); showToast('Бренд сохранен', 'Информация о бренде обновлена', 'success');">
+          <i class="bi bi-check2"></i> Сохранить бренд
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

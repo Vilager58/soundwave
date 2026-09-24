@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params['query'] = '%' . $_POST['query'] . '%';
     };
 
+    $placeholders = [];
     if ($_POST['selectedCats'] != '') {
         $cats = explode(',', $_POST['selectedCats']);
         foreach ($cats as $index => $cat_id) {
@@ -39,9 +40,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $placeholders[] = ":" . $placeholder_name;
             $params[$placeholder_name] = (int) $cat_id;
         }
-        $q .= 'AND c.slug IN (' . implode(', ', $placeholders) . ')';
+        $q .= 'AND c.id IN (' . implode(', ', $placeholders) . ')';
     };
 
+    $placeholders = [];
+    if ($_POST['selectedBrands'] != '') {
+        $brands = explode(',', $_POST['selectedBrands']);
+        foreach ($brands as $index => $brand_id) {
+            $placeholder_name = "brand_" . $index;
+            $placeholders[] = ":" . $placeholder_name;
+            $params[$placeholder_name] = (int) $brand_id;
+        }
+        $q .= 'AND b.id IN (' . implode(', ', $placeholders) . ')';
+    };
+
+    if ($_POST['minP'] != '') {
+        $q .= ' AND pv.price >= ' . $_POST['minP'];
+    };
+
+    if ($_POST['maxP'] != '') {
+        $q .= ' AND pv.price <= ' . $_POST['maxP'];
+    };
 
     $query = $pdo->prepare($q);
     $query->execute($params);
@@ -52,8 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query->execute([]);
     $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 }
-
-
 
 $products = [];
 

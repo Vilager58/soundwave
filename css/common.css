@@ -21,6 +21,7 @@
   --radius-lg: 16px;
   --radius-full: 9999px;
   --transition: all 0.25s ease;
+  --bg-surface: #181310;
 }
 
 * {
@@ -47,6 +48,21 @@ body {
   margin-right: auto;
   padding-left: 16px;
   padding-right: 16px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: none;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-highlight);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 a {

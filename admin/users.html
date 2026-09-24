@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пользователи и персонал | SOUNDWAVE ADMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    .permissions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .permission-module-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-base);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .permission-module-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brand-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .permission-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+    .permission-item input {
+      accent-color: var(--brand-yellow);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .customer-kpi-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .customer-kpi-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-base);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      text-align: center;
+    }
+    .customer-kpi-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--brand-yellow);
+      font-family: var(--font-mono);
+    }
+    .customer-kpi-lbl {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3 новых</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link active">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Пользователи и персонал</span>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск пользователей..." data-table-search="#users-table">
+        </div>
+
+        <div class="header-right">
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Пользователи и персонал</h1>
+            <p>Управление учетными записями, ролями сотрудников и профилями покупателей</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-brand" data-modal-target="user-modal">
+              <i class="bi bi-person-plus-fill"></i>
+              Добавить пользователя
+            </button>
+          </div>
+        </div>
+
+        <!-- Users Table Card -->
+        <div class="admin-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="toolbar-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Поиск по ФИО, email или телефону..." data-table-search="#users-table">
+              </div>
+
+              <!-- Filter by Role -->
+              <select class="filter-select" data-table-filter="2" data-filter-table="#users-table">
+                <option value="">Все роли</option>
+                <option value="Главный администратор">Главные администраторы</option>
+                <option value="Менеджер заказов">Менеджеры заказов</option>
+                <option value="Контент-менеджер">Контент-менеджеры</option>
+                <option value="Курьер">Курьеры</option>
+                <option value="Покупатель">Покупатели</option>
+              </select>
+            </div>
+            <div class="toolbar-right">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Всего учетных записей: <strong>6</strong></span>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table" id="users-table">
+              <thead>
+                <tr>
+                  <th>Пользователь</th>
+                  <th>Контакты</th>
+                  <th>Роль в системе</th>
+                  <th>Бонусный счет</th>
+                  <th>Статус</th>
+                  <th style="text-align: right;">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Staff 1 -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 38px; height: 38px; font-size: 0.85rem;">АГ</div>
+                      <div>
+                        <div style="font-weight: 700; color: var(--text-primary);">Алексей Громов</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Викторович</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">admin@soundwave.ru</div>
+                    <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted);">+7 (999) 111-22-33</div>
+                  </td>
+                  <td><span class="badge badge-brand"><i class="bi bi-shield-lock-fill"></i> Главный администратор</span></td>
+                  <td><span style="color: var(--text-muted);">—</span></td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать учетную запись" data-modal-target="user-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Staff 2 -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 38px; height: 38px; font-size: 0.85rem;">ДС</div>
+                      <div>
+                        <div style="font-weight: 700; color: var(--text-primary);">Дмитрий Смирнов</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Андреевич</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">manager@soundwave.ru</div>
+                    <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted);">+7 (999) 222-33-44</div>
+                  </td>
+                  <td><span class="badge badge-info"><i class="bi bi-headset"></i> Менеджер заказов</span></td>
+                  <td><span style="color: var(--text-muted);">—</span></td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать учетную запись" data-modal-target="user-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Staff 3 -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 38px; height: 38px; font-size: 0.85rem;">ЕК</div>
+                      <div>
+                        <div style="font-weight: 700; color: var(--text-primary);">Екатерина Ковалева</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Сергеевна</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">content@soundwave.ru</div>
+                    <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted);">+7 (999) 333-44-55</div>
+                  </td>
+                  <td><span class="badge badge-purple"><i class="bi bi-pencil-square"></i> Контент-менеджер</span></td>
+                  <td><span style="color: var(--text-muted);">—</span></td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать учетную запись" data-modal-target="user-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Staff 4 -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 38px; height: 38px; font-size: 0.85rem;">ИБ</div>
+                      <div>
+                        <div style="font-weight: 700; color: var(--text-primary);">Иван Быстров</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Николаевич</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">courier@soundwave.ru</div>
+                    <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted);">+7 (999) 444-55-66</div>
+                  </td>
+                  <td><span class="badge badge-muted"><i class="bi bi-truck"></i> Служба доставки (Курьер)</span></td>
+                  <td><span style="color: var(--text-muted);">—</span></td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Редактировать учетную запись" data-modal-target="user-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Customer 1 -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 38px; height: 38px; font-size: 0.85rem; background: var(--bg-surface); color: var(--text-secondary);">МА</div>
+                      <div>
+                        <div style="font-weight: 700; color: var(--text-primary);">Михаил Аудиофилов</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Олегович • г. Москва</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">customer@gmail.com</div>
+                    <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted);">+7 (999) 555-66-77</div>
+                  </td>
+                  <td><span class="badge badge-muted">Покупатель</span></td>
+                  <td><strong style="color: var(--brand-yellow); font-family: var(--font-mono); font-size: 0.95rem;">3 800 б.</strong></td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn" title="История покупок" data-modal-target="customer-history-modal" style="color: var(--brand-yellow);">
+                        <i class="bi bi-bag-check"></i>
+                      </button>
+                      <button class="table-action-btn edit-btn" title="Редактировать профиль" data-modal-target="user-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Заблокировать" onclick="showToast('Блокировка', 'Учетная запись временно заблокирована', 'danger')">
+                        <i class="bi bi-slash-circle"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Customer 2 -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 38px; height: 38px; font-size: 0.85rem; background: var(--bg-surface); color: var(--text-secondary);">АМ</div>
+                      <div>
+                        <div style="font-weight: 700; color: var(--text-primary);">Анна Меломанова</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Игоревна • г. Санкт-Петербург</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">anna.music@yandex.ru</div>
+                    <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted);">+7 (999) 666-77-88</div>
+                  </td>
+                  <td><span class="badge badge-muted">Покупатель</span></td>
+                  <td><strong style="color: var(--brand-yellow); font-family: var(--font-mono); font-size: 0.95rem;">1 250 б.</strong></td>
+                  <td><span class="badge badge-success">Активен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn" title="История покупок" data-modal-target="customer-history-modal" style="color: var(--brand-yellow);">
+                        <i class="bi bi-bag-check"></i>
+                      </button>
+                      <button class="table-action-btn edit-btn" title="Редактировать профиль" data-modal-target="user-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="table-action-btn delete-btn" title="Заблокировать" onclick="showToast('Блокировка', 'Учетная запись временно заблокирована', 'danger')">
+                        <i class="bi bi-slash-circle"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 1: CREATE / EDIT USER & STAFF ROLES
+       ========================================================================== -->
+  <div class="modal-backdrop" id="user-modal">
+    <div class="admin-modal modal-xl">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-person-gear" style="color: var(--brand-yellow);"></i>
+          <span>Управление учетной записью</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tabs Navigation -->
+        <div class="nav-tabs">
+          <button class="tab-btn active" data-tab="tab-user-profile">
+            <i class="bi bi-person-badge"></i> Личные данные
+          </button>
+          <button class="tab-btn" data-tab="tab-user-roles">
+            <i class="bi bi-shield-check"></i> Роль и разрешения
+          </button>
+          <button class="tab-btn" data-tab="tab-user-loyalty">
+            <i class="bi bi-gem"></i> Бонусы и лояльность
+          </button>
+          <button class="tab-btn" data-tab="tab-user-security">
+            <i class="bi bi-key"></i> Безопасность
+          </button>
+        </div>
+
+        <!-- TAB 1: PROFILE DATA -->
+        <div class="tab-pane active" id="tab-user-profile">
+          <form id="user-profile-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;">
+              <div class="form-group">
+                <label class="form-label">Фамилия <span class="required">*</span></label>
+                <input type="text" class="form-control" name="lastname" value="Аудиофилов" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Имя <span class="required">*</span></label>
+                <input type="text" class="form-control" name="firstname" value="Михаил" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Отчество</label>
+                <input type="text" class="form-control" name="patronymic" value="Олегович">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;">
+              <div class="form-group">
+                <label class="form-label">E-mail для входа <span class="required">*</span></label>
+                <input type="email" class="form-control" name="email" value="customer@gmail.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Номер телефона <span class="required">*</span></label>
+                <input type="text" class="form-control" name="phone" value="+7 (999) 555-66-77" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Дата рождения</label>
+                <input type="date" class="form-control" name="birthdate" value="1991-07-19">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 18px;">
+              <div class="form-group">
+                <label class="form-label">Город</label>
+                <input type="text" class="form-control" name="city" value="Москва">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Основной адрес доставки</label>
+                <input type="text" class="form-control" name="adress" value="ул. Тверская, д. 12, корп. 2, кв. 45">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Инструмент / Профиль увлечений</label>
+              <input type="text" class="form-control" name="instrument" value="Hi-Fi аудиофил, электрогитара, винил" placeholder="Например: Студийный звукорежиссер, вокал, клавишные">
+            </div>
+
+            <div class="form-group" style="padding-top: 10px;">
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" name="is_active" checked>
+                <span class="switch-slider"></span>
+                <span>Учетная запись активна (доступ разрешен)</span>
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 2: ROLES & PERMISSIONS -->
+        <div class="tab-pane" id="tab-user-roles">
+          <div class="form-group">
+            <label class="form-label" style="font-size: 0.95rem;">Системная роль пользователя</label>
+            <select class="form-control" name="role_id" style="font-size: 0.95rem; font-weight: 600;">
+              <option value="6" selected>Покупатель (Клиент интернет-магазина: корзина, заказы, избранное)</option>
+              <option value="1">Главный администратор (Полный неограниченный доступ)</option>
+              <option value="2">Администратор системы (Управление сотрудниками, аналитика, настройки)</option>
+              <option value="3">Менеджер по обработке заказов (Прием и смена статусов заказов)</option>
+              <option value="4">Контент-менеджер каталога (Товары, категории, бренды, отзывы)</option>
+              <option value="5">Служба доставки / Курьер (Маршрутные листы, подтверждение вручения)</option>
+            </select>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="form-label" style="font-size: 0.95rem; margin-bottom: 0;">
+                Гранулярные привилегии (Таблица permissions)
+              </label>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Наследуются от выбранной роли или настраиваются индивидуально</span>
+            </div>
+
+            <div class="permissions-grid">
+              
+              <!-- Module: Каталог -->
+              <div class="permission-module-card">
+                <div class="permission-module-title">
+                  <i class="bi bi-headphones"></i> Каталог
+                </div>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="catalog.view" checked>
+                  <span>Просмотр каталога</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="catalog.create">
+                  <span>Создание товаров</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="catalog.edit">
+                  <span>Редактирование цен</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="catalog.delete">
+                  <span>Удаление и архив</span>
+                </label>
+              </div>
+
+              <!-- Module: Заказы -->
+              <div class="permission-module-card">
+                <div class="permission-module-title">
+                  <i class="bi bi-bag-check"></i> Заказы
+                </div>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="orders.view_all">
+                  <span>Просмотр заказов</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="orders.edit_status">
+                  <span>Смена статусов</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="orders.edit_items">
+                  <span>Правка состава</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="orders.cancel">
+                  <span>Отмена заказов</span>
+                </label>
+              </div>
+
+              <!-- Module: Доставка и POS -->
+              <div class="permission-module-card">
+                <div class="permission-module-title">
+                  <i class="bi bi-upc-scan"></i> Шоурум / Доставка
+                </div>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="delivery.view_routes">
+                  <span>Маршрутные листы</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="delivery.complete">
+                  <span>Выдача заказов в POS</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="delivery.manage_methods">
+                  <span>Настройка точек выдачи</span>
+                </label>
+              </div>
+
+              <!-- Module: Пользователи и Аналитика -->
+              <div class="permission-module-card">
+                <div class="permission-module-title">
+                  <i class="bi bi-shield-lock"></i> Администрирование
+                </div>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="users.view">
+                  <span>Просмотр покупателей</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="users.manage_staff">
+                  <span>Управление персоналом</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="promos.manage">
+                  <span>Промокоды и акции</span>
+                </label>
+                <label class="permission-item">
+                  <input type="checkbox" name="permissions[]" value="analytics.view">
+                  <span>Финансовые отчеты</span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: LOYALTY & BONUSES -->
+        <div class="tab-pane" id="tab-user-loyalty">
+          <div style="background: linear-gradient(135deg, #241c17, #1d1612); border: 1px solid var(--border-highlight); border-radius: var(--radius-lg); padding: 22px; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.8px;">
+                  Текущий баланс карты Soundwave Club
+                </div>
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--brand-yellow); font-family: var(--font-mono); margin-top: 4px;">
+                  3 800 <span style="font-size: 1.1rem; font-weight: 600;">баллов</span>
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">
+                  Эквивалентно скидке 3 800 ₽ при оплате до 30% стоимости любого аудиооборудования
+                </div>
+              </div>
+              <div class="badge badge-brand" style="font-size: 0.85rem; padding: 8px 14px;">
+                <i class="bi bi-star-fill"></i> Уровень: Gold Audiophile
+              </div>
+            </div>
+          </div>
+
+          <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">
+            Ручная корректировка бонусного баланса
+          </h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 18px;">
+            <div class="form-group">
+              <label class="form-label">Действие</label>
+              <select class="form-control" name="bonus_action">
+                <option value="add">Начислить баллы (+)</option>
+                <option value="sub">Списать баллы (-)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Количество баллов</label>
+              <input type="number" class="form-control" name="bonus_amount" value="500" placeholder="500">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Основание операции (причина)</label>
+              <input type="text" class="form-control" name="bonus_reason" placeholder="Например: Подарок к дню рождения, компенсация задержки">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: SECURITY -->
+        <div class="tab-pane" id="tab-user-security">
+          <div style="max-width: 540px;">
+            <div class="form-group">
+              <label class="form-label">Новый пароль учетной записи</label>
+              <input type="password" class="form-control" name="new_password" placeholder="Оставьте пустым, если не нужно менять">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Повторите новый пароль</label>
+              <input type="password" class="form-control" name="confirm_password" placeholder="Повторите введенный пароль">
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" type="button" onclick="showToast('Генерация', 'Сгенерирован надежный пароль: Sw#2026!ProAudio', 'info')">
+                <i class="bi bi-dice-5-fill"></i> Сгенерировать сложный пароль
+              </button>
+              <button class="btn btn-secondary btn-sm" type="button" onclick="showToast('Письмо отправлено', 'Ссылка для сброса пароля отправлена на customer@gmail.com', 'success')">
+                <i class="bi bi-envelope-at"></i> Отправить ссылку сброса на email
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
+        <button class="btn btn-brand" type="button" onclick="closeModal('user-modal'); showToast('Пользователь сохранен', 'Данные учетной записи успешно обновлены', 'success');">
+          <i class="bi bi-check2"></i> Сохранить изменения
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: CUSTOMER PROFILE & ORDER HISTORY
+       ========================================================================== -->
+  <div class="modal-backdrop" id="customer-history-modal">
+    <div class="admin-modal modal-xl">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-person-lines-fill" style="color: var(--brand-yellow);"></i>
+          <span>Карточка покупателя: Михаил Олегович Аудиофилов</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Customer KPI Strip -->
+        <div class="customer-kpi-summary">
+          <div class="customer-kpi-box">
+            <div class="customer-kpi-val">57 330 ₽</div>
+            <div class="customer-kpi-lbl">Сумма всех покупок (LTV)</div>
+          </div>
+          <div class="customer-kpi-box">
+            <div class="customer-kpi-val">2</div>
+            <div class="customer-kpi-lbl">Всего заказов</div>
+          </div>
+          <div class="customer-kpi-box">
+            <div class="customer-kpi-val" style="color: var(--brand-yellow);">3 800</div>
+            <div class="customer-kpi-lbl">Бонусный баланс клуба</div>
+          </div>
+        </div>
+
+        <!-- Customer Contacts Card -->
+        <div class="admin-card" style="padding: 16px; margin-bottom: 24px; font-size: 0.9rem; line-height: 1.6;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <div><span style="color: var(--text-muted);">Телефон:</span> <strong>+7 (999) 555-66-77</strong></div>
+            <div><span style="color: var(--text-muted);">Email:</span> <strong>customer@gmail.com</strong></div>
+            <div><span style="color: var(--text-muted);">Город:</span> Москва</div>
+            <div><span style="color: var(--text-muted);">Интересы:</span> Hi-Fi, Винил, Электрогитара</div>
+          </div>
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle); color: var(--text-secondary);">
+            <span style="color: var(--text-muted);">Адрес доставки по умолчанию:</span> г. Москва, ул. Тверская, д. 12, корп. 2, кв. 45 (подъезд 1, этаж 5, домофон 45К)
+          </div>
+        </div>
+
+        <!-- Orders Table of this customer -->
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+          <i class="bi bi-clock-history" style="color: var(--brand-yellow);"></i>
+          История заказов покупателя
+        </h3>
+
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Номер заказа</th>
+                  <th>Дата</th>
+                  <th>Состав</th>
+                  <th>Способ получения</th>
+                  <th>Сумма</th>
+                  <th>Статус</th>
+                  <th style="text-align: right;">Действие</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow);">SW-2026-0003</strong></td>
+                  <td>12.09.2026 18:30</td>
+                  <td>Beyerdynamic DT 770 PRO 80 Ом (1 шт.)</td>
+                  <td><span class="badge badge-purple">СДЭК ПВЗ</span></td>
+                  <td class="price-cell"><span class="price-current">19 340 ₽</span></td>
+                  <td><span class="badge badge-purple">В сборке</span></td>
+                  <td style="text-align: right;">
+                    <a href="orders.html" class="table-action-btn edit-btn" title="Перейти к заказу">
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow);">SW-2026-0001</strong></td>
+                  <td>01.09.2026 14:20</td>
+                  <td>Sony WH-1000XM5 Black (1 шт.)</td>
+                  <td><span class="badge badge-muted">Курьер Мск</span></td>
+                  <td class="price-cell"><span class="price-current">37 990 ₽</span></td>
+                  <td><span class="badge badge-success">Доставлен</span></td>
+                  <td style="text-align: right;">
+                    <a href="orders.html" class="table-action-btn edit-btn" title="Перейти к заказу">
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Закрыть</button>
+        <button class="btn btn-brand" type="button" onclick="closeModal('customer-history-modal'); openModal('user-modal');">
+          <i class="bi bi-pencil"></i> Редактировать профиль
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

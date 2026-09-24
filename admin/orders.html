@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Все заказы | SOUNDWAVE ADMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-link">
+          <div class="brand-icon-box">
+            <i class="bi bi-soundwave"></i>
+          </div>
+          <span class="brand-name">SOUND<span>WAVE</span></span>
+          
+      </div>
+
+      <div class="sidebar-nav-container">
+        <!-- Section: Overview -->
+        <div>
+          <div class="nav-section-title">Обзор</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-item-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Дашборд</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Fulfillment -->
+        <div>
+          <div class="nav-section-title">Шоурум и выдача</div>
+          <ul class="nav-list">
+            <li>
+              <a href="pickup.html" class="nav-item-link pickup-nav-highlight">
+                <i class="bi bi-upc-scan"></i>
+                <span>Выдача заказов</span>
+                <span class="nav-item-badge badge-pickup">POS</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Catalog -->
+        <div>
+          <div class="nav-section-title">Каталог аудиотехники</div>
+          <ul class="nav-list">
+            <li>
+              <a href="products.html" class="nav-item-link">
+                <i class="bi bi-headphones"></i>
+                <span>Товары</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+            <li>
+              <a href="categories.html" class="nav-item-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Категории</span>
+              </a>
+            </li>
+            <li>
+              <a href="brands.html" class="nav-item-link">
+                <i class="bi bi-patch-check-fill"></i>
+                <span>Бренды</span>
+                <span class="nav-item-badge">6</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Orders & Sales -->
+        <div>
+          <div class="nav-section-title">Продажи и логистика</div>
+          <ul class="nav-list">
+            <li>
+              <a href="orders.html" class="nav-item-link active">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Все заказы</span>
+                <span class="nav-item-badge badge-accent">3</span>
+              </a>
+            </li>
+            <li>
+              <a href="promocodes.html" class="nav-item-link">
+                <i class="bi bi-ticket-perforated-fill"></i>
+                <span>Промокоды</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Users & Feedback -->
+        <div>
+          <div class="nav-section-title">Клиенты и модерация</div>
+          <ul class="nav-list">
+            <li>
+              <a href="reviews.html" class="nav-item-link">
+                <i class="bi bi-star-half"></i>
+                <span>Отзывы</span>
+                <span class="nav-item-badge">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="users.html" class="nav-item-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Пользователи</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar">АГ</div>
+          <div class="user-info">
+            <div class="user-name">Алексей Громов</div>
+            <div class="user-role">Главный администратор</div>
+          </div>
+          <a href="../login.php" class="user-action-btn" title="Выйти">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main">
+      
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="breadcrumbs">
+            <a href="index.html">Админ-панель</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="current">Реестр заказов</span>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Поиск заказов..." data-table-search="#orders-table">
+        </div>
+
+        <div class="header-right">
+          <a href="../index.php" target="_blank" class="view-storefront-btn">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>В магазин</span>
+          </a>
+          <button class="header-action-btn" title="Уведомления">
+            <i class="bi bi-bell"></i>
+            <span class="btn-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="admin-content">
+        
+        <!-- Page Title & Actions -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Реестр заказов интернет-магазина</h1>
+            <p>Управление заказами, изменение статусов, отслеживание курьерской доставки и самовывоза</p>
+          </div>
+          <div class="page-actions">
+            <a href="pickup.html" class="btn btn-brand">
+              <i class="bi bi-upc-scan"></i>
+              Терминал выдачи
+            </a>
+            <button class="btn btn-secondary" onclick="showToast('Экспорт заказов', 'Таблица заказов выгружена в Excel', 'info')">
+              <i class="bi bi-download"></i>
+              Экспорт
+            </button>
+          </div>
+        </div>
+
+        <!-- Orders Table Card -->
+        <div class="admin-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="toolbar-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Поиск по номеру, клиенту или телефону..." data-table-search="#orders-table">
+              </div>
+
+              <!-- Status filter -->
+              <select class="filter-select" data-table-filter="5" data-filter-table="#orders-table">
+                <option value="">Все статусы</option>
+                <option value="Готов к выдаче">Готов к выдаче</option>
+                <option value="В сборке">В сборке / Оплачен</option>
+                <option value="Доставлен">Доставлен</option>
+                <option value="Отменен">Отменен</option>
+              </select>
+
+              <!-- Delivery method filter -->
+              <select class="filter-select" data-table-filter="3" data-filter-table="#orders-table">
+                <option value="">Все типы доставки</option>
+                <option value="Шоурум">Самовывоз (Шоурум)</option>
+                <option value="Курьер">Курьерская доставка</option>
+                <option value="СДЭК">СДЭК ПВЗ</option>
+                <option value="Почта">Почта России</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Всего: <strong>3</strong> заказа</span>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table" id="orders-table">
+              <thead>
+                <tr>
+                  <th>Номер заказа</th>
+                  <th>Дата оформления</th>
+                  <th>Покупатель</th>
+                  <th>Способ доставки</th>
+                  <th>Оплата</th>
+                  <th>Сумма</th>
+                  <th>Статус заказа</th>
+                  <th style="text-align: right;">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Order 1 -->
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow); font-size: 0.95rem;">SW-2026-0002</strong></td>
+                  <td>10.09.2026 <span style="color: var(--text-muted); font-size: 0.8rem;">11:45</span></td>
+                  <td>
+                    <div style="font-weight: 600; color: var(--text-primary);">Анна Меломанова</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">+7 999 666-77-88</div>
+                  </td>
+                  <td>
+                    <span class="badge badge-brand"><i class="bi bi-shop"></i> Шоурум СПб</span>
+                  </td>
+                  <td><span class="badge badge-warning">При получении</span></td>
+                  <td class="price-cell"><span class="price-current">41 990 ₽</span></td>
+                  <td><span class="badge badge-info">Готов к выдаче</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <a href="pickup.html" class="table-action-btn" title="Выдать заказ" style="color: var(--brand-yellow);">
+                        <i class="bi bi-upc-scan"></i>
+                      </a>
+                      <button class="table-action-btn edit-btn" title="Подробнее" data-modal-target="order-detail-modal">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Order 2 -->
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow); font-size: 0.95rem;">SW-2026-0003</strong></td>
+                  <td>12.09.2026 <span style="color: var(--text-muted); font-size: 0.8rem;">18:30</span></td>
+                  <td>
+                    <div style="font-weight: 600; color: var(--text-primary);">Михаил Аудиофилов</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">+7 999 555-66-77</div>
+                  </td>
+                  <td>
+                    <span class="badge badge-purple"><i class="bi bi-box-seam"></i> СДЭК ПВЗ</span>
+                    <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); margin-top: 2px;">CDEK-882910411</div>
+                  </td>
+                  <td><span class="badge badge-success">СБП Оплачено</span></td>
+                  <td class="price-cell"><span class="price-current">19 340 ₽</span></td>
+                  <td><span class="badge badge-purple">В сборке на складе</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Подробнее" data-modal-target="order-detail-modal">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Order 3 -->
+                <tr>
+                  <td><strong style="font-family: var(--font-mono); color: var(--brand-yellow); font-size: 0.95rem;">SW-2026-0001</strong></td>
+                  <td>01.09.2026 <span style="color: var(--text-muted); font-size: 0.8rem;">14:20</span></td>
+                  <td>
+                    <div style="font-weight: 600; color: var(--text-primary);">Михаил Аудиофилов</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">+7 999 555-66-77</div>
+                  </td>
+                  <td>
+                    <span class="badge badge-muted"><i class="bi bi-truck"></i> Курьер Мск</span>
+                    <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); margin-top: 2px;">SW-EXP-770192</div>
+                  </td>
+                  <td><span class="badge badge-success">Карта онлайн</span></td>
+                  <td class="price-cell"><span class="price-current">37 990 ₽</span></td>
+                  <td><span class="badge badge-success">Доставлен</span></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                      <button class="table-action-btn edit-btn" title="Подробнее" data-modal-target="order-detail-modal">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: ORDER DETAILS & STATUS WORKFLOW
+       ========================================================================== -->
+  <div class="modal-backdrop" id="order-detail-modal">
+    <div class="admin-modal modal-xl">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-bag-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Заказ SW-2026-0002</span>
+        </div>
+        <button class="modal-close-btn" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px;">
+          
+          <!-- Left: Items and Delivery Details -->
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);">
+              Состав заказа
+            </h3>
+            <div class="admin-card" style="margin-bottom: 20px;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Товар</th>
+                    <th>Кол-во</th>
+                    <th>Цена</th>
+                    <th>Итого</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600; color: var(--text-primary);">Marshall Stanmore III</div>
+                      <div style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono);">MSH-STAN3-BLK • Черный</div>
+                    </td>
+                    <td>1 шт.</td>
+                    <td>41 990 ₽</td>
+                    <td><strong>41 990 ₽</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);">
+              Данные получателя и адрес
+            </h3>
+            <div class="admin-card" style="padding: 16px; font-size: 0.9rem; line-height: 1.6;">
+              <div><strong>ФИО:</strong> Анна Игоревна Меломанова</div>
+              <div><strong>Телефон:</strong> +7 (999) 666-77-88</div>
+              <div><strong>Email:</strong> anna.music@yandex.ru</div>
+              <div><strong>Пункт самовывоза:</strong> г. Санкт-Петербург, Невский проспект, д. 54 (Шоурум Soundwave СПб)</div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-subtle); color: var(--brand-yellow);">
+                <strong>Пожелание клиента:</strong> Заберу в пятницу вечером после работы.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Status management -->
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);">
+              Управление заказом
+            </h3>
+            
+            <div class="admin-card" style="padding: 20px;">
+              <div class="form-group">
+                <label class="form-label">Статус заказа</label>
+                <select class="form-control" name="status_id">
+                  <option value="1">Новый</option>
+                  <option value="2">Ожидает онлайн-оплаты</option>
+                  <option value="3">Оплачен, ожидает сборки</option>
+                  <option value="4">В сборке на складе</option>
+                  <option value="5">Передан курьеру / В пути</option>
+                  <option value="6" selected>Готов к выдаче в пункте</option>
+                  <option value="7">Успешно доставлен / Выдан</option>
+                  <option value="8">Отменен</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Трек-номер курьерской службы / СДЭК</label>
+                <input type="text" class="form-control" placeholder="Например: CDEK-99201928" style="font-family: var(--font-mono);">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Внутренняя пометка менеджера</label>
+                <textarea class="form-control" rows="3">Товар зарезервирован на складе в СПб, осмотрен.</textarea>
+              </div>
+
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; margin-top: 14px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="color: var(--text-muted);">Товары:</span>
+                  <span>41 990 ₽</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="color: var(--text-muted);">Доставка:</span>
+                  <span>0 ₽ (Бесплатно)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.15rem; color: var(--brand-yellow); border-top: 1px dashed var(--border-base); padding-top: 8px;">
+                  <span>К оплате:</span>
+                  <span>41 990 ₽</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-modal-close>Закрыть</button>
+        <button class="btn btn-brand" type="button" onclick="closeModal('order-detail-modal'); showToast('Заказ обновлен', 'Статус заказа и примечания успешно сохранены', 'success');">
+          <i class="bi bi-check2"></i> Сохранить изменения
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
