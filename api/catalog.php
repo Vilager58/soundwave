@@ -106,17 +106,17 @@ foreach ($rows as $row) {
             'id'               => $productId,
             'productTitle'     => $row['title'],
             'shortDescription' => $row['short_description'],
-            'description' => $row['description'],
+            'description'      => $row['description'],
             'brand'            => $row['brand'],
-            'brandId'            => $row['brand_id'],
+            'brandId'          => $row['brand_id'],
             'category'         => $row['category'],
-            'categoryId'         => $row['category_id'],
+            'categoryId'       => $row['category_id'],
             'reviewsCount'     => $row['reviews_count'],
             'rating'           => $row['rating'],
             'isFeatured'       => $row['is_featured'],
             'isActive'         => $row['is_active'],
-            'modelCode'         => $row['model_code'],
-            'slug'         => $row['slug'],
+            'modelCode'        => $row['model_code'],
+            'slug'             => $row['slug'],
             'variants'         => []
         ];
     }

@@ -1653,6 +1653,9 @@ textarea.form-control {
 .modal-backdrop.show .admin-modal {
   transform: scale(1);
 }
+.admin-modal.modal-sm {
+  max-width: 440px;
+}
 
 .admin-modal.modal-lg {
   max-width: 880px;
@@ -1882,6 +1885,13 @@ input[type='checkbox'] {
   cursor: pointer;
   position: relative;
   transition: var(--transition);
+}
+
+input[type='file'] {
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input[type='checkbox']:checked {
@@ -2240,6 +2250,10 @@ input[type='checkbox']:checked::after {
       font-size: 1.5rem;
       color: var(--brand-yellow);
       flex-shrink: 0;
+    }
+    .brand-logo-preview svg{
+      width: 36px;
+      height: 36px;
     }
     .brand-card-title {
       font-size: 1.2rem;

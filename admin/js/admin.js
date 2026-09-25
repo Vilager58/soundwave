@@ -5,8 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   let products = [];
+  let brands = [];
   initSidebar();
-  initModals();
+  initEvents();
   initTabs();
   // initTableSearchAndFilters();
   initPickupTerminal();
@@ -301,7 +302,7 @@ function openModal(modalId, targetBtn) {
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-modal-close>Отмена</button>
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         <button class="btn btn-brand" type="button"
           onclick="closeModal('product-modal'); showToast('Товар сохранен', 'Данные товара успешно обновлены в базе', 'success');">
           <i class="bi bi-check2"></i> Сохранить изменения
@@ -309,6 +310,86 @@ function openModal(modalId, targetBtn) {
       </div>
     </div>`
       initTabs();
+      break;
+
+    case 'brand-modal':
+      const brandId = targetBtn.getAttribute('data-modal-brand-id');
+      if (brandId == '0') {
+        brand = {
+          "id": 0,
+          "title": "",
+          "slug": "",
+          "country": "",
+          "logoUrl": "Добавьте Изображение",
+          "description": "",
+          "isActive": 1
+        }
+      } else {
+        brand = brands.find(b => b.id == brandId);
+      }
+      modalBox.innerHTML = `
+          <div class="admin-modal modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Редактирование бренда</span>
+        </div>
+        <button class="modal-close-btn" type="button" modal-action-button='close'>
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="brand-form">
+          <input type="text" class="form-control" name="id" value="${brand.id}" required style='display: none'>
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Название бренда <span class="required">*</span></label>
+              <input type="text" class="form-control" name="title" value="${brand.title}" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Алиас (Slug) <span class="required">*</span></label>
+              <input type="text" class="form-control" name="slug" value="${brand.slug}" style="font-family: var(--font-mono);" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Страна происхождения</label>
+              <input type="text" class="form-control" name="country" value="${brand.country}" placeholder="Например: Япония, США">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Логотип (только svg)</label>
+              <button type='button' class="form-control" id='logo-select-button'>${brand.logoUrl}</button>
+              <input type="file" class="form-control" accept=".svg, image/svg+xml" name="logo_input" id='logo-select-input' style='display: none'>
+              <input type="text" name="logoUrl" id='logo-select-url' value='${brand.logoUrl}' style='display: none'>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Описание бренда для витрины</label>
+            <textarea class="form-control" name="description" rows="3">${brand.description}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="switch-label">
+              <input type="checkbox" class="switch-input" name="is_active" ${brand.isActive == 1 ? 'checked' : ''}>
+              <span class="switch-slider"></span>
+              <span>Бренд активен и отображается в фильтрах каталога</span>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='${brand.id == 0 ? 'add':'save'}-brand'>
+          <i class="bi bi-check2"></i> Сохранить бренд </button>
+      </div>
+    </div>
+      `
       break;
 
     case 'select-brand-modal':
@@ -319,7 +400,7 @@ function openModal(modalId, targetBtn) {
           <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
           <span>Выбор бренда</span>
         </div>
-        <button class="modal-close-btn" type="button">
+        <button class="modal-close-btn" type="button" modal-action-button='close'>
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
@@ -346,13 +427,13 @@ function openModal(modalId, targetBtn) {
         </button>
 
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" onclick="closeModal('select-brand-modal')">Отмена</button>
+          <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         </div>
       </div>
     </div>`
       break;
-    
-      case 'select-category-modal':
+
+    case 'select-category-modal':
       modalBox.innerHTML = `  
       <div class="admin-modal modal-lg">
         <div class="modal-header">
@@ -360,7 +441,7 @@ function openModal(modalId, targetBtn) {
           <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
           <span>Выбор категории</span>
         </div>
-        <button class="modal-close-btn" type="button">
+        <button class="modal-close-btn" type="button" modal-action-button='close'>
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
@@ -387,11 +468,30 @@ function openModal(modalId, targetBtn) {
         </button>
 
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" onclick="closeModal('select-category-modal')">Отмена</button>
+          <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         </div>
       </div>
     </div>`
       break;
+
+    case 'remove-brand':
+      const removingBrandId = targetBtn.getAttribute('data-modal-brand-id');
+      brand = brands.find(b => b.id == removingBrandId);
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-sm">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Подтверждаете удаление ${brand.title} ?</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='remove-brand' modal-action-data='${brand.id}'>
+          <i class="bi bi-check2"></i> Удалить бренд </button>
+      </div>`
+      ;
+    break;
   }
 
   const backdrop = document.getElementById(modalId);
@@ -405,9 +505,11 @@ function closeModal(modalId, save = 'none') {
   if (save != 'none') {
     switch (modalId) {
       case 'select-brand-modal':
-        document.querySelector('input#data-modal-brand-id').setAttribute('data-modal-brand-id', save)
+        document.querySelector('input#data-modal-brand-id').setAttribute('data-modal-brand-id', save);
+        break;
     }
-  }
+}
+
   const backdrop = document.getElementById(modalId);
   if (!backdrop) return;
   backdrop.classList.remove('show');
@@ -417,7 +519,7 @@ function closeModal(modalId, save = 'none') {
   }, 250);
 }
 
-function initModals() {
+function initEvents() {
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-modal-target]');
     if (trigger) {
@@ -427,19 +529,71 @@ function initModals() {
       return;
     }
 
-    const closeBtn = e.target.closest('.modal-close-btn, [data-modal-close]');
-    if (closeBtn) {
-      const backdrop = closeBtn.closest('.modal-backdrop');
-      if (backdrop) closeModal(backdrop.id);
+    const actionBtn = e.target.closest('[modal-action-button]');
+    if (actionBtn) {
+      e.preventDefault();
+      const modalType = actionBtn.getAttribute('modal-action-button');
+      obtainModal(modalType, actionBtn);
       return;
     }
 
-    if (e.target.classList.contains('modal-backdrop')) {
-      closeModal(e.target.id);
+    function changeUrl(i) {
+      if (i.target.files[0]) {
+        uploadBtn.innerHTML = i.target.files[0].name;
+        document.querySelector('#logo-select-url').value = '';
+      }
+      i.target.removeEventListener('change', changeUrl);
     }
+
+    const uploadBtn = e.target.closest('#logo-select-button');
+    if (uploadBtn) {
+      const selectInput = document.querySelector('#logo-select-input');
+      console.log(selectInput);
+      selectInput.addEventListener('change', changeUrl);
+      if (selectInput) selectInput.click();
+      return;
+    }
+
   });
 };
 
+async function obtainModal(action, btn) {
+  switch (action) {
+    case 'save-brand':
+      frm = document.querySelector('#brand-form')
+      f = Object.fromEntries(new FormData(frm));
+      response = await Brands(f, 'update');
+      showToast('Успешно', response.message, 'succes');
+      closeModal('brand-modal');
+      renderBrands();
+      break;
+
+    case 'add-brand':
+      frm = document.querySelector('#brand-form')
+      f = Object.fromEntries(new FormData(frm));
+      f['type'] = 'add';
+      response = await Brands(f, 'add');
+      showToast('Успешно', response.message, 'succes');
+      closeModal('brand-modal');
+      renderBrands();
+      break;
+
+    case 'remove-brand':
+      bid = document.querySelector('[modal-action-data]');
+      bid = bid.getAttribute('modal-action-data');
+      response = await Brands({id: bid}, 'remove');
+      showToast('Успешно', response.message, 'succes');
+      closeModal('remove-brand');
+      renderBrands();
+      break;
+
+    case 'close':
+      const backdrop = btn.closest('.modal-backdrop');
+      if (backdrop) closeModal(backdrop.id);
+      break;
+  }
+
+}
 
 /* ==========================================================================
    TABS SWITCHER
@@ -552,7 +706,7 @@ function showToast(title, message, type = 'success') {
 
   container.appendChild(toast);
 
-  const closeBtn = toast.querySelector('.toast-close');
+  closeBtn = toast.querySelector('.toast-close');
   closeBtn.addEventListener('click', () => {
     removeToast(toast);
   });
@@ -674,12 +828,20 @@ function initPickupTerminal() {
     const order = sampleOrdersDB[cleanNum];
 
     if (!order) {
-      showToast('Заказ не найден', `Заказ с номером "${cleanNum}" отсутствует в системе шоурумов`, 'danger');
+      showToast('Заказ не найден', `
+      Заказ с номером "${cleanNum}"
+      отсутствует в системе шоурумов `, 'danger');
       return;
     }
 
     renderPickupOrder(order);
-    showToast('Заказ найден', `Загружен заказ ${order.orderNumber} (${order.customer.name})`, 'info');
+    showToast('Заказ найден', `
+      Загружен заказ $ {
+        order.orderNumber
+      }($ {
+        order.customer.name
+      })
+      `, 'info');
   }
 
   if (searchBtn) {
@@ -768,7 +930,11 @@ function renderPickupOrder(order) {
   // Status badge
   const badgeElem = document.getElementById('order-status-badge');
   if (badgeElem) {
-    badgeElem.className = `badge ${order.statusBadge}`;
+    badgeElem.className = `
+      badge $ {
+        order.statusBadge
+      }
+      `;
     badgeElem.textContent = order.statusTitle;
   }
 
@@ -780,11 +946,19 @@ function renderPickupOrder(order) {
   if (phoneElem) phoneElem.textContent = order.customer.phone;
 
   const bonusElem = document.getElementById('customer-display-bonuses');
-  if (bonusElem) bonusElem.textContent = `${order.customer.bonuses} баллов`;
+  if (bonusElem) bonusElem.textContent = `
+      $ {
+        order.customer.bonuses
+      }
+      баллов `;
 
   // Total
   const totalElem = document.getElementById('display-order-total');
-  if (totalElem) totalElem.textContent = `${order.total.toLocaleString('ru-RU')} ₽`;
+  if (totalElem) totalElem.textContent = `
+      $ {
+        order.total.toLocaleString('ru-RU')
+      }₽
+      `;
 
   // Items List
   const itemsContainer = document.getElementById('order-items-checklist');
@@ -793,16 +967,35 @@ function renderPickupOrder(order) {
     order.items.forEach(item => {
       const row = document.createElement('div');
       row.className = 'check-item-row';
-      row.innerHTML = `
-        <div class="check-item-left">
-          <input type="checkbox" class="check-checkbox" id="item-chk-${item.id}">
-          <img src="${item.image}" alt="${item.title}" class="check-item-img">
-          <div>
-            <div class="check-item-title">${item.title}</div>
-            <div class="check-item-meta">${item.variant} • Артикул: <strong>${item.article}</strong> • Штрих-код: ${item.barcode}</div>
-          </div>
-        </div>
-        <div class="check-item-qty">${item.amount} шт.</div>
+      row.innerHTML = ` <
+      div class = "check-item-left" >
+        <
+        input type = "checkbox"
+      class = "check-checkbox"
+      id = "item-chk-${item.id}" >
+        <
+        img src = "${item.image}"
+      alt = "${item.title}"
+      class = "check-item-img" >
+        <
+        div >
+        <
+        div class = "check-item-title" > $ {
+          item.title
+        } < /div> <
+        div class = "check-item-meta" > $ {
+          item.variant
+        }•
+      Артикул: < strong > $ {
+          item.article
+        } < /strong> • Штрих-код: ${item.barcode}</div >
+        <
+        /div> <
+        /div> <
+        div class = "check-item-qty" > $ {
+          item.amount
+        }
+      шт. < /div>
       `;
 
       // Checkbox visual toggle
@@ -857,19 +1050,37 @@ function updateReceiptModal(order) {
 
   const receiptItems = document.getElementById('receipt-items-list');
   if (receiptItems) {
-    receiptItems.innerHTML = order.items.map(item => `
-      <div class="receipt-line">
-        <span>${item.title} (${item.variant})</span>
-      </div>
-      <div class="receipt-line" style="color: #666; font-size: 11px;">
-        <span>${item.amount} шт x ${item.price.toLocaleString('ru-RU')} ₽</span>
-        <span>${(item.amount * item.price).toLocaleString('ru-RU')} ₽</span>
-      </div>
-    `).join('');
+    receiptItems.innerHTML = order.items.map(item => ` <
+      div class = "receipt-line" >
+        <
+        span > $ {
+          item.title
+        }($ {
+          item.variant
+        }) < /span> <
+        /div> <
+        div class = "receipt-line"
+      style = "color: #666; font-size: 11px;" >
+        <
+        span > $ {
+          item.amount
+        }
+      шт x $ {
+        item.price.toLocaleString('ru-RU')
+      }₽ < /span> <
+      span > $ {
+          (item.amount * item.price).toLocaleString('ru-RU')
+        }₽ < /span> <
+        /div>
+      `).join('');
   }
 
   const receiptTotal = document.getElementById('receipt-total-sum');
-  if (receiptTotal) receiptTotal.textContent = `${order.total.toLocaleString('ru-RU')} ₽`;
+  if (receiptTotal) receiptTotal.textContent = `
+      $ {
+        order.total.toLocaleString('ru-RU')
+      }₽
+      `;
 }
 
 function addOrderToTodayLog() {
@@ -881,19 +1092,27 @@ function addOrderToTodayLog() {
     minute: '2-digit'
   });
   const newRow = document.createElement('tr');
-  newRow.innerHTML = `
-    <td><strong>SW-2026-0002</strong></td>
-    <td>${timeStr}</td>
-    <td>Анна Меломанова</td>
-    <td>1 товар</td>
-    <td>41 990 ₽</td>
-    <td><span class="badge badge-success">Выдан</span></td>
-    <td>
-      <button class="table-action-btn" title="Печать чека" onclick="openModal('receipt-modal')">
-        <i class="bi bi-printer"></i>
-      </button>
-    </td>
-  `;
+  newRow.innerHTML = ` <
+      td > < strong > SW - 2026 - 0002 < /strong></td >
+        <
+        td > $ {
+          timeStr
+        } < /td> <
+        td > Анна Меломанова < /td> <
+        td > 1 товар < /td> <
+        td > 41 990₽ < /td> <
+        td > < span class = "badge badge-success" > Выдан < /span></td >
+        <
+        td >
+        <
+        button class = "table-action-btn"
+      title = "Печать чека"
+      onclick = "openModal('receipt-modal')" >
+        <
+        i class = "bi bi-printer" > < /i> <
+        /button> <
+        /td>
+      `;
   todayTable.insertBefore(newRow, todayTable.firstChild);
 }
 
@@ -908,7 +1127,24 @@ async function getProducts(params) {
       return data
     })
     .catch(error => {
-      showToast(error);
+      showToast('Ошибка', error, 'danger');
+    });
+
+  return response
+}
+
+async function Brands(params, type) {
+  params['type'] = type;
+  const response = fetch('/api/brands.php', {
+      method: 'POST',
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast('Ошибка', error, 'danger');
     });
 
   return response
@@ -941,7 +1177,7 @@ async function getFilters(params) {
       return data
     })
     .catch(error => {
-      showToast(error);
+      showToast('Ошибка', error, 'danger');
     });
 
   return response
@@ -959,4 +1195,16 @@ function prepareData(data) {
 
 function formatPrice(num) {
   return (num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+}
+
+async function loadSvg(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`
+      Ошибка загрузки лого `);
+    return await response.text();
+  } catch (error) {
+    console.error(error);
+    return '<span class="error-logo">X</span>';
+  }
 }
