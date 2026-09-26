@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     HAVING 1=1
                     ';
                 if ($_POST['query'] != 'null') {
-                    $q .= ' AND b.title LIKE :query';
+                    $q .= ' AND (b.title LIKE :query OR b.slug LIKE :query)';
                     $params['query'] = '%' . $_POST['query'] . '%';
                 }
                 ;

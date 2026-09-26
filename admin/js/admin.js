@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   let products = [];
   let brands = [];
+  let categories = [];
   initSidebar();
   initEvents();
   initTabs();
@@ -108,12 +109,12 @@ function openModal(modalId, targetBtn) {
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
               <div class="form-group">
                 <label for="data-modal-brand-id" class="form-label">Бренд производителя <span class="required">*</span></label>
-                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand-modal" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="brand_id" required></input>
+                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="brand_id" required>
               </div>
 
               <div class="form-group">
                 <label for="data-modal-category-id" class="form-label">Категория каталога <span class="required">*</span></label>
-                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category-modal" value="${product.category}" data-modal-category-id="${product.categoryId}" name="category_id" required></input>
+                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category" value="${product.category}" data-modal-category-id="${product.categoryId}" name="category_id" required>
               </div>
 
               <div class="form-group">
@@ -392,7 +393,83 @@ function openModal(modalId, targetBtn) {
       `
       break;
 
-    case 'select-brand-modal':
+    case 'category-modal':
+      const categoryId = targetBtn.getAttribute('data-modal-category-id');
+      if (categoryId == '0') {
+        category = {
+          "id": 0,
+          "title": "",
+          "slug": "",
+          "parentId": "",
+          "description": "",
+          "isActive": 1
+        }
+      } else {
+        category = categories.find(b => b.id == categoryId);
+      }
+      modalBox.innerHTML = `
+        <div class="admin-modal modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-diagram-3-fill" style="color: var(--brand-yellow);"></i>
+          <span>Управление категорией каталога</span>
+        </div>
+        <button class="modal-close-btn" type="button" modal-action-button='close'>
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="category-form">
+          <input type="text" class="form-control" name="id" value="${category.id}" required style='display: none'>
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Название категории <span class="required">*</span></label>
+              <input type="text" class="form-control" name="title" value="${category.title}"
+                placeholder="Например: Студийные мониторы" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Алиас (Slug) <span class="required">*</span></label>
+              <input type="text" class="form-control" name="slug" value="${category.slug}"
+                style="font-family: var(--font-mono);" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Родительская категория</label>
+                <button type='button' class="form-control" data-modal-target="select-category" id='parent-category-title'>${category.parentTitle || 'Корневая'}</button>
+              <input type="text" name="parentCategoryId" id='parent-category-id' value='${category.parentId || '0'}' style='display: none'>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Описание раздела (для SEO и сниппетов)</label>
+            <textarea class="form-control" name="description"
+              rows="3">${category.description}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="switch-label">
+              <input type="checkbox" class="switch-input" name="is_active" ${category.isActive == 1 ? 'checked' : ''}>
+              <span class="switch-slider"></span>
+              <span>Категория активна и видна в каталоге</span>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='${category.id == 0 ? 'add':'save'}-category'>
+        Сохранить категорию
+        </button>
+      </div>
+    </div>
+      `
+      break;
+
+    case 'select-brand':
       modalBox.innerHTML = `  
       <div class="admin-modal modal-lg">
         <div class="modal-header">
@@ -412,7 +489,7 @@ function openModal(modalId, targetBtn) {
             <input type="text" class="form-control" name="title" value="." required>
           </div>
         </form>
-        <button class="brand-card" data-brand-id="2" onclick="closeModal('select-brand-modal', 2)">
+        <button class="brand-card" data-brand-id="2" onclick="closeModal('select-brand', 2)">
           <div>
             <div class="brand-card-select">
               <div class="brand-card-select">
@@ -433,13 +510,14 @@ function openModal(modalId, targetBtn) {
     </div>`
       break;
 
-    case 'select-category-modal':
+    case 'select-category':
+
       modalBox.innerHTML = `  
       <div class="admin-modal modal-lg">
         <div class="modal-header">
         <div class="modal-title">
           <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
-          <span>Выбор категории</span>
+          <span>Выберите категорию</span>
         </div>
         <button class="modal-close-btn" type="button" modal-action-button='close'>
           <i class="bi bi-x-lg"></i>
@@ -447,35 +525,34 @@ function openModal(modalId, targetBtn) {
       </div>
 
       <div class="modal-body">
-        <form id="brand-form">
+        <form id="select-category-form">
           <div class="form-group">
             <label class="form-label">Введите название категории</label>
-            <input type="text" class="form-control" name="title" value="." required>
+            <input type="text" class="form-control" name="title" modal-action-input='select-category' value="" palaceholder='Название' required>
           </div>
         </form>
-        <button class="brand-card" data-brand-id="2" onclick="closeModal('select-category-modal', 2)">
-          <div>
-            <div class="brand-card-select">
-              <div class="brand-card-select">
-                <div class="brand-logo-preview">
-                  <i class="bi bi-mic-fill"></i>
-                </div>
-                <div class="brand-card-title">Shure</div>
-                <div class="brand-card-country"><i class="bi bi-geo-alt-fill"></i> США</div>
-              </div>
-            </div>
-          </div>
-        </button>
-
-        <div class="modal-footer">
+        <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">ID</th>
+                  <th>Название категории</th>
+                  <th>Алиас (Slug)</th>
+                  <th>Статус</th>
+                </tr>
+              </thead>
+              <tbody id="select-category-list"></tbody>
+            </table>
+          <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" modal-action-button='select-category' modal-action-data='0'>Сделать корневой</button>
           <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         </div>
       </div>
     </div>`
+    renderSelectCategories();
       break;
 
     case 'remove-brand':
-      const removingBrandId = targetBtn.getAttribute('data-modal-brand-id');
+      removingBrandId = targetBtn.getAttribute('data-modal-brand-id');
       brand = brands.find(b => b.id == removingBrandId);
       modalBox.innerHTML = `  
       <div class="admin-modal modal-sm">
@@ -489,9 +566,26 @@ function openModal(modalId, targetBtn) {
         <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         <button class="btn btn-brand" type="button" modal-action-button='remove-brand' modal-action-data='${brand.id}'>
           <i class="bi bi-check2"></i> Удалить бренд </button>
-      </div>`
-      ;
-    break;
+      </div>`;
+      break;
+
+    case 'remove-category':
+      removingCategoryId = targetBtn.getAttribute('data-modal-category-id');
+      category = categories.find(c => c.id == removingCategoryId);
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-sm">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Подтверждаете удаление ${category.title} ?</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='remove-category' modal-action-data='${category.id}'>
+          <i class="bi bi-check2"></i> Удалить бренд </button>
+      </div>`;
+      break;
   }
 
   const backdrop = document.getElementById(modalId);
@@ -504,11 +598,11 @@ function openModal(modalId, targetBtn) {
 function closeModal(modalId, save = 'none') {
   if (save != 'none') {
     switch (modalId) {
-      case 'select-brand-modal':
+      case 'select-brand':
         document.querySelector('input#data-modal-brand-id').setAttribute('data-modal-brand-id', save);
         break;
     }
-}
+  }
 
   const backdrop = document.getElementById(modalId);
   if (!backdrop) return;
@@ -554,6 +648,27 @@ function initEvents() {
       return;
     }
 
+    // const selectCatBtn = e.target.closest('#category-select-button');
+    // if (selectCatBtn) {
+    //   const selectInput = document.querySelector('#logo-select-input');
+    //   console.log(selectInput);
+    //   selectInput.addEventListener('change', changeUrl);
+    //   if (selectInput) selectInput.click();
+    //   return;
+    // }
+
+  });
+
+  document.addEventListener('input', (e)=>{
+    const input = e.target.closest('[modal-action-input]');
+    if(input){
+      const inputType = input.getAttribute('modal-action-input');
+      switch(inputType){
+        case 'select-category':
+          renderSelectCategories(input.value);
+        break;
+      }
+    }
   });
 };
 
@@ -563,9 +678,9 @@ async function obtainModal(action, btn) {
       frm = document.querySelector('#brand-form')
       f = Object.fromEntries(new FormData(frm));
       response = await Brands(f, 'update');
-      showToast('Успешно', response.message, 'succes');
-      closeModal('brand-modal');
+      showToast('Успешно', response.message, 'success');
       renderBrands();
+      closeModal('brand-modal');
       break;
 
     case 'add-brand':
@@ -573,18 +688,62 @@ async function obtainModal(action, btn) {
       f = Object.fromEntries(new FormData(frm));
       f['type'] = 'add';
       response = await Brands(f, 'add');
-      showToast('Успешно', response.message, 'succes');
-      closeModal('brand-modal');
+      showToast('Успешно', response.message, 'success');
       renderBrands();
+      closeModal('brand-modal');
       break;
 
     case 'remove-brand':
-      bid = document.querySelector('[modal-action-data]');
-      bid = bid.getAttribute('modal-action-data');
-      response = await Brands({id: bid}, 'remove');
-      showToast('Успешно', response.message, 'succes');
-      closeModal('remove-brand');
+      bid = btn.getAttribute('modal-action-data');
+      response = await Brands({
+        id: bid
+      }, 'remove');
+      showToast('Успешно', response.message, 'success');
       renderBrands();
+      closeModal('remove-brand');
+      break;
+
+    case 'select-category':
+      cid = btn.getAttribute('modal-action-data');
+      if(cid == 0){
+        title = 'Корневая';
+        console.log('корневая');
+      } else {
+        category = categories.find(c => c.id == cid);
+        title = category.title;
+      }
+      document.querySelector('#parent-category-title').innerText = title;
+      document.querySelector('#parent-category-id').value = cid;
+      closeModal('select-category');
+      break;
+
+    case 'save-category':
+      frm = document.querySelector('#category-form')
+      f = Object.fromEntries(new FormData(frm));
+      response = await Categories(f, 'update');
+      showToast('Успешно', response.message, 'success');
+      renderCategories();
+      closeModal('category-modal');
+      break;
+    
+    case 'add-category':
+      frm = document.querySelector('#category-form')
+      f = Object.fromEntries(new FormData(frm));
+      f['type'] = 'add';
+      response = await Categories(f, 'add');
+      showToast('Успешно', response.message, 'success');
+      renderCategories();
+      closeModal('category-modal');
+      break;
+    
+    case 'remove-category':
+      cid = btn.getAttribute('modal-action-data');
+      response = await Categories({
+        id: cid
+      }, 'remove');
+      showToast('Успешно', response.message, 'success');
+      renderCategories();
+      closeModal('remove-category');
       break;
 
     case 'close':
@@ -1150,11 +1309,29 @@ async function Brands(params, type) {
   return response
 }
 
-function getFilterParams() {
-  const params = new URLSearchParams(window.location.search);
+async function Categories(params, type, parentOnly = false) {
+  params['type'] = type;
+  if (parentOnly) params['parent'] = '1';
+  const response = fetch('/api/categories.php', {
+      method: 'POST',
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast('Ошибка', error, 'danger');
+    });
 
+  return response
+}
+
+function getFilterParams(query) {
+  const params = new URLSearchParams(window.location.search);
+  console.log(query);
   const filterParams = {
-    query: params.get('q'),
+    query: query || params.get('q'),
     category: params.get('cat'),
     brand: params.get('brand'),
     sort: params.get('sort'),
@@ -1207,4 +1384,25 @@ async function loadSvg(url) {
     console.error(error);
     return '<span class="error-logo">X</span>';
   }
+}
+
+async function renderSelectCategories(query) {
+  parent_categories = await Categories(getFilterParams(query), 'get', true);
+  const box = document.querySelector('#select-category-list');
+  let html = '';
+  for (const c of parent_categories) {
+    if (c.parentId == null) {
+      html += `<tr style="background: rgba(255, 255, 255, 0.02); cursor: pointer;" modal-action-button='select-category' modal-action-data='${c.id}'>
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#${c.id}</strong></td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                      ${c.title}
+                    </div>
+                  </td>
+                  <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">${c.slug}</code></td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                </tr>`
+    }
+  }
+  box.innerHTML = html;
 }

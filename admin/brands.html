@@ -155,7 +155,7 @@
 
         <div class="header-search">
           <i class="bi bi-search"></i>
-          <input type="text" placeholder="Поиск брендов...">
+          <input type="text" placeholder="Поиск брендов..." id="brand-query">
         </div>
 
         <div class="header-right">
@@ -201,8 +201,8 @@
 
   <script src="js/admin.js"></script>
   <script>
-    async function renderBrands() {
-      brands = await Brands(getFilterParams(), 'get');
+    async function renderBrands(query) {
+      brands = await Brands(getFilterParams(query), 'get');
       const box = document.querySelector('#brand-list');
       let html = '';
       for(const b of brands){
@@ -235,6 +235,9 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderBrands();
+      document.querySelector('#brand-query').addEventListener('input', (e)=>{
+        renderBrands(e.target.value);
+      })
     });
   </script>
 </body>
