@@ -117,7 +117,7 @@ foreach ($rows as $row) {
             'isActive'         => $row['is_active'],
             'modelCode'        => $row['model_code'],
             'slug'             => $row['slug'],
-            'variants'         => []
+            'variants'         => [],
         ];
     }
 

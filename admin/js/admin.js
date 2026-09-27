@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let products = [];
   let brands = [];
   let categories = [];
+  let product = {};
   initSidebar();
   initEvents();
   initTabs();
@@ -53,12 +54,18 @@ function initSidebar() {
    MODAL MANAGEMENT
    ========================================================================== */
 function openModal(modalId, targetBtn) {
-  // console.log(modalId, targetBtn);
-  const modalBox = document.querySelector('#' + modalId);
+  let modalBox = document.getElementById(modalId);
+  if (!modalBox) {
+    let mb = document.createElement('div');
+    mb.id = modalId;
+    mb.className = 'modal-backdrop';
+    document.body.append(mb);
+    modalBox = mb;
+  }
   switch (modalId) {
     case 'product-modal':
       const productId = targetBtn.getAttribute('data-modal-product-id');
-      const product = products.find(p => p.id == productId);
+      product = products.find(p => p.id == productId);
       console.log(product);
       modalBox.innerHTML = `<div class="admin-modal modal-xl">
       <div class="modal-header">
@@ -78,7 +85,7 @@ function openModal(modalId, targetBtn) {
             <i class="bi bi-info-circle"></i> Основное
           </button>
           <button class="tab-btn" data-tab="tab-variants">
-            <i class="bi bi-tags"></i> Модификации и цены (2)
+            <i class="bi bi-tags"></i> Модификации и цены (${product.variants.length})
           </button>
           <button class="tab-btn" data-tab="tab-attributes">
             <i class="bi bi-sliders"></i> Характеристики (8)
@@ -157,8 +164,7 @@ function openModal(modalId, targetBtn) {
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <p style="color: var(--text-secondary); font-size: 0.88rem;">Модификации определяют цвета, сопротивление
               (Ом) и индивидуальные складские остатки.</p>
-            <button class="btn btn-brand btn-sm" type="button"
-              onclick="showToast('Новый вариант', 'Добавлена строка для новой модификации', 'info')">
+            <button class="btn btn-brand btn-sm" type="button" modal-action-button='add-variant' modal-action-data='${product.id}'>
               <i class="bi bi-plus-lg"></i> Добавить модификацию
             </button>
           </div>
@@ -176,40 +182,7 @@ function openModal(modalId, targetBtn) {
                   <th>Действие</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><input type="text" class="form-control" value="Черный матовый (Black)" style="min-width: 170px;">
-                  </td>
-                  <td><input type="text" class="form-control" value="SNY-WHXM5-BLK"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="text" class="form-control" value="4548736132566"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="number" class="form-control" value="37990" style="width: 110px; font-weight: 700;">
-                  </td>
-                  <td><input type="number" class="form-control" value="42990" style="width: 110px;"></td>
-                  <td><input type="number" class="form-control" value="15" style="width: 80px; font-weight: 700;"></td>
-                  <td>
-                    <button class="table-action-btn delete-btn" title="Удалить вариант"><i
-                        class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="form-control" value="Серебристый платиновый (Silver)"
-                      style="min-width: 170px;"></td>
-                  <td><input type="text" class="form-control" value="SNY-WHXM5-SLV"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="text" class="form-control" value="4548736132573"
-                      style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="number" class="form-control" value="37990" style="width: 110px; font-weight: 700;">
-                  </td>
-                  <td><input type="number" class="form-control" value="42990" style="width: 110px;"></td>
-                  <td><input type="number" class="form-control" value="8" style="width: 80px; font-weight: 700;"></td>
-                  <td>
-                    <button class="table-action-btn delete-btn" title="Удалить вариант"><i
-                        class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id='product-variants'></tbody>
             </table>
           </div>
         </div>
@@ -311,6 +284,7 @@ function openModal(modalId, targetBtn) {
       </div>
     </div>`
       initTabs();
+      renderProductVariants(product);
       break;
 
     case 'brand-modal':
@@ -548,7 +522,7 @@ function openModal(modalId, targetBtn) {
         </div>
       </div>
     </div>`
-    renderSelectCategories();
+      renderSelectCategories();
       break;
 
     case 'remove-brand':
@@ -587,11 +561,8 @@ function openModal(modalId, targetBtn) {
       </div>`;
       break;
   }
-
-  const backdrop = document.getElementById(modalId);
-  if (!backdrop) return;
-  backdrop.style.display = 'flex';
-  setTimeout(() => backdrop.classList.add('show'), 10);
+  modalBox.style.display = 'flex';
+  setTimeout(() => modalBox.classList.add('show'), 10);
   document.body.style.overflow = 'hidden';
 }
 
@@ -659,14 +630,23 @@ function initEvents() {
 
   });
 
-  document.addEventListener('input', (e)=>{
+  document.addEventListener('input', (e) => {
     const input = e.target.closest('[modal-action-input]');
-    if(input){
+    if (input) {
       const inputType = input.getAttribute('modal-action-input');
-      switch(inputType){
+      switch (inputType) {
         case 'select-category':
           renderSelectCategories(input.value);
-        break;
+          break;
+
+        case 'brand':
+          renderBrands(input.value);
+          break;
+
+        case 'category':
+          renderCategories(input.value);
+          break;
+
       }
     }
   });
@@ -705,7 +685,7 @@ async function obtainModal(action, btn) {
 
     case 'select-category':
       cid = btn.getAttribute('modal-action-data');
-      if(cid == 0){
+      if (cid == 0) {
         title = 'Корневая';
         console.log('корневая');
       } else {
@@ -725,7 +705,7 @@ async function obtainModal(action, btn) {
       renderCategories();
       closeModal('category-modal');
       break;
-    
+
     case 'add-category':
       frm = document.querySelector('#category-form')
       f = Object.fromEntries(new FormData(frm));
@@ -735,7 +715,7 @@ async function obtainModal(action, btn) {
       renderCategories();
       closeModal('category-modal');
       break;
-    
+
     case 'remove-category':
       cid = btn.getAttribute('modal-action-data');
       response = await Categories({
@@ -745,6 +725,34 @@ async function obtainModal(action, btn) {
       renderCategories();
       closeModal('remove-category');
       break;
+
+    case 'add-variant':
+      pid = btn.getAttribute('modal-action-data');
+      product.variants.push({
+        "variantId": 0,
+        "variant": "",
+        "article": "",
+        "barcode": "",
+        "price": "",
+        "oldPrice": "",
+        "amount": "",
+      });
+      renderProductVariants(product);
+      break;
+
+    case 'copy-variant':
+      vid = btn.getAttribute('modal-action-data');
+      variant = {...product.variants.find(v => v.variantId == vid), variantId: 0};
+      product.variants.push(variant);
+      renderProductVariants(product);
+      break;
+
+    case 'remove-variant':
+      vid = btn.getAttribute('modal-action-data');
+      product.variants.splice(product.variants.findIndex(v => v.variantId == vid), 1);
+      renderProductVariants(product);
+      break;
+
 
     case 'close':
       const backdrop = btn.closest('.modal-backdrop');
@@ -1404,5 +1412,36 @@ async function renderSelectCategories(query) {
                 </tr>`
     }
   }
+  box.innerHTML = html;
+}
+
+function renderProductVariants(product) {
+  box = document.getElementById('product-variants');
+  html = ''
+  for (v of product.variants) {
+    html += `
+                <tr>                    
+                  <td>
+                    <input type="text" class="form-control" value="${v.variant}" style="min-width: 170px;">
+                  </td>
+                  <td><input type="text" class="form-control" placeholder='SKU...' value="${v.article}"
+                      style="font-family: var(--font-mono); width: 140px;"></td>
+                  <td><input type="text" class="form-control" placeholder='EAN-13...' value="${v.barcode}"
+                      style="font-family: var(--font-mono); width: 140px;"></td>
+                  <td><input type="number" class="form-control" value="${v.price}" placeholder='Цена...' style="width: 110px; font-weight: 700;">
+                  </td>
+                  <td><input type="number" class="form-control" value="${v.oldPrice}" placeholder='Старая уена...' style="width: 110px;"></td>
+                  <td><input type="number" class="form-control" value="${v.amount}" placeholder='Остаток...' style="width: 80px; font-weight: 700;"></td>
+                  <td>
+                    <div class="table-actions" style="justify-content: flex-end;">
+                     <button class="table-action-btn" title="Копировать вариант" modal-action-button='copy-variant' modal-action-data='${v.variantId}'>
+                        <i class="bi bi-copy"></i>
+                      </button>
+                    <button class="table-action-btn delete-btn" title="Удалить вариант" modal-action-button='remove-variant' modal-action-data='${v.variantId}'><i
+                        class="bi bi-trash"></i></button>
+                        </div>
+                  </td>
+                </tr>`
+  };
   box.innerHTML = html;
 }

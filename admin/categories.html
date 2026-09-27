@@ -12,8 +12,6 @@
 
 <body>
   <div class="admin-layout">
-
-    <!-- SIDEBAR -->
     <aside class="admin-sidebar">
       <div class="sidebar-brand">
         <a href="index.html" class="brand-link">
@@ -25,7 +23,6 @@
       </div>
 
       <div class="sidebar-nav-container">
-        <!-- Section: Overview -->
         <div>
           <div class="nav-section-title">Обзор</div>
           <ul class="nav-list">
@@ -37,8 +34,6 @@
             </li>
           </ul>
         </div>
-
-        <!-- Section: Fulfillment -->
         <div>
           <div class="nav-section-title">Шоурум и выдача</div>
           <ul class="nav-list">
@@ -51,8 +46,6 @@
             </li>
           </ul>
         </div>
-
-        <!-- Section: Catalog -->
         <div>
           <div class="nav-section-title">Каталог аудиотехники</div>
           <ul class="nav-list">
@@ -78,8 +71,6 @@
             </li>
           </ul>
         </div>
-
-        <!-- Section: Orders & Sales -->
         <div>
           <div class="nav-section-title">Продажи и логистика</div>
           <ul class="nav-list">
@@ -98,8 +89,6 @@
             </li>
           </ul>
         </div>
-
-        <!-- Section: Users & Feedback -->
         <div>
           <div class="nav-section-title">Клиенты и модерация</div>
           <ul class="nav-list">
@@ -119,8 +108,6 @@
           </ul>
         </div>
       </div>
-
-      <!-- User footer -->
       <div class="sidebar-footer">
         <div class="user-snippet">
           <div class="user-avatar">АГ</div>
@@ -155,7 +142,7 @@
 
         <div class="header-search">
           <i class="bi bi-search"></i>
-          <input type="text" placeholder="Поиск категорий..." id='category-query'>
+          <input type="text" placeholder="Поиск категорий..." modal-action-input="category">
         </div>
 
         <div class="header-right">
@@ -193,7 +180,7 @@
             <div class="toolbar-left">
               <div class="toolbar-search">
                 <i class="bi bi-search"></i>
-                <input type="text" placeholder="Поиск по названию или ЧПУ..." data-table-search="#categories-table">
+                <input type="text" placeholder="Поиск по названию или алиасу..." data-table-search="#categories-table" modal-action-input="category">
               </div>
             </div>
             <div class="toolbar-right">
@@ -222,13 +209,6 @@
       </main>
     </div>
   </div>
-
-  <!-- ==========================================================================
-       MODAL: CREATE / EDIT CATEGORY
-       ========================================================================== -->
-  <div class="modal-backdrop" id="category-modal"></div>
-  <div class="modal-backdrop" id="select-category"></div>
-  <div class="modal-backdrop" id="remove-category"></div>
 
   <script src="js/admin.js"></script>
   <script>

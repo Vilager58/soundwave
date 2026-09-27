@@ -155,7 +155,7 @@
 
         <div class="header-search">
           <i class="bi bi-search"></i>
-          <input type="text" placeholder="Поиск брендов..." id="brand-query">
+          <input type="text" placeholder="Поиск брендов..." modal-action-input="brand">
         </div>
 
         <div class="header-right">
@@ -192,13 +192,6 @@
       </main>
     </div>
   </div>
-
-  <!-- ==========================================================================
-       MODAL: CREATE / EDIT BRAND
-       ========================================================================== -->
-  <div class="modal-backdrop" id="brand-modal"></div>
-  <div class="modal-backdrop" id="remove-brand"></div>
-
   <script src="js/admin.js"></script>
   <script>
     async function renderBrands(query) {
@@ -235,9 +228,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderBrands();
-      document.querySelector('#brand-query').addEventListener('input', (e)=>{
-        renderBrands(e.target.value);
-      })
     });
   </script>
 </body>
