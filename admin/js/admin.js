@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let product = {};
   initSidebar();
   initEvents();
-  initTabs();
+  // initTabs();
   // initTableSearchAndFilters();
   initPickupTerminal();
 });
@@ -53,7 +53,7 @@ function initSidebar() {
 /* ==========================================================================
    MODAL MANAGEMENT
    ========================================================================== */
-function openModal(modalId, targetBtn) {
+async function openModal(modalId, targetBtn) {
   let modalBox = document.getElementById(modalId);
   if (!modalBox) {
     let mb = document.createElement('div');
@@ -65,7 +65,9 @@ function openModal(modalId, targetBtn) {
   switch (modalId) {
     case 'product-modal':
       const productId = targetBtn.getAttribute('data-modal-product-id');
-      product = products.find(p => p.id == productId);
+      product = await Product({
+        id: productId
+      }, 'get');
       console.log(product);
       modalBox.innerHTML = `<div class="admin-modal modal-xl">
       <div class="modal-header">
@@ -73,7 +75,7 @@ function openModal(modalId, targetBtn) {
           <i class="bi bi-pencil-fill" style="color: var(--brand-yellow);"></i>
           <span>Редактирование товара</span>
         </div>
-        <button class="modal-close-btn" type="button">
+        <button class="modal-close-btn" type="button" modal-action-button='close'>
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
@@ -81,34 +83,34 @@ function openModal(modalId, targetBtn) {
       <div class="modal-body">
         <!-- Tabs Navigation -->
         <div class="nav-tabs">
-          <button class="tab-btn active" data-tab="tab-general">
+          <button class="tab-btn active" data-tab="tab-general" data-tab-level='1'>
             <i class="bi bi-info-circle"></i> Основное
           </button>
-          <button class="tab-btn" data-tab="tab-variants">
-            <i class="bi bi-tags"></i> Модификации и цены (${product.variants.length})
+          <button class="tab-btn" data-tab="tab-variants" data-tab-level='1'>
+            <i class="bi bi-tags"></i> Модификации и цены (${Object.keys(product.variants).length})
           </button>
-          <button class="tab-btn" data-tab="tab-attributes">
+          <button class="tab-btn" data-tab="tab-attributes" data-tab-level='1' modal-action-button='reload-attributes'>
             <i class="bi bi-sliders"></i> Характеристики (8)
           </button>
-          <button class="tab-btn" data-tab="tab-gallery">
+          <button class="tab-btn" data-tab="tab-gallery" data-tab-level='1' modal-action-button='reload-images'>
             <i class="bi bi-images"></i> Фото и медиа (3)
           </button>
         </div>
 
         <!-- TAB 1: GENERAL -->
-        <div class="tab-pane active" id="tab-general">
+        <div class="tab-pane active" id="tab-general" data-tab-level='1'>
           <form id="product-general-form">
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
               <div class="form-group">
                 <label class="form-label">Полное название товара <span class="required">*</span></label>
-                <input type="text" class="form-control" name="title" value="${product.productTitle}"
+                <input type="text" class="form-control" name="general-title" value="${product.productTitle}"
                   required>
                 <div class="form-hint">Отображается в заголовке страницы каталога и поиске</div>
               </div>
 
               <div class="form-group">
                 <label class="form-label">Алиас (Slug) <span class="required">*</span></label>
-                <input type="text" class="form-control" name="slug" value="${product.slug}"
+                <input type="text" class="form-control" name="general-slug" value="${product.slug}"
                   style="font-family: var(--font-mono);" required>
               </div>
             </div>
@@ -116,42 +118,42 @@ function openModal(modalId, targetBtn) {
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
               <div class="form-group">
                 <label for="data-modal-brand-id" class="form-label">Бренд производителя <span class="required">*</span></label>
-                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="brand_id" required>
+                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="general-brand" required>
               </div>
 
               <div class="form-group">
                 <label for="data-modal-category-id" class="form-label">Категория каталога <span class="required">*</span></label>
-                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category" value="${product.category}" data-modal-category-id="${product.categoryId}" name="category_id" required>
+                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category" value="${product.category}" data-modal-category-id="${product.categoryId}" name="general-category" required>
               </div>
 
               <div class="form-group">
                 <label class="form-label">Модельный код производителя</label>
-                <input type="text" class="form-control" name="model_code" value="${product.modelCode}"
+                <input type="text" class="form-control" name="general-modelCode" value="${product.modelCode}"
                   style="font-family: var(--font-mono);">
               </div>
             </div>
 
             <div class="form-group">
               <label class="form-label">Краткое описание (для сниппетов и карточек каталога)</label>
-              <textarea class="form-control" name="short_description"
+              <textarea class="form-control" name="general-shortDescription"
                 rows="2">${product.shortDescription}</textarea>
             </div>
 
             <div class="form-group">
               <label class="form-label">Полное описание с разметкой</label>
-              <textarea class="form-control" name="description"
+              <textarea class="form-control" name="general-description"
                 rows="4">${product.description}</textarea>
             </div>
 
             <div style="display: flex; gap: 32px; padding: 12px 0;">
               <label class="switch-label">
-                <input type="checkbox" class="switch-input" name="is_active" ${product.isActive == '1' ? 'checked' : ''}>
+                <input type="checkbox" class="switch-input" name="general-is_active" ${product.isActive == '1' ? 'checked' : ''}>
                 <span class="switch-slider"></span>
                 <span>Отображать на сайте (Активен)</span>
               </label>
 
               <label class="switch-label">
-                <input type="checkbox" class="switch-input" name="is_featured" ${product.isFeatured == '1' ? 'checked' : ''}>
+                <input type="checkbox" class="switch-input" name="general-is_featured" ${product.isFeatured == '1' ? 'checked' : ''}>
                 <span class="switch-slider"></span>
                 <span>Хит продаж / Рекомендованный товар</span>
               </label>
@@ -160,7 +162,7 @@ function openModal(modalId, targetBtn) {
         </div>
 
         <!-- TAB 2: VARIANTS & PRICING -->
-        <div class="tab-pane" id="tab-variants">
+        <div class="tab-pane" id="tab-variants" data-tab-level='1'>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <p style="color: var(--text-secondary); font-size: 0.88rem;">Модификации определяют цвета, сопротивление
               (Ом) и индивидуальные складские остатки.</p>
@@ -169,6 +171,7 @@ function openModal(modalId, targetBtn) {
             </button>
           </div>
 
+          
           <div class="table-responsive">
             <table class="admin-table">
               <thead>
@@ -185,92 +188,20 @@ function openModal(modalId, targetBtn) {
               <tbody id='product-variants'></tbody>
             </table>
           </div>
+          
         </div>
 
         <!-- TAB 3: ATTRIBUTES -->
-        <div class="tab-pane" id="tab-attributes">
+        <div class="tab-pane" id="tab-attributes" data-tab-level='1'>
           <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px;">
             Технические характеристики участвуют в фильтрах каталога интернет-магазина.
           </p>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-            <div class="form-group">
-              <label class="form-label">Частотный диапазон (Гц)</label>
-              <input type="text" class="form-control" value="4 - 40 000 Гц">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Импеданс / Сопротивление (Ом)</label>
-              <input type="number" class="form-control" value="48">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Активное шумоподавление (ANC)</label>
-              <select class="form-control">
-                <option value="1" selected>Да (Присутствует)</option>
-                <option value="0">Нет</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Время работы от аккумулятора (ч)</label>
-              <input type="number" class="form-control" value="30">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Тип подключения</label>
-              <input type="text" class="form-control" value="Bluetooth 5.2 / Mini-Jack 3.5 mm">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Вес (г)</label>
-              <input type="number" class="form-control" value="250">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Поддерживаемые аудиокодеки</label>
-              <input type="text" class="form-control" value="LDAC, AAC, SBC">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Наличие микрофона</label>
-              <select class="form-control">
-                <option value="1" selected>Да (8 микрофонов с шумоподавлением)</option>
-                <option value="0">Нет</option>
-              </select>
-            </div>
-          </div>
+          <div id='attributes-box'></div>
         </div>
 
         <!-- TAB 4: GALLERY & MEDIA -->
-        <div class="tab-pane" id="tab-gallery">
-          <div class="dropzone-box"
-            onclick="showToast('Загрузка фото', 'Выберите изображения WEBP/JPG/PNG до 10 МБ', 'info')">
-            <i class="bi bi-cloud-arrow-up-fill dropzone-icon"></i>
-            <div class="dropzone-text">Перетащите фотографии сюда или нажмите для выбора</div>
-            <div class="dropzone-subtext">Поддерживаются WebP, PNG, JPG высокой четкости</div>
-          </div>
-
-          <div class="gallery-grid">
-            <div class="gallery-item is-main">
-              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&auto=format&fit=crop&q=80"
-                alt="Sony Black Main">
-              <span class="gallery-item-badge">Главное</span>
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=200&auto=format&fit=crop&q=80"
-                alt="Sony Black Side">
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80"
-                alt="Sony Silver">
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-            </div>
-          </div>
+        <div class="tab-pane" id="tab-gallery" data-tab-level='1'>
+            <div id='gallery-box'></div>
         </div>
 
       </div>
@@ -283,8 +214,9 @@ function openModal(modalId, targetBtn) {
         </button>
       </div>
     </div>`
-      initTabs();
       renderProductVariants(product);
+      renderVariantAttributes(product);
+      renderVariantGallery(product);
       break;
 
     case 'brand-modal':
@@ -586,6 +518,31 @@ function closeModal(modalId, save = 'none') {
 
 function initEvents() {
   document.addEventListener('click', (e) => {
+    const tabButton = e.target.closest('.tab-btn');
+    if (tabButton) {
+      const navtab = e.target.closest('.nav-tabs');
+      const tabButtons = navtab.querySelectorAll('.tab-btn');
+      const tabLevel = tabButton.getAttribute('data-tab-level');
+      const targetId = tabButton.getAttribute('data-tab');
+      const container = navtab.closest('.modal-body') || navtab.closest('.admin-card') || document;
+
+      tabButtons.forEach(btn => {
+        if (btn.getAttribute('data-tab-level') == tabLevel) btn.classList.remove('active');
+      });
+      tabButton.classList.add('active');
+
+      const panes = container.querySelectorAll('.tab-pane');
+      panes.forEach(pane => {
+        if (pane.getAttribute('data-tab-level') == tabLevel) {
+          if (pane.id === targetId) {
+            pane.classList.add('active');
+          } else {
+            pane.classList.remove('active');
+          }
+        }
+      });
+    }
+
     const trigger = e.target.closest('[data-modal-target]');
     if (trigger) {
       e.preventDefault();
@@ -618,7 +575,6 @@ function initEvents() {
       if (selectInput) selectInput.click();
       return;
     }
-
     // const selectCatBtn = e.target.closest('#category-select-button');
     // if (selectCatBtn) {
     //   const selectInput = document.querySelector('#logo-select-input');
@@ -655,7 +611,7 @@ function initEvents() {
 async function obtainModal(action, btn) {
   switch (action) {
     case 'save-brand':
-      frm = document.querySelector('#brand-form')
+      frm = document.querySelector('#brand-form');
       f = Object.fromEntries(new FormData(frm));
       response = await Brands(f, 'update');
       showToast('Успешно', response.message, 'success');
@@ -664,7 +620,7 @@ async function obtainModal(action, btn) {
       break;
 
     case 'add-brand':
-      frm = document.querySelector('#brand-form')
+      frm = document.querySelector('#brand-form');
       f = Object.fromEntries(new FormData(frm));
       f['type'] = 'add';
       response = await Brands(f, 'add');
@@ -698,7 +654,7 @@ async function obtainModal(action, btn) {
       break;
 
     case 'save-category':
-      frm = document.querySelector('#category-form')
+      frm = document.querySelector('#category-form');
       f = Object.fromEntries(new FormData(frm));
       response = await Categories(f, 'update');
       showToast('Успешно', response.message, 'success');
@@ -707,7 +663,7 @@ async function obtainModal(action, btn) {
       break;
 
     case 'add-category':
-      frm = document.querySelector('#category-form')
+      frm = document.querySelector('#category-form');
       f = Object.fromEntries(new FormData(frm));
       f['type'] = 'add';
       response = await Categories(f, 'add');
@@ -726,33 +682,48 @@ async function obtainModal(action, btn) {
       closeModal('remove-category');
       break;
 
+    case 'reload-attributes':
+      renderVariantAttributes(product);
+      break;
+
     case 'add-variant':
       pid = btn.getAttribute('modal-action-data');
-      product.variants.push({
-        "variantId": 0,
+      var_arr = Object.keys(product.variants);
+      new_id = 'new-' + (var_arr.length + 1);
+      product.variants[new_id] = {
+        "variantId": new_id,
         "variant": "",
         "article": "",
         "barcode": "",
-        "price": "",
-        "oldPrice": "",
-        "amount": "",
-      });
+        "price": 0,
+        "oldPrice": 0,
+        "amount": 0,
+      };
       renderProductVariants(product);
       break;
 
     case 'copy-variant':
       vid = btn.getAttribute('modal-action-data');
-      variant = {...product.variants.find(v => v.variantId == vid), variantId: 0};
-      product.variants.push(variant);
+      var_arr = Object.keys(product.variants);
+      new_id = 'copy-' + (var_arr.length + 1);
+      variant = {
+        ...product.variants[vid],
+        variantId: new_id
+      };
+      product.variants[new_id] = variant;
       renderProductVariants(product);
       break;
 
     case 'remove-variant':
       vid = btn.getAttribute('modal-action-data');
-      product.variants.splice(product.variants.findIndex(v => v.variantId == vid), 1);
+      delete product.variants[vid];
       renderProductVariants(product);
       break;
 
+    case 'reload-images':
+      // presave();
+      renderVariantGallery(product);
+      break;
 
     case 'close':
       const backdrop = btn.closest('.modal-backdrop');
@@ -762,35 +733,19 @@ async function obtainModal(action, btn) {
 
 }
 
+function presave(){
+  const inputs = document.querySelector('.modal-body').querySelectorAll('input');
+  const produc = [];
+  for(input of inputs){
+    produc.push([input.value, input.name]);
+  }
+  console.log(produc);
+}
+
 /* ==========================================================================
    TABS SWITCHER
    ========================================================================== */
-function initTabs() {
-  document.querySelectorAll('.nav-tabs').forEach(tabNav => {
-    const tabButtons = tabNav.querySelectorAll('.tab-btn');
-    tabButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = button.getAttribute('data-tab');
-        const container = tabNav.closest('.modal-body') || tabNav.closest('.admin-card') || document;
-
-        // Reset active buttons in this group
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        // Toggle panes
-        const panes = container.querySelectorAll('.tab-pane');
-        panes.forEach(pane => {
-          if (pane.id === targetId) {
-            pane.classList.add('active');
-          } else {
-            pane.classList.remove('active');
-          }
-        });
-      });
-    });
-  });
-}
+// function initTabs() {}
 
 /* ==========================================================================
    TABLE SEARCH AND CLIENT FILTERING
@@ -1300,6 +1255,23 @@ async function getProducts(params) {
   return response
 }
 
+async function Product(params, type) {
+  params['type'] = type;
+  const response = fetch('/api/product.php', {
+      method: 'POST',
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast('Ошибка', error, 'danger');
+    });
+
+  return response
+}
+
 async function Brands(params, type) {
   params['type'] = type;
   const response = fetch('/api/brands.php', {
@@ -1418,20 +1390,21 @@ async function renderSelectCategories(query) {
 function renderProductVariants(product) {
   box = document.getElementById('product-variants');
   html = ''
-  for (v of product.variants) {
+  for (v of Object.keys(product.variants)) {
+    v = product.variants[v];
     html += `
                 <tr>                    
                   <td>
-                    <input type="text" class="form-control" value="${v.variant}" style="min-width: 170px;">
+                    <input type="text" class="form-control" name='variant-${v.variantId}-title' value="${v.variant}" style="min-width: 170px;">
                   </td>
-                  <td><input type="text" class="form-control" placeholder='SKU...' value="${v.article}"
+                  <td><input type="text" class="form-control" placeholder='SKU...' name='variant-${v.variantId}-article' value="${v.article}"
                       style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="text" class="form-control" placeholder='EAN-13...' value="${v.barcode}"
+                  <td><input type="text" class="form-control" placeholder='EAN-13...' name='variant-${v.variantId}-barcode' value="${v.barcode}"
                       style="font-family: var(--font-mono); width: 140px;"></td>
-                  <td><input type="number" class="form-control" value="${v.price}" placeholder='Цена...' style="width: 110px; font-weight: 700;">
+                  <td><input type="number" class="form-control" name='variant-${v.variantId}-price' value="${v.price}" placeholder='Цена...' style="width: 110px; font-weight: 700;">
                   </td>
-                  <td><input type="number" class="form-control" value="${v.oldPrice}" placeholder='Старая уена...' style="width: 110px;"></td>
-                  <td><input type="number" class="form-control" value="${v.amount}" placeholder='Остаток...' style="width: 80px; font-weight: 700;"></td>
+                  <td><input type="number" class="form-control" name='variant-${v.variantId}-oldPrice' value="${v.oldPrice}" placeholder='Старая уена...' style="width: 110px;"></td>
+                  <td><input type="number" class="form-control" name='variant-${v.variantId}-amount' value="${v.amount}" placeholder='Остаток...' style="width: 80px; font-weight: 700;"></td>
                   <td>
                     <div class="table-actions" style="justify-content: flex-end;">
                      <button class="table-action-btn" title="Копировать вариант" modal-action-button='copy-variant' modal-action-data='${v.variantId}'>
@@ -1444,4 +1417,118 @@ function renderProductVariants(product) {
                 </tr>`
   };
   box.innerHTML = html;
+}
+
+function renderVariantAttributes(product) {
+  box = document.getElementById('attributes-box');
+  box.innerHTML = '';
+  navtabs = document.createElement('div');
+  navtabs.className = 'nav-tabs';
+  variantTabs = document.createElement('div');
+  for (v of Object.keys(product.variants)) {
+    vid = v;
+    v = product.variants[v];
+    navtabs.innerHTML += `<button class="tab-btn" data-tab="tab-variant-${vid}" data-tab-level='2'>
+                            <i class="bi bi-info-circle"></i> ${v.variant}
+                          </button>`;
+
+    variantTab = document.createElement('div');
+    variantTab.className = "tab-pane";
+    variantTab.id = 'tab-variant-' + v.variantId;
+    variantTab.setAttribute('data-tab-level', '2');
+    grid = document.createElement('div');
+    grid.className = 'attr-grid';
+
+    for (a of Object.keys(v.attributes)) {
+      a = v.attributes[a];
+      switch (a.type) {
+        case 'number':
+          grid.innerHTML += `
+          <div class="form-group">
+              <label class="form-label">${a.title} ${a.unit ? '('+a.unit+')':''}</label>
+              <input type="number" class="form-control" name='attr-${a.attributeId}' value="${a.value}" placeholder='Значение...'>
+            </div>
+            `
+          break;
+
+        case 'string':
+          grid.innerHTML += `
+          <div class="form-group">
+              <label class="form-label">${a.title}</label>
+              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}' value="${a.value}" placeholder='Значение...'>
+            </div>
+            `
+          break;
+
+        case 'boolean':
+          grid.innerHTML += `
+          <div class="form-group">
+              <label class="form-label">${a.title}</label>
+              <select class="form-control" name='attr-${a.attributeId}'>
+                <option value="1" ${a.value == 1 ? 'selected': ''}>Да</option>
+                <option value="0" ${a.value == 0 ? 'selected': ''}>Нет</option>
+              </select>
+            </div>
+            `
+          break;
+      }
+      variantTab.append(grid);
+    }
+    variantTabs.append(variantTab);
+  }
+
+  box.append(navtabs);
+  box.append(variantTabs);
+}
+
+function renderVariantGallery(product) {
+  box = document.getElementById('gallery-box');
+  box.innerHTML = '';
+  navtabs = document.createElement('div');
+  navtabs.className = 'nav-tabs';
+  variantTabs = document.createElement('div');
+
+  for (v of Object.keys(product.variants)) {
+    v = product.variants[v];
+    navtabs.innerHTML += `<button class="tab-btn" data-tab="tab-variant-${v.variantId}" data-tab-level='2'>
+                            <i class="bi bi-info-circle"></i> ${v.variant}
+                          </button>`;
+
+    variantTab = document.createElement('div');
+    variantTab.className = "tab-pane";
+    variantTab.id = 'tab-variant-' + v.variantId;
+    variantTab.setAttribute('data-tab-level', '2');
+
+    dropzone = document.createElement('div');
+    dropzone.className = "dropzone-box";
+    dropzone.innerHTML = `
+            <i class="bi bi-cloud-arrow-up-fill dropzone-icon"></i>
+            <div class="dropzone-text">Перетащите фотографии сюда или нажмите для выбора</div>
+            <div class="dropzone-subtext">Поддерживаются WebP, PNG, JPG высокой четкости</div>
+            `;
+
+    grid = document.createElement('div');
+    grid.className = 'gallery-grid';
+
+    for (i of Object.keys(product.images)) {
+      i = product.images[i];
+      if (i.variantId !== v.variantId) continue;
+
+      grid.innerHTML += `
+            <div class="gallery-item ${i.isMain == 1 ? 'is-main' : ''} ">
+              <img src="${i.imageUrl}">
+              ${i.isMain == 1 ? '<span class="gallery-item-badge">Главное</span>' : ''}
+              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
+              <input type="text" name="image-${v.variantId}-${i.id}-${i.sortOrder}" id='image-url' modal-action-button='remove-image'
+               modal-action-data='${i.id}' value='${i.imageUrl}' style='display: none'>
+            </div>
+      `
+    }
+    variantTab.append(dropzone);
+    variantTab.append(grid);
+    variantTabs.append(variantTab);
+  }
+
+  box.append(navtabs);
+  box.append(variantTabs);
 }

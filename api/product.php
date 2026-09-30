@@ -43,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ';
 
                 $attributes = 'SELECT 
-                    pv.id,
+                    pv.id as variant_id,
                     pa.attribute_id,
                     a.title,
                     a.unit,
+                    a.data_type,
                     COALESCE(pa.value_string, pa.value_number, pa.value_bool) as val
                     FROM products_variants pv
                     LEFT JOIN product_attributes pa ON pv.id = pa.variant_id
@@ -54,6 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     JOIN products p ON pv.product_id = p.id
 
                     WHERE pv.product_id = ?
+                ';
+
+                $imgs = 'SELECT 
+                    pi.id as image_id,
+                    pi.variant_id,
+                    pi.image_url,
+                    pi.is_main,
+                    pi.sort_order
+                    FROM product_images pi
+                    WHERE pi.product_id = ?
                 ';
 
                 $id = $_POST['id'];
@@ -70,6 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $query->execute([$id]);
                 $attributes = $query->fetchAll(PDO::FETCH_ASSOC);
 
+                $query = $pdo->prepare($imgs);
+                $query->execute([$id]);
+                $imgs = $query->fetchAll(PDO::FETCH_ASSOC);
+
                 $response = (object) [
                     'id' => $product['product_id'],
                     'productTitle' => $product['title'],
@@ -83,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'isActive' => $product['is_active'],
                     'modelCode' => $product['model_code'],
                     'slug' => $product['slug'],
-                    'variants' => [],
                     'images' => [],
+                    'variants' => [],
                 ];
 
                 foreach ($variants as $variant) {
@@ -101,11 +116,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 };
 
                 foreach ($attributes as $attr) {
-                    $response->variants[$attr['id']]->attributes[$attr['attribute_id']] = (object) [
-                        'atributeId' => $attr['attribute_id'],
+                    $response->variants[$attr['variant_id']]->attributes[$attr['attribute_id']] = (object) [
+                        'attributeId' => $attr['attribute_id'],
                         'title' => $attr['title'],
+                        'type' => $attr['data_type'],
                         'unit' => $attr['unit'],
                         'value' => $attr['val'],
+                    ];
+                }
+
+                foreach($imgs as $img){
+                    $response->images[$img['image_id']] = (object) [
+                        'id' => $img['image_id'],
+                        'variantId' => $img['variant_id'],
+                        'imageUrl' => $img['image_url'],
+                        'isMain' => $img['is_main'],
+                        'sortOrder' => $img['sort_order'],
                     ];
                 }
 
