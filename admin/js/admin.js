@@ -743,6 +743,7 @@ async function obtainModal(action, btn) {
       break;
 
     case 'reload-attributes':
+      presave();
       renderVariantAttributes(product);
       break;
 
@@ -751,6 +752,7 @@ async function obtainModal(action, btn) {
       var_arr = Object.keys(product.variants);
       new_id = 'new-' + (var_arr.length + 1);
       product.variants[new_id] = {
+        'action': 'add',
         "variantId": new_id,
         "variant": "",
         "article": "",
@@ -768,7 +770,8 @@ async function obtainModal(action, btn) {
       new_id = 'copy-' + (var_arr.length + 1);
       variant = {
         ...product.variants[vid],
-        variantId: new_id
+        variantId: new_id,
+        'action': 'add',
       };
       product.variants[new_id] = variant;
       renderProductVariants(product);
@@ -776,7 +779,12 @@ async function obtainModal(action, btn) {
 
     case 'remove-variant':
       vid = btn.getAttribute('modal-action-data');
-      product.variants[vid].action = 'remove';
+      console.log(vid);
+      if (vid.includes('copy') || vid.includes('new')) {
+        delete product.variants[vid];
+      } else {
+        product.variants[vid].action = 'remove';
+      }
       renderProductVariants(product);
       closeModal('remove-variant');
       break;
@@ -784,12 +792,12 @@ async function obtainModal(action, btn) {
     case 'remove-attr':
       ids = btn.getAttribute('modal-action-data').split('-');
       product.variants[ids[0]].attributes[ids[1]].action = 'remove';
-      renderVariantAttributes(product, setactive=ids[0]);
+      renderVariantAttributes(product, setactive = ids[0]);
       closeModal('remove-attribute');
       break;
 
     case 'reload-images':
-      presave();
+      // presave();
       renderVariantGallery(product);
       break;
 
@@ -837,13 +845,16 @@ function presave() {
         attributeId: a[2],
         title: a[3],
         value: input.value,
-        action: a[4]
+        action: a[4],
+        unit: input.getAttribute('unit'),
+        type: input.getAttribute('itype')
       };
       continue
     }
     if (i.includes('category') || i.includes('brand')) {
       bc = i.split('-');
       prs[bc[1] + 'Id'] = bc[2];
+      prs[bc[1]] = input.value;
       continue
     }
 
@@ -853,17 +864,9 @@ function presave() {
       continue
     }
   }
-  return prs
+  product = prs;
 }
 
-/* ==========================================================================
-   TABS SWITCHER
-   ========================================================================== */
-// function initTabs() {}
-
-/* ==========================================================================
-   TABLE SEARCH AND CLIENT FILTERING
-   ========================================================================== */
 function initTableSearchAndFilters() {
   const searchInputs = document.querySelectorAll('.toolbar-search input, [data-table-search]');
 
@@ -883,7 +886,6 @@ function initTableSearchAndFilters() {
     });
   });
 
-  // Category and Brand selects
   const filterSelects = document.querySelectorAll('[data-table-filter]');
   filterSelects.forEach(select => {
     const colIndex = parseInt(select.getAttribute('data-table-filter'), 10);
@@ -908,9 +910,6 @@ function initTableSearchAndFilters() {
   });
 }
 
-/* ==========================================================================
-   TOAST NOTIFICATION ENGINE
-   ========================================================================== */
 function showToast(title, message, type = 'success') {
   let container = document.querySelector('.toast-container');
   if (!container) {
@@ -962,9 +961,6 @@ function removeToast(toast) {
   }, 300);
 }
 
-/* ==========================================================================
-   PICKUP POINT (POS / ORDER FULFILLMENT) ENGINE
-   ========================================================================== */
 const sampleOrdersDB = {
   'SW-2026-0002': {
     orderNumber: 'SW-2026-0002',
@@ -1518,11 +1514,11 @@ function renderProductVariants(product) {
   html = ''
   for (v of Object.keys(product.variants)) {
     v = product.variants[v];
-      html += `
+    html += `
                 <tr ${v.action == 'remove'? "style='display:none'": ''}>                    
                   <td>
                     <input type="text" class="form-control" name='variant-${v.variantId}-action' value="${v.action}" style="display:none;">
-                    <input type="text" class="form-control" name='variant-${v.variantId}-title' value="${v.variant}" style="min-width: 170px;">
+                    <input type="text" class="form-control" name='variant-${v.variantId}-variant' value="${v.variant}" style="min-width: 170px;">
                   </td>
                   <td><input type="text" class="form-control" placeholder='SKU...' name='variant-${v.variantId}-article' value="${v.article}"
                       style="font-family: var(--font-mono); width: 140px;"></td>
@@ -1549,11 +1545,11 @@ function renderProductVariants(product) {
 
 function renderVariantAttributes(product, setactive = '') {
   box = document.getElementById('attributes-box');
-  box.innerHTML = '';
   navtabs = document.createElement('div');
   navtabs.className = 'nav-tabs';
   variantTabs = document.createElement('div');
   for (v of Object.keys(product.variants)) {
+    
     vid = v;
     v = product.variants[v];
     navtabs.innerHTML += `<button class="tab-btn" data-tab="tab-variant-${vid}" data-tab-level='2'>
@@ -1573,17 +1569,17 @@ function renderVariantAttributes(product, setactive = '') {
               <i class="bi bi-plus-lg"></i> Добавить атрибут
             </button>    
     `
+   
     for (a of Object.keys(v.attributes)) {
       a = v.attributes[a];
       display = a.action == 'remove' ? "style='display:none;'" : '';
-
       switch (a.type) {
         case 'number':
           grid.innerHTML += `
           <div class="form-group" ${display}>
               <label class="form-label">${a.title} ${a.unit ? '('+a.unit+')':''}</label>
               <div class='attr-input'>
-              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' value="${a.value}" placeholder='Значение...'>
+              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' title="${a.title}" unit="${a.unit}" itype='${a.type}' value="${a.value}" placeholder='Значение...'>
                 <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
               </div>
             </div>
@@ -1595,7 +1591,7 @@ function renderVariantAttributes(product, setactive = '') {
           <div class="form-group" ${display}>
               <label class="form-label">${a.title}</label>
               <div class='attr-input'>
-              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' value="${a.value}" placeholder='Значение...'>
+              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' title="${a.title}" unit="${a.unit}" itype='${a.type}' value="${a.value}" placeholder='Значение...'>
                 <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
               </div>
             </div>
@@ -1607,7 +1603,7 @@ function renderVariantAttributes(product, setactive = '') {
           <div class="form-group" ${display}>
               <label class="form-label">${a.title}</label>
               <div class='attr-input'>
-              <select class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}'>
+              <select class="form-control" title="${a.title}" unit="${a.unit}" itype='${a.type}' name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}'>
                 <option value="1" ${a.value == 1 ? 'selected': ''}>Да</option>
                 <option value="0" ${a.value == 0 ? 'selected': ''}>Нет</option>
               </select>
@@ -1621,7 +1617,7 @@ function renderVariantAttributes(product, setactive = '') {
     }
     variantTabs.append(variantTab);
   }
-
+  box.innerHTML = '';
   box.append(navtabs);
   box.append(variantTabs);
 }
