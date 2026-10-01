@@ -459,6 +459,25 @@ async function openModal(modalId, targetBtn) {
       renderSelectCategories();
       break;
 
+    case 'remove-attribute':
+      removingIds = targetBtn.getAttribute('data-modal-attr-id').split('-');
+      productVariant = product.variants[removingIds[0]];
+      attr = productVariant.attributes[removingIds[1]];
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-sm">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Подтверждаете удаление <br> ${attr.title} ?</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='remove-attr' modal-action-data='${removingIds[0]}-${removingIds[1]}'>
+          <i class="bi bi-check2"></i> Удалить атрибут</button>
+      </div>`;
+      break;
+
     case 'remove-brand':
       removingBrandId = targetBtn.getAttribute('data-modal-brand-id');
       brand = brands.find(b => b.id == removingBrandId);
@@ -491,6 +510,24 @@ async function openModal(modalId, targetBtn) {
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         <button class="btn btn-brand" type="button" modal-action-button='remove-category' modal-action-data='${category.id}'>
+          <i class="bi bi-check2"></i> Удалить бренд </button>
+      </div>`;
+      break;
+
+    case 'remove-variant':
+      removingVariantId = targetBtn.getAttribute('data-modal-variant-id');
+      variant = product.variants[removingVariantId];
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-sm">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Подтверждаете удаление ${variant.variant} ?</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='remove-variant' modal-action-data='${removingVariantId}'>
           <i class="bi bi-check2"></i> Удалить бренд </button>
       </div>`;
       break;
@@ -739,8 +776,16 @@ async function obtainModal(action, btn) {
 
     case 'remove-variant':
       vid = btn.getAttribute('modal-action-data');
-      delete product.variants[vid];
+      product.variants[vid].action = 'remove';
       renderProductVariants(product);
+      closeModal('remove-variant');
+      break;
+
+    case 'remove-attr':
+      ids = btn.getAttribute('modal-action-data').split('-');
+      product.variants[ids[0]].attributes[ids[1]].action = 'remove';
+      renderVariantAttributes(product, setactive=ids[0]);
+      closeModal('remove-attribute');
       break;
 
     case 'reload-images':
@@ -791,13 +836,14 @@ function presave() {
       prs['variants'][a[1]]['attributes'][a[2]] = {
         attributeId: a[2],
         title: a[3],
-        value: input.value
+        value: input.value,
+        action: a[4]
       };
       continue
     }
-    if(i.includes('category') || i.includes('brand')){
+    if (i.includes('category') || i.includes('brand')) {
       bc = i.split('-');
-      prs[bc[1]+'Id'] = bc[2];
+      prs[bc[1] + 'Id'] = bc[2];
       continue
     }
 
@@ -1472,9 +1518,10 @@ function renderProductVariants(product) {
   html = ''
   for (v of Object.keys(product.variants)) {
     v = product.variants[v];
-    html += `
-                <tr>                    
+      html += `
+                <tr ${v.action == 'remove'? "style='display:none'": ''}>                    
                   <td>
+                    <input type="text" class="form-control" name='variant-${v.variantId}-action' value="${v.action}" style="display:none;">
                     <input type="text" class="form-control" name='variant-${v.variantId}-title' value="${v.variant}" style="min-width: 170px;">
                   </td>
                   <td><input type="text" class="form-control" placeholder='SKU...' name='variant-${v.variantId}-article' value="${v.article}"
@@ -1490,16 +1537,17 @@ function renderProductVariants(product) {
                      <button class="table-action-btn" title="Копировать вариант" modal-action-button='copy-variant' modal-action-data='${v.variantId}'>
                         <i class="bi bi-copy"></i>
                       </button>
-                    <button class="table-action-btn delete-btn" title="Удалить вариант" modal-action-button='remove-variant' modal-action-data='${v.variantId}'><i
+                    <button class="table-action-btn delete-btn" title="Удалить вариант" data-modal-target="remove-variant" data-modal-variant-id='${v.variantId}'><i
                         class="bi bi-trash"></i></button>
                         </div>
                   </td>
                 </tr>`
+
   };
   box.innerHTML = html;
 }
 
-function renderVariantAttributes(product) {
+function renderVariantAttributes(product, setactive = '') {
   box = document.getElementById('attributes-box');
   box.innerHTML = '';
   navtabs = document.createElement('div');
@@ -1513,42 +1561,59 @@ function renderVariantAttributes(product) {
                           </button>`;
 
     variantTab = document.createElement('div');
-    variantTab.className = "tab-pane";
+    active = setactive == vid ? 'active' : '';
+    variantTab.className = "tab-pane " + active;
     variantTab.id = 'tab-variant-' + v.variantId;
     variantTab.setAttribute('data-tab-level', '2');
     grid = document.createElement('div');
     grid.className = 'attr-grid';
-
+    variantTab.innerHTML = `
+          <div style="display: flex; justify-content: end; align-items: center; margin-bottom: 16px;">
+            <button class="btn btn-brand btn-sm" type="button" modal-action-button='add-attribute' modal-action-data='${vid}'>
+              <i class="bi bi-plus-lg"></i> Добавить атрибут
+            </button>    
+    `
     for (a of Object.keys(v.attributes)) {
       a = v.attributes[a];
+      display = a.action == 'remove' ? "style='display:none;'" : '';
+
       switch (a.type) {
         case 'number':
           grid.innerHTML += `
-          <div class="form-group">
+          <div class="form-group" ${display}>
               <label class="form-label">${a.title} ${a.unit ? '('+a.unit+')':''}</label>
-              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}' value="${a.value}" placeholder='Значение...'>
+              <div class='attr-input'>
+              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' value="${a.value}" placeholder='Значение...'>
+                <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
+              </div>
             </div>
             `
           break;
 
         case 'string':
           grid.innerHTML += `
-          <div class="form-group">
+          <div class="form-group" ${display}>
               <label class="form-label">${a.title}</label>
-              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}' value="${a.value}" placeholder='Значение...'>
+              <div class='attr-input'>
+              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' value="${a.value}" placeholder='Значение...'>
+                <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
+              </div>
             </div>
             `
           break;
 
         case 'boolean':
           grid.innerHTML += `
-          <div class="form-group">
+          <div class="form-group" ${display}>
               <label class="form-label">${a.title}</label>
-              <select class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}'>
+              <div class='attr-input'>
+              <select class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}'>
                 <option value="1" ${a.value == 1 ? 'selected': ''}>Да</option>
                 <option value="0" ${a.value == 0 ? 'selected': ''}>Нет</option>
               </select>
+                <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
             </div>
+                </div>
             `
           break;
       }

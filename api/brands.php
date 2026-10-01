@@ -1,7 +1,6 @@
 <?php
 require('db.php');
 
-
 $params = [];
 
 function loadFile($type)
