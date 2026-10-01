@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let brands = [];
   let categories = [];
   let product = {};
+  let presaveproduct = {};
+  let lastSearchCat = '0';
   initSidebar();
   initEvents();
   // initTabs();
@@ -118,12 +120,12 @@ async function openModal(modalId, targetBtn) {
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
               <div class="form-group">
                 <label for="data-modal-brand-id" class="form-label">Бренд производителя <span class="required">*</span></label>
-                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="general-brand" required>
+                <input class="form-control" id='data-modal-brand-id' data-modal-target="select-brand" value="${product.brand}" data-modal-brand-id="${product.brandId}" name="general-brand-${product.brandId}" required>
               </div>
 
               <div class="form-group">
                 <label for="data-modal-category-id" class="form-label">Категория каталога <span class="required">*</span></label>
-                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category" value="${product.category}" data-modal-category-id="${product.categoryId}" name="general-category" required>
+                <input class="form-control" id='data-modal-category-id' data-modal-target="select-category" value="${product.category}" data-modal-category-parent='0' name="general-category-${product.categoryId}" required>
               </div>
 
               <div class="form-group">
@@ -345,7 +347,7 @@ async function openModal(modalId, targetBtn) {
           <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
             <div class="form-group">
               <label class="form-label">Родительская категория</label>
-                <button type='button' class="form-control" data-modal-target="select-category" id='parent-category-title'>${category.parentTitle || 'Корневая'}</button>
+                <button type='button' class="form-control" data-modal-target="select-category" data-modal-category-parent='1' id='parent-category-title'>${category.parentTitle || 'Корневая'}</button>
               <input type="text" name="parentCategoryId" id='parent-category-id' value='${category.parentId || '0'}' style='display: none'>
           </div>
 
@@ -417,7 +419,6 @@ async function openModal(modalId, targetBtn) {
       break;
 
     case 'select-category':
-
       modalBox.innerHTML = `  
       <div class="admin-modal modal-lg">
         <div class="modal-header">
@@ -454,6 +455,7 @@ async function openModal(modalId, targetBtn) {
         </div>
       </div>
     </div>`
+      lastSearchCat = targetBtn.getAttribute('data-modal-category-parent') == '1';
       renderSelectCategories();
       break;
 
@@ -641,6 +643,27 @@ async function obtainModal(action, btn) {
 
     case 'select-category':
       cid = btn.getAttribute('modal-action-data');
+      if (lastSearchCat) {
+        if (cid == 0) {
+          title = 'Корневая';
+        } else {
+          category = categories.find(c => c.id == cid);
+          title = category.title;
+        }
+        document.querySelector('#parent-category-title').innerText = title;
+        document.querySelector('#parent-category-id').value = cid;
+      } else {
+        category = categories.find(c => c.id == cid);
+        title = category.title;
+        document.querySelector('#parent-category-title').innerText = title;
+        document.querySelector('#parent-category-id').value = cid;
+      }
+
+      closeModal('select-category');
+      break;
+
+    case 'select-product-category':
+      cid = btn.getAttribute('modal-action-data');
       if (cid == 0) {
         title = 'Корневая';
         console.log('корневая');
@@ -721,7 +744,7 @@ async function obtainModal(action, btn) {
       break;
 
     case 'reload-images':
-      // presave();
+      presave();
       renderVariantGallery(product);
       break;
 
@@ -733,13 +756,58 @@ async function obtainModal(action, btn) {
 
 }
 
-function presave(){
-  const inputs = document.querySelector('.modal-body').querySelectorAll('input');
-  const produc = [];
-  for(input of inputs){
-    produc.push([input.value, input.name]);
+function presave() {
+  const modal = document.querySelector('#product-modal')
+  const inputs = modal.querySelectorAll('input, select, textarea');
+  const prs = {
+    variants: {},
+    images: {}
+  };
+  vars = []
+  for (input of inputs) {
+    i = input.name;
+    if (i.includes('variant')) {
+      s = i.split('-');
+      if (typeof (prs['variants'][s[1]]) != 'object') prs['variants'][s[1]] = {
+        variantId: s[1],
+        attributes: {}
+      };
+      prs['variants'][s[1]][s[2]] = input.value;
+      continue;
+    }
+    if (i.includes('image')) {
+      v = i.split('-');
+      prs['images'][v[1]] = {
+        id: v[1],
+        isMain: v[4],
+        imageUrl: input.value,
+        sortOrder: v[3],
+        variantId: v[2]
+      };
+      continue;
+    }
+    if (i.includes('attr')) {
+      a = i.split('-');
+      prs['variants'][a[1]]['attributes'][a[2]] = {
+        attributeId: a[2],
+        title: a[3],
+        value: input.value
+      };
+      continue
+    }
+    if(i.includes('category') || i.includes('brand')){
+      bc = i.split('-');
+      prs[bc[1]+'Id'] = bc[2];
+      continue
+    }
+
+    if (i.includes('general')) {
+      g = i.split('-');
+      prs[g[1]] = input.value;
+      continue
+    }
   }
-  console.log(produc);
+  return prs
 }
 
 /* ==========================================================================
@@ -1367,10 +1435,10 @@ async function loadSvg(url) {
 }
 
 async function renderSelectCategories(query) {
-  parent_categories = await Categories(getFilterParams(query), 'get', true);
+  categories = await Categories(getFilterParams(query), 'get', lastSearchCat);
   const box = document.querySelector('#select-category-list');
   let html = '';
-  for (const c of parent_categories) {
+  for (const c of categories) {
     if (c.parentId == null) {
       html += `<tr style="background: rgba(255, 255, 255, 0.02); cursor: pointer;" modal-action-button='select-category' modal-action-data='${c.id}'>
                   <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#${c.id}</strong></td>
@@ -1380,6 +1448,18 @@ async function renderSelectCategories(query) {
                     </div>
                   </td>
                   <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">${c.slug}</code></td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                </tr>`
+    } else {
+      html += `<tr>
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#${c.id}</strong></td>
+                  <td>
+                    <div style="padding-left: 28px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-primary);">
+                      <i class="bi bi-arrow-return-right" style="color: var(--border-highlight);"></i>
+                      ${c.title}
+                    </div>
+                  </td>
+                  <td><code style="color: var(--text-secondary); font-family: var(--font-mono);">${c.slug}</code></td>
                   <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
                 </tr>`
     }
@@ -1446,7 +1526,7 @@ function renderVariantAttributes(product) {
           grid.innerHTML += `
           <div class="form-group">
               <label class="form-label">${a.title} ${a.unit ? '('+a.unit+')':''}</label>
-              <input type="number" class="form-control" name='attr-${a.attributeId}' value="${a.value}" placeholder='Значение...'>
+              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}' value="${a.value}" placeholder='Значение...'>
             </div>
             `
           break;
@@ -1455,7 +1535,7 @@ function renderVariantAttributes(product) {
           grid.innerHTML += `
           <div class="form-group">
               <label class="form-label">${a.title}</label>
-              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}' value="${a.value}" placeholder='Значение...'>
+              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}' value="${a.value}" placeholder='Значение...'>
             </div>
             `
           break;
@@ -1464,7 +1544,7 @@ function renderVariantAttributes(product) {
           grid.innerHTML += `
           <div class="form-group">
               <label class="form-label">${a.title}</label>
-              <select class="form-control" name='attr-${a.attributeId}'>
+              <select class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}'>
                 <option value="1" ${a.value == 1 ? 'selected': ''}>Да</option>
                 <option value="0" ${a.value == 0 ? 'selected': ''}>Нет</option>
               </select>
@@ -1519,7 +1599,7 @@ function renderVariantGallery(product) {
               <img src="${i.imageUrl}">
               ${i.isMain == 1 ? '<span class="gallery-item-badge">Главное</span>' : ''}
               <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-              <input type="text" name="image-${v.variantId}-${i.id}-${i.sortOrder}" id='image-url' modal-action-button='remove-image'
+              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}" id='image-url' modal-action-button='remove-image'
                modal-action-data='${i.id}' value='${i.imageUrl}' style='display: none'>
             </div>
       `
