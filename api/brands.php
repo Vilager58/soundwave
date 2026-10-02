@@ -25,8 +25,6 @@ function loadFile($type)
             }
             return $destPath;
             break;
-
-
     }
 }
 

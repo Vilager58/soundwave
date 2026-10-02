@@ -140,29 +140,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
 
             case 'update':
-                $id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $parent_id = filter_var($_POST['parentCategoryId'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $parent_id = $parent_id == 0 ? null : $parent_id;
-                $title = filter_var($_POST['title'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $slug = filter_var($_POST['slug'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $description = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $is_active = isset($_POST['is_active']) ? '1' : '0';
-                $q = ' UPDATE categories c SET 
-                        c.title = ?, 
-                        c.slug = ?,  
-                        c.parent_id = ?, 
-                        c.description = ?, 
-                        c.is_active = ?
+                // $id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
+                // $parent_id = filter_var($_POST['parentCategoryId'], FILTER_SANITIZE_SPECIAL_CHARS);
+                // $parent_id = $parent_id == 0 ? null : $parent_id;
+                // $title = filter_var($_POST['title'], FILTER_SANITIZE_SPECIAL_CHARS);
+                // $slug = filter_var($_POST['slug'], FILTER_SANITIZE_SPECIAL_CHARS);
+                // $description = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+                // $is_active = isset($_POST['is_active']) ? '1' : '0';
+                // $q = ' UPDATE categories c SET 
+                //         c.title = ?, 
+                //         c.slug = ?,  
+                //         c.parent_id = ?, 
+                //         c.description = ?, 
+                //         c.is_active = ?
 
-                        WHERE c.id = ?
-                        ';
+                //         WHERE c.id = ?
+                //         ';
 
-                $query = $pdo->prepare($q);
-                $query->execute([$title, $slug, $parent_id, $description, $is_active, $id]);
-                $response = [
-                    'status' => 'success',
-                    'message' => "Успешное обновление категории"
-                ];
+                // $query = $pdo->prepare($q);
+                // $query->execute([$title, $slug, $parent_id, $description, $is_active, $id]);
+                // $response = [
+                //     'status' => 'success',
+                //     'message' => "Успешное обновление категории"
+                // ];
+                echo "<pre>";
+                $variants = json_decode($_POST['variants'], true);
+
+                print_r($variants[1]['attributes']);
+                echo "</pre>";
+
                 break;
 
             case 'add':

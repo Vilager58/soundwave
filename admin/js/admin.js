@@ -92,10 +92,10 @@ async function openModal(modalId, targetBtn) {
             <i class="bi bi-tags"></i> Модификации и цены (${Object.keys(product.variants).length})
           </button>
           <button class="tab-btn" data-tab="tab-attributes" data-tab-level='1' modal-action-button='reload-attributes'>
-            <i class="bi bi-sliders"></i> Характеристики (8)
+            <i class="bi bi-sliders"></i> Характеристики
           </button>
           <button class="tab-btn" data-tab="tab-gallery" data-tab-level='1' modal-action-button='reload-images'>
-            <i class="bi bi-images"></i> Фото и медиа (3)
+            <i class="bi bi-images"></i> Фото и медиа (${Object.keys(product.images).length})
           </button>
         </div>
 
@@ -210,8 +210,7 @@ async function openModal(modalId, targetBtn) {
 
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
-        <button class="btn btn-brand" type="button"
-          onclick="closeModal('product-modal'); showToast('Товар сохранен', 'Данные товара успешно обновлены в базе', 'success');">
+        <button class="btn btn-brand" type="button" modal-action-button='save-product'>
           <i class="bi bi-check2"></i> Сохранить изменения
         </button>
       </div>
@@ -459,6 +458,45 @@ async function openModal(modalId, targetBtn) {
       renderSelectCategories();
       break;
 
+    case 'select-attribute':
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-lg">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Выберите атрибут</span>
+        </div>
+        <button class="modal-close-btn" type="button" modal-action-button='close'>
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="select-atribute-form">
+          <div class="form-group">
+            <label class="form-label">Введите название категории</label>
+            <input type="text" class="form-control" name="title" modal-action-input='select-atribute' value="" palaceholder='Название' required>
+          </div>
+        </form>
+        <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">ID</th>
+                  <th>Название категории</th>
+                  <th>Алиас (Slug)</th>
+                  <th>Статус</th>
+                </tr>
+              </thead>
+              <tbody id="select-category-list"></tbody>
+            </table>
+          <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        </div>
+      </div>
+    </div>`
+      renderSelectAttributes();
+      break;
+
     case 'remove-attribute':
       removingIds = targetBtn.getAttribute('data-modal-attr-id').split('-');
       productVariant = product.variants[removingIds[0]];
@@ -528,7 +566,28 @@ async function openModal(modalId, targetBtn) {
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         <button class="btn btn-brand" type="button" modal-action-button='remove-variant' modal-action-data='${removingVariantId}'>
-          <i class="bi bi-check2"></i> Удалить бренд </button>
+          <i class="bi bi-check2"></i> Удалить вариант </button>
+      </div>`;
+      break;
+
+    case 'remove-image':
+      removingImageId = targetBtn.getAttribute('data-modal-image-id');
+      image = product.images[removingImageId];
+      modalBox.innerHTML = `  
+      <div class="admin-modal modal-sm">
+        <div class="modal-header">
+        <div class="modal-title">
+          <i class="bi bi-patch-check-fill" style="color: var(--brand-yellow);"></i>
+          <span>Удалить изображение?</span>
+        </div>
+      </div>
+      <div class='modal-body'>
+        <img style='width: 100px; height: 100px;' src=${image.imageUrl}/>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
+        <button class="btn btn-brand" type="button" modal-action-button='remove-image' modal-action-data='${removingImageId}'>
+          <i class="bi bi-check2"></i> Удалить изображение </button>
       </div>`;
       break;
   }
@@ -796,13 +855,49 @@ async function obtainModal(action, btn) {
       closeModal('remove-attribute');
       break;
 
+    case 'select-main-image':
+      id = btn.getAttribute('modal-action-data');
+      for (i of Object.keys(product.images)) {
+        product.images[i].isMain = '0';
+      }
+      product.images[id].isMain = '1';
+      renderVariantGallery(product, product.images[id].variantId);
+      break;
+
+    case 'remove-image':
+      id = btn.getAttribute('modal-action-data');
+      product.images[id].action = 'remove';
+      vid = product.images[id].variantId;
+      l = [];
+      for (i of Object.keys(product.images)) {
+        if (product.images[i].action != 'remove') l.push(i);
+      }
+      if (l.length == 0) {
+        showToast('Предупреждение', 'Добавьте хотя бы одно изображение', 'info')
+      }
+      if (product.images[id].isMain == '1') {
+        showToast('Предупреждение', 'Выберите главное изображение', 'info')
+      }
+
+      renderVariantGallery(product, product.images[id].variantId);
+      closeModal('remove-image');
+      break;
+
     case 'reload-images':
-      // presave();
+      presave();
       renderVariantGallery(product);
       break;
 
+    case 'save-product':
+      presave();
+      response = await Product(product, 'update');
+      showToast('Успешно', response.message, 'success');
+      renderCatalog();
+      closeModal('product-modal');
+      break;
+
     case 'close':
-      const backdrop = btn.closest('.modal-backdrop');
+      backdrop = btn.closest('.modal-backdrop');
       if (backdrop) closeModal(backdrop.id);
       break;
   }
@@ -845,7 +940,7 @@ function presave() {
         attributeId: a[2],
         title: a[3],
         value: input.value,
-        action: a[4],
+        action: a[4] || 'update',
         unit: input.getAttribute('unit'),
         type: input.getAttribute('itype')
       };
@@ -1417,6 +1512,23 @@ async function Categories(params, type, parentOnly = false) {
   return response
 }
 
+async function Attributes(params, type) {
+  params['type'] = type;
+  const response = fetch('/api/attributes.php', {
+      method: 'POST',
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast('Ошибка', error, 'danger');
+    });
+
+  return response
+}
+
 function getFilterParams(query) {
   const params = new URLSearchParams(window.location.search);
   console.log(query);
@@ -1454,7 +1566,11 @@ function prepareData(data) {
   const formData = new FormData();
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
-      formData.append(key, data[key]);
+      if (typeof(data[key]) == 'object' || typeof(data[key]) == 'array') {
+        formData.append(key, JSON.stringify(data[key]));
+      } else {
+        formData.append(key, data[key]);
+      }
     }
   }
   return formData
@@ -1509,6 +1625,40 @@ async function renderSelectCategories(query) {
   box.innerHTML = html;
 }
 
+async function renderSelectAttributes(query) {
+  attributes = await Categories(getFilterParams(query), 'get', lastSearchCat);
+  const box = document.querySelector('#select-category-list');
+  let html = '';
+  for (const c of categories) {
+    if (c.parentId == null) {
+      html += `<tr style="background: rgba(255, 255, 255, 0.02); cursor: pointer;" modal-action-button='select-category' modal-action-data='${c.id}'>
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#${c.id}</strong></td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                      ${c.title}
+                    </div>
+                  </td>
+                  <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">${c.slug}</code></td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                </tr>`
+    } else {
+      html += `<tr>
+                  <td><strong style="color: var(--text-muted); font-family: var(--font-mono);">#${c.id}</strong></td>
+                  <td>
+                    <div style="padding-left: 28px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-primary);">
+                      <i class="bi bi-arrow-return-right" style="color: var(--border-highlight);"></i>
+                      ${c.title}
+                    </div>
+                  </td>
+                  <td><code style="color: var(--text-secondary); font-family: var(--font-mono);">${c.slug}</code></td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                </tr>`
+    }
+  }
+  box.innerHTML = html;
+}
+
+
 function renderProductVariants(product) {
   box = document.getElementById('product-variants');
   html = ''
@@ -1549,16 +1699,17 @@ function renderVariantAttributes(product, setactive = '') {
   navtabs.className = 'nav-tabs';
   variantTabs = document.createElement('div');
   for (v of Object.keys(product.variants)) {
-    
+
     vid = v;
     v = product.variants[v];
-    navtabs.innerHTML += `<button class="tab-btn" data-tab="tab-variant-${vid}" data-tab-level='2'>
+    active = setactive == vid ? ' active' : '';
+    navtabs.innerHTML += `<button class="tab-btn${active}" data-tab="tab-variant-${vid}" data-tab-level='2'>
                             <i class="bi bi-info-circle"></i> ${v.variant}
                           </button>`;
 
     variantTab = document.createElement('div');
-    active = setactive == vid ? 'active' : '';
-    variantTab.className = "tab-pane " + active;
+
+    variantTab.className = "tab-pane" + active;
     variantTab.id = 'tab-variant-' + v.variantId;
     variantTab.setAttribute('data-tab-level', '2');
     grid = document.createElement('div');
@@ -1569,7 +1720,7 @@ function renderVariantAttributes(product, setactive = '') {
               <i class="bi bi-plus-lg"></i> Добавить атрибут
             </button>    
     `
-   
+
     for (a of Object.keys(v.attributes)) {
       a = v.attributes[a];
       display = a.action == 'remove' ? "style='display:none;'" : '';
@@ -1622,21 +1773,23 @@ function renderVariantAttributes(product, setactive = '') {
   box.append(variantTabs);
 }
 
-function renderVariantGallery(product) {
+function renderVariantGallery(product, setactive = '') {
   box = document.getElementById('gallery-box');
   box.innerHTML = '';
   navtabs = document.createElement('div');
   navtabs.className = 'nav-tabs';
   variantTabs = document.createElement('div');
-
+  console.log(setactive);
   for (v of Object.keys(product.variants)) {
+    vid = v;
     v = product.variants[v];
-    navtabs.innerHTML += `<button class="tab-btn" data-tab="tab-variant-${v.variantId}" data-tab-level='2'>
+    active = setactive == vid ? ' active' : '';
+    navtabs.innerHTML += `<button class="tab-btn${active}" data-tab="tab-variant-${v.variantId}" data-tab-level='2'>
                             <i class="bi bi-info-circle"></i> ${v.variant}
                           </button>`;
 
     variantTab = document.createElement('div');
-    variantTab.className = "tab-pane";
+    variantTab.className = "tab-pane" + active;
     variantTab.id = 'tab-variant-' + v.variantId;
     variantTab.setAttribute('data-tab-level', '2');
 
@@ -1656,12 +1809,12 @@ function renderVariantGallery(product) {
       if (i.variantId !== v.variantId) continue;
 
       grid.innerHTML += `
-            <div class="gallery-item ${i.isMain == 1 ? 'is-main' : ''} ">
-              <img src="${i.imageUrl}">
+            <div class="gallery-item ${i.isMain == 1 ? 'is-main' : ''}" ${i.action == 'remove' ? "style='display:none;'" : ''}>
+              <img src="${i.imageUrl}" modal-action-button='select-main-image' modal-action-data='${i.id}' style='cursor:pointer;'>
               ${i.isMain == 1 ? '<span class="gallery-item-badge">Главное</span>' : ''}
-              <button class="gallery-item-delete" type="button" title="Удалить"><i class="bi bi-trash"></i></button>
-              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}" id='image-url' modal-action-button='remove-image'
-               modal-action-data='${i.id}' value='${i.imageUrl}' style='display: none'>
+              <button class="gallery-item-delete" type="button" data-modal-target='remove-image'  data-modal-image-id='${i.id}' title="Удалить"><i class="bi bi-trash"></i></button>
+              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}${i.action ? '-'+i.action : ''}" id='image-url' 
+               value='${i.imageUrl}' style='display: none'>
             </div>
       `
     }
