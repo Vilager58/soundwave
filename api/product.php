@@ -111,9 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'price' => $variant['price'],
                         'oldPrice' => $variant['old_price'],
                         'amount' => $variant['amount'],
+                        'isActive' => $variant['is_active'],
                         'attributes' => [],
                     ];
-                };
+                }
+                ;
 
                 foreach ($attributes as $attr) {
                     $response->variants[$attr['variant_id']]->attributes[$attr['attribute_id']] = (object) [
@@ -125,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ];
                 }
 
-                foreach($imgs as $img){
+                foreach ($imgs as $img) {
                     $response->images[$img['image_id']] = (object) [
                         'id' => $img['image_id'],
                         'variantId' => $img['variant_id'],
@@ -134,70 +136,143 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'sortOrder' => $img['sort_order'],
                     ];
                 }
-
-                // $response = array_values($product);
-                // echo($product[0]);
                 break;
 
             case 'update':
-                // $id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-                // $parent_id = filter_var($_POST['parentCategoryId'], FILTER_SANITIZE_SPECIAL_CHARS);
-                // $parent_id = $parent_id == 0 ? null : $parent_id;
-                // $title = filter_var($_POST['title'], FILTER_SANITIZE_SPECIAL_CHARS);
-                // $slug = filter_var($_POST['slug'], FILTER_SANITIZE_SPECIAL_CHARS);
-                // $description = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS);
-                // $is_active = isset($_POST['is_active']) ? '1' : '0';
-                // $q = ' UPDATE categories c SET 
-                //         c.title = ?, 
-                //         c.slug = ?,  
-                //         c.parent_id = ?, 
-                //         c.description = ?, 
-                //         c.is_active = ?
+                try {
+                    $pdo->beginTransaction();
+                    $product = "UPDATE products p SET
+                        p.category_id = ?,
+                        p.brand_id = ?,
+                        p.title = ?,
+                        p.slug = ?,
+                        p.model_code = ?,
+                        p.short_Description = ?,
+                        p.description = ?,
+                        p.is_active = ?,
+                        p.is_featured = ?,
+                        p.updated_at = NOW()
 
-                //         WHERE c.id = ?
-                //         ';
+                        WHERE p.id = ?
+                    ";
+                    $query = $pdo->prepare($product);
+                    $query->execute([
+                        $_POST['categoryId'],
+                        $_POST['brandId'],
+                        $_POST['title'],
+                        $_POST['slug'],
+                        $_POST['modelCode'],
+                        $_POST['shortDescription'],
+                        $_POST['description'],
+                        $_POST['isActive'],
+                        $_POST['isFeatured'],
+                        $_POST['id']
+                    ]);
 
-                // $query = $pdo->prepare($q);
-                // $query->execute([$title, $slug, $parent_id, $description, $is_active, $id]);
-                // $response = [
-                //     'status' => 'success',
-                //     'message' => "Успешное обновление категории"
-                // ];
-                echo "<pre>";
-                $variants = json_decode($_POST['variants'], true);
+                    $variants = json_decode($_POST['variants'], true);
 
-                print_r($variants[1]['attributes']);
-                echo "</pre>";
 
-                break;
+                    foreach ($variants as $variant) {
+                        switch ($variant['action']) {
+                            case 'update':
+                                $variantQuery = 'UPDATE products_variants pv SET
+                                                pv.title = ?,
+                                                pv.article = ?,
+                                                pv.barcode = ?,
+                                                pv.price = ?,
+                                                pv.old_price = ?,
+                                                pv.amount = ?,
+                                                pv.is_active = ?
 
-            case 'add':
-                $parent_id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $title = filter_var($_POST['title'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $slug = filter_var($_POST['slug'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $description = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $is_active = isset($_POST['is_active']) ? '1' : '0';
+                                                WHERE
+                                                pv.id = ?
+                                                ';
+                                $query = $pdo->prepare($variantQuery);
+                                $query->execute([
+                                    $variant['variant'],
+                                    $variant['article'],
+                                    $variant['barcode'],
+                                    $variant['price'],
+                                    $variant['oldPrice'],
+                                    $variant['amount'],
+                                    $variant['isActive'],
+                                    $variant['variantId'],
+                                ]);
+                                foreach ($variant['attributes'] as $attribute) {
+                                    switch ($attribute['action']) {
+                                        case 'update':
+                                            $attributeQuery = 'UPDATE product_attributes pa SET
+                                                pa.value_string = ?,
+                                                pa.value_number = ?,
+                                                pa.value_bool = ?
 
-                $q = ' INSERT INTO categories(
-                           title, slug, parent_id, description, is_active)
-                           VALUES(?, ?, ?, ?, ?)';
-                $query = $pdo->prepare($q);
-                $query->execute([$title, $slug, $parent_id, $description, $is_active]);
-                $response = [
-                    'status' => 'success',
-                    'message' => "Успешное добавление категории"
-                ];
-                break;
+                                                WHERE
+                                                pa.variant_id = ? AND pa.attribute_id = ?
+                                                ';
 
-            case 'remove':
-                $id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $q = ' DELETE FROM categories WHERE id = ?';
-                $query = $pdo->prepare($q);
-                $query->execute([$id]);
-                $response = [
-                    'status' => 'success',
-                    'message' => "Успешное удаление категории"
-                ];
+                                            $query = $pdo->prepare($attributeQuery);
+                                            $query->execute([
+                                                $attribute['type'] == 'string' ? $attribute['value'] : null,
+                                                $attribute['type'] == 'number' ? $attribute['value'] : null,
+                                                $attribute['type'] == 'boolean' ? $attribute['value'] : null,
+                                                $variant['variantId'],
+                                                $attribute['attributeId']
+                                            ]);
+                                            break;
+                                    }
+                                    ;
+                                }
+                                ;
+                                break;
+                        }
+                        ;
+                    }
+                    ;
+
+                    $images = json_decode($_POST['images'], true);
+                    foreach ($images as $image) {
+                        switch ($image['action']) {
+                            case 'update':
+                                $imageQuery = 'UPDATE product_images pi SET
+                                    pi.variant_id = ?,
+                                    pi.image_url = ?,
+                                    pi.is_main = ?,
+                                    pi.sort_order = ?
+
+                                    WHERE
+                                    pi.id = ?
+                                    ';
+
+                                $query = $pdo->prepare($imageQuery);
+                                $query->execute([
+                                    $image['variantId'],
+                                    $image['imageUrl'],
+                                    $image['isMain'],
+                                    $image['sortOrder'],
+                                    $image['id']
+                                ]);
+                                break;
+                        }
+                    }
+
+                    $pdo->commit();
+
+                    $response = [
+                        'status' => 'success',
+                        'message' => "Успешное обновление товара"
+                    ];
+
+                } catch (Exception $e) {
+                    if (isset($pdo) && $pdo->inTransaction()) {
+                        $pdo->rollBack();
+                    }
+                    http_response_code(503);
+                    $response = [
+                        'status' => 'error',
+                        'message' => $e->getMessage(),
+                    ];
+                    break;
+                }
                 break;
         }
         echo json_encode($response, JSON_UNESCAPED_UNICODE);

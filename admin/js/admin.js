@@ -105,8 +105,8 @@ async function openModal(modalId, targetBtn) {
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
               <div class="form-group">
                 <label class="form-label">Полное название товара <span class="required">*</span></label>
-                <input type="text" class="form-control" name="general-title" value="${product.productTitle}"
-                  required>
+                <input type="text" class="form-control" name="general-id" value="${product.id}" style='display:none;' required>
+                <input type="text" class="form-control" name="general-title" value="${product.productTitle}" required>
                 <div class="form-hint">Отображается в заголовке страницы каталога и поиске</div>
               </div>
 
@@ -149,13 +149,13 @@ async function openModal(modalId, targetBtn) {
 
             <div style="display: flex; gap: 32px; padding: 12px 0;">
               <label class="switch-label">
-                <input type="checkbox" class="switch-input" name="general-is_active" ${product.isActive == '1' ? 'checked' : ''}>
+                <input type="checkbox" class="switch-input" name="general-isActive" ${product.isActive == '1' ? 'checked' : ''}>
                 <span class="switch-slider"></span>
                 <span>Отображать на сайте (Активен)</span>
               </label>
 
               <label class="switch-label">
-                <input type="checkbox" class="switch-input" name="general-is_featured" ${product.isFeatured == '1' ? 'checked' : ''}>
+                <input type="checkbox" class="switch-input" name="general-isFeatured" ${product.isFeatured == '1' ? 'checked' : ''}>
                 <span class="switch-slider"></span>
                 <span>Хит продаж / Рекомендованный товар</span>
               </label>
@@ -184,6 +184,7 @@ async function openModal(modalId, targetBtn) {
                   <th>Цена (₽)</th>
                   <th>Старая цена (₽)</th>
                   <th>Остаток (шт)</th>
+                  <th>Активен</th>
                   <th>Действие</th>
                 </tr>
               </thead>
@@ -914,13 +915,21 @@ function presave() {
   vars = []
   for (input of inputs) {
     i = input.name;
+    if(input.type == 'checkbox'){
+      val = input.checked ? '1' : '0';
+    } else {
+      val = input.value
+    };
+
     if (i.includes('variant')) {
       s = i.split('-');
       if (typeof (prs['variants'][s[1]]) != 'object') prs['variants'][s[1]] = {
         variantId: s[1],
-        attributes: {}
+        attributes: {},
+        action: 'update'
       };
-      prs['variants'][s[1]][s[2]] = input.value;
+      prs['variants'][s[1]][s[2]] = val;
+      if (s[2] == 'action') prs['variants'][s[1]].action = val == 'undefined' ? 'update' : val;
       continue;
     }
     if (i.includes('image')) {
@@ -928,9 +937,10 @@ function presave() {
       prs['images'][v[1]] = {
         id: v[1],
         isMain: v[4],
-        imageUrl: input.value,
+        imageUrl: val,
         sortOrder: v[3],
-        variantId: v[2]
+        variantId: v[2],
+        action: v[5]
       };
       continue;
     }
@@ -939,7 +949,7 @@ function presave() {
       prs['variants'][a[1]]['attributes'][a[2]] = {
         attributeId: a[2],
         title: a[3],
-        value: input.value,
+        value: val,
         action: a[4] || 'update',
         unit: input.getAttribute('unit'),
         type: input.getAttribute('itype')
@@ -949,13 +959,13 @@ function presave() {
     if (i.includes('category') || i.includes('brand')) {
       bc = i.split('-');
       prs[bc[1] + 'Id'] = bc[2];
-      prs[bc[1]] = input.value;
+      prs[bc[1]] = val;
       continue
     }
 
     if (i.includes('general')) {
       g = i.split('-');
-      prs[g[1]] = input.value;
+      prs[g[1]] = val;
       continue
     }
   }
@@ -1566,7 +1576,7 @@ function prepareData(data) {
   const formData = new FormData();
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
-      if (typeof(data[key]) == 'object' || typeof(data[key]) == 'array') {
+      if (typeof (data[key]) == 'object' || typeof (data[key]) == 'array') {
         formData.append(key, JSON.stringify(data[key]));
       } else {
         formData.append(key, data[key]);
@@ -1678,6 +1688,12 @@ function renderProductVariants(product) {
                   </td>
                   <td><input type="number" class="form-control" name='variant-${v.variantId}-oldPrice' value="${v.oldPrice}" placeholder='Старая уена...' style="width: 110px;"></td>
                   <td><input type="number" class="form-control" name='variant-${v.variantId}-amount' value="${v.amount}" placeholder='Остаток...' style="width: 80px; font-weight: 700;"></td>
+                  <td> 
+                      <label class="switch-label">
+                        <input type="checkbox" class="switch-input" name="variant-${v.variantId}-isActive" ${v.isActive == 1 ? 'checked' : ''}> 
+                        <span class="switch-slider"></span>
+                      </label>
+                  </td>
                   <td>
                     <div class="table-actions" style="justify-content: flex-end;">
                      <button class="table-action-btn" title="Копировать вариант" modal-action-button='copy-variant' modal-action-data='${v.variantId}'>
@@ -1813,7 +1829,7 @@ function renderVariantGallery(product, setactive = '') {
               <img src="${i.imageUrl}" modal-action-button='select-main-image' modal-action-data='${i.id}' style='cursor:pointer;'>
               ${i.isMain == 1 ? '<span class="gallery-item-badge">Главное</span>' : ''}
               <button class="gallery-item-delete" type="button" data-modal-target='remove-image'  data-modal-image-id='${i.id}' title="Удалить"><i class="bi bi-trash"></i></button>
-              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}${i.action ? '-'+i.action : ''}" id='image-url' 
+              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}${i.action ? '-'+i.action : '-update'}" id='image-url' 
                value='${i.imageUrl}' style='display: none'>
             </div>
       `
