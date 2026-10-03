@@ -2,8 +2,10 @@
 require('db.php');
 
 
-$params = [];
+print_r($productModel->getById(1));
 
+$params = [];
+exit;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['type'])) {
@@ -238,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     pi.image_url = ?,
                                     pi.is_main = ?,
                                     pi.sort_order = ?
-
+                                    
                                     WHERE
                                     pi.id = ?
                                     ';

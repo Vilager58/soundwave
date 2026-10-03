@@ -1,7 +1,20 @@
 <?php
+
+use App\Brand\BrandRepository;
 require('db.php');
 
 $params = [];
+
+require_once('./src/Brand/BrandRepository.php');
+require_once('./src/Database.php');
+use App\Database;
+// use App\Brand\BrandRepository;
+
+$db = new Database($pdo);
+$brandRepository = new BrandRepository($db);
+
+print_r($brandRepository->getAll());
+exit;
 
 function loadFile($type)
 {
@@ -44,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     FROM brands b 
                     LEFT JOIN products p ON b.id = p.brand_id 
                     GROUP BY b.id
-                    HAVING 1=1
-                    ';
+                    HAVING 1=1';
+
                 if ($_POST['query'] != 'null') {
                     $q .= ' AND (b.title LIKE :query OR b.slug LIKE :query)';
                     $params['query'] = '%' . $_POST['query'] . '%';
