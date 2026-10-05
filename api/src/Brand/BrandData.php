@@ -1,15 +1,22 @@
 <?php
+
+namespace App\Brand;
+
+/**
+ * Данные бренда
+ */
 readonly class BrandData
 {
     public function __construct(
-        private int $id,
-        private string $title,
-        private string $slug,
-        private string $country,
-        private string $logoUrl,
-        private string $description,
-        private bool $Active,
-        private ?int $amount,
-    ) {
+        public int    $id,
+        public string $title,
+        public string $slug,
+        public string $country,
+        public string $logoUrl,
+        public string $description,
+        public bool   $active,
+        public ?int   $amount = null
+    )
+    {
     }
 }

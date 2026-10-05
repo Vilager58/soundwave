@@ -10,10 +10,11 @@ require_once('./src/Database.php');
 use App\Database;
 // use App\Brand\BrandRepository;
 
-$db = new Database($pdo);
+$db = new Database('mysql:host=localhost;dbname=soundwave;port=3306', 'root', '');
+
 $brandRepository = new BrandRepository($db);
 
-print_r($brandRepository->getAll());
+print_r($brandRepository->getById(1));
 exit;
 
 function loadFile($type)
@@ -148,4 +149,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-?>
