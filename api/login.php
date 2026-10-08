@@ -1,6 +1,6 @@
 <?php
 require('db.php');
-session_start();
+
 
 
 header('Content-Type: application/json');
@@ -11,7 +11,6 @@ $q = 'SELECT id, role_id, password_hash FROM users WHERE email = ?';
 $query = $pdo->prepare($q);
 $query->execute([$login]);
 $user_data = $query->fetch(PDO::FETCH_ASSOC);
-
 
 if ($query->rowCount() == 0 || !password_verify($password, $user_data['password_hash'])){
     http_response_code(403);

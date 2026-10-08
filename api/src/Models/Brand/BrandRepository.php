@@ -1,12 +1,12 @@
 <?php
-namespace App\Brand;
+namespace App\Models\Brand;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use PDO;
 use Exception;
-use App\Database;
-use App\Brand;
+use App\Models\Database;
+use App\Models\Brand;
+use PDO;
 
 class BrandRepository
 {
@@ -153,13 +153,20 @@ class BrandRepository
     /**
      * Удалить бренд из базы данных
      *
-     * @param int $id
+     * @param int $id BrandId : id бренда в бд
      * @return array|null ArrayMessage : результат
      * @throws \Throwable
      */
     public function removeBrandById(int $id): ?array
     {
+
         return $this->db->transaction(function (PDO $pdo) use ($id) {
+            $productCount = "SELECT COUNT(p.brand_id) AS amount FROM products p WHERE p.brand_id = ?";
+            $query = $pdo->prepare($productCount);
+            $query->execute([$id]);
+            $amount = $query->fetchColumn();
+            if($amount != 0) throw new Exception("Cant remove brand with products");
+
             $brandQuery = "DELETE FROM brands WHERE id = ?";
 
             $query = $pdo->prepare($brandQuery);

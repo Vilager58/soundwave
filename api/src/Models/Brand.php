@@ -1,6 +1,8 @@
 <?php
-namespace App;
-use App\Brand\BrandData;
+namespace App\Models;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+use App\Models\Brand\BrandData;
 
 class Brand
 {

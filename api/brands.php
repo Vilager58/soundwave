@@ -1,20 +1,23 @@
 <?php
-
-use App\Brand\BrandRepository;
 require('db.php');
 
 $params = [];
 
-require_once('./src/Brand/BrandRepository.php');
-require_once('./src/Database.php');
+require_once __DIR__ . '/vendor/autoload.php';
+
 use App\Database;
-// use App\Brand\BrandRepository;
+use App\Brand\BrandRepository;
+use App\Brand\BrandData;
 
 $db = new Database('mysql:host=localhost;dbname=soundwave;port=3306', 'root', '');
 
-$brandRepository = new BrandRepository($db);
 
-print_r($brandRepository->getById(1));
+$brandRepository = new BrandRepository($db);
+$numeros = $brandRepository->getById(6);
+$numeros->update(new BrandData('penis', 'huy', 'govno', '/d/d', 'pypa', true));
+print_r($numeros->getTitle());
+$brandRepository->removeBrandById($numeros->getId());
+
 exit;
 
 function loadFile($type)

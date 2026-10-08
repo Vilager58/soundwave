@@ -254,7 +254,7 @@
 
       const formData = new FormData(loginForm);
 
-      fetch('/api/login.php', {
+      fetch('/api/v1/login', {
         method: 'POST',
         body: formData
       })

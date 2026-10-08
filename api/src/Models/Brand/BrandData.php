@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Brand;
+namespace App\Models\Brand;
 
 /**
  * Данные бренда
@@ -8,7 +8,6 @@ namespace App\Brand;
 readonly class BrandData
 {
     public function __construct(
-        public int    $id,
         public string $title,
         public string $slug,
         public string $country,
