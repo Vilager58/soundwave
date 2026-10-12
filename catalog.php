@@ -280,7 +280,7 @@
       renderFilters(filters);
       const products = await getProducts(getFilterParams());
       console.log(products);
-      const favs = getStoredFavs();
+      // const favs = getStoredFavs();
 
       if (countEl) {
         countEl.innerHTML = `Показано <strong>${products.length}</strong> из <strong>${SOUNDWAVE_DATA.products.length}</strong> товаров`;
@@ -300,16 +300,16 @@
 
       let html = '';
       products.forEach(p => {
-        const isFav = favs.includes(p.id);
+        // const isFav = favs.includes(p.id);
         html += `
           <div class="col-xl-4 col-md-6">
-            <div class="product-card">
+            <div class="product-card" pid="">
               <div class="product-image-box">
                 <div class="product-badges">
                   ${p.badge ? `<span class="badge-${p.badgeType || 'hit'}">${p.badge}</span>` : ''}
                 </div>
-                <button class="product-fav-btn ${isFav ? 'active' : ''}" data-id="${p.id}" aria-label="В избранное">
-                  <i class="bi bi-heart${isFav ? '-fill' : ''}"></i>
+                <button class="product-fav-btn" data-id="${p.id}" aria-label="В избранное">
+                  <i class="bi bi-heart"></i>
                 </button>
                 <a href="product.php?id=${p.id}">
                   <img src="${p.image}" alt="${p.productTitle}" loading="lazy">

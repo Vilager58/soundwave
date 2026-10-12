@@ -225,20 +225,18 @@
       }
     }
 
-    
-
     registerForm.addEventListener('submit', function (event) {
       event.preventDefault();
 
       const formData = new FormData(registerForm);
 
-      fetch('/api/register.php', {
+      fetch('/api/v1/register', {
         method: 'POST',
         body: formData
       })
         .then(response => response.json())
         .then(data => {
-          showToast('Аккаунт создан!');
+          showToast(data.message);
           setTimeout(() => {
             window.location.href = 'account.php';
           }, 700);
@@ -261,7 +259,7 @@
         .then(response => response.json())
         .then(data => {
           if (data.status == 'error') {
-            showToast(data.message);
+            showToast(data.message, );
           } else {
             showToast(data.message);
             setTimeout(() => {

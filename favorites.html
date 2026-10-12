@@ -155,8 +155,9 @@
 
   <script src="js/main.js"></script>
   <script>
-    function renderFavoritesPage() {
-      const favs = getStoredFavs();
+    async function renderFavoritesPage() {
+      const favs = await getFavs();
+      console.log(favs);
       const container = document.querySelector('#favs-grid-container');
       const emptyView = document.querySelector('#favs-empty-view');
 
@@ -169,44 +170,34 @@
       if (emptyView) emptyView.style.display = 'none';
 
       let html = '';
-      favs.forEach(id => {
-        const product = SOUNDWAVE_DATA.products.find(p => p.id === id) || {
-          id: id,
-          title: 'Товар SOUNDWAVE',
-          category: 'Оборудование',
-          price: 49990,
-          rating: 5.0,
-          reviews: 10,
-          image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'
-        };
-
+      favs.forEach(fav => {
         html += `
           <div class="product-card">
             <div class="product-image-box">
-              <button class="product-fav-btn active" onclick="removeFromFavs('${product.id}')" title="Удалить из избранного">
+              <button class="product-fav-btn active" onclick="removeFromFavs('${fav.id}')" title="Удалить из избранного">
                 <i class="bi bi-heart-fill"></i>
               </button>
-              <a href="product.php?id=${product.id}">
-                <img src="${product.image}" alt="${product.title}">
+              <a href="product.php?id=${fav.id}">
+                <img src="${fav.image}" alt="${fav.product_title}">
               </a>
             </div>
             <div class="product-content">
-              <div class="product-category-tag">${product.category}</div>
-              <a href="product.php?id=${product.id}" class="product-title">${product.title}</a>
+              <div class="product-category-tag">${fav.category}</div>
+              <a href="product.php?id=${fav.id}" class="product-title">${fav.product_title}</a>
               <div class="product-rating">
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
-                <span class="rating-count">${product.rating || '4.9'}</span>
+                <span class="rating-count">${fav.rating || '4.9'}</span>
                 <span class="badge-stock">В наличии</span>
               </div>
               <div class="product-price-row">
                 <div class="price-box">
-                  <span class="current-price">${formatPrice(product.price)}</span>
+                  <span class="current-price">${formatPrice(fav.price)}</span>
                 </div>
-                <button class="btn-add-cart" onclick="addToCart('${product.id}')" title="В корзину">
+                <button class="btn-add-cart" onclick="addToCart('${fav.id}')" title="В корзину">
                   <i class="bi bi-bag-plus"></i>
                 </button>
               </div>

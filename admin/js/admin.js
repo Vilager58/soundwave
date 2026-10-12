@@ -1,8 +1,3 @@
-/**
- * SoundWave Admin Panel - Core Interactive Logic
- * Vanilla JS (No dependencies)
- */
-
 document.addEventListener('DOMContentLoaded', () => {
   let products = [];
   let brands = [];
@@ -17,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPickupTerminal();
 });
 
-/* ==========================================================================
-   SIDEBAR & MOBILE NAVIGATION
-   ========================================================================== */
 function initSidebar() {
   const sidebar = document.querySelector('.admin-sidebar');
   const collapseBtn = document.querySelector('.sidebar-collapse-btn');
@@ -294,7 +286,7 @@ async function openModal(modalId, targetBtn) {
 
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
-        <button class="btn btn-brand" type="button" modal-action-button='${brand.id == 0 ? 'add':'save'}-brand'>
+        <button class="btn btn-brand" type="button" modal-action-button='${brand.id == 0 ? 'add' : 'save'}-brand'>
           <i class="bi bi-check2"></i> Сохранить бренд </button>
       </div>
     </div>
@@ -369,7 +361,7 @@ async function openModal(modalId, targetBtn) {
 
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
-        <button class="btn btn-brand" type="button" modal-action-button='${category.id == 0 ? 'add':'save'}-category'>
+        <button class="btn btn-brand" type="button" modal-action-button='${category.id == 0 ? 'add' : 'save'}-category'>
         Сохранить категорию
         </button>
       </div>
@@ -915,7 +907,7 @@ function presave() {
   vars = []
   for (input of inputs) {
     i = input.name;
-    if(input.type == 'checkbox'){
+    if (input.type == 'checkbox') {
       val = input.checked ? '1' : '0';
     } else {
       val = input.value
@@ -1456,9 +1448,9 @@ function addOrderToTodayLog() {
 async function getProducts(params) {
 
   const response = fetch('/api/catalog.php', {
-      method: 'POST',
-      body: prepareData(params),
-    })
+    method: 'POST',
+    body: prepareData(params),
+  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1473,9 +1465,9 @@ async function getProducts(params) {
 async function Product(params, type) {
   params['type'] = type;
   const response = fetch('/api/product.php', {
-      method: 'POST',
-      body: prepareData(params),
-    })
+    method: 'POST',
+    body: prepareData(params),
+  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1490,9 +1482,9 @@ async function Product(params, type) {
 async function Brands(params, type) {
   params['type'] = type;
   const response = fetch('/api/brands.php', {
-      method: 'POST',
-      body: prepareData(params),
-    })
+    method: 'POST',
+    body: prepareData(params),
+  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1508,9 +1500,9 @@ async function Categories(params, type, parentOnly = false) {
   params['type'] = type;
   if (parentOnly) params['parent'] = '1';
   const response = fetch('/api/categories.php', {
-      method: 'POST',
-      body: prepareData(params),
-    })
+    method: 'POST',
+    body: prepareData(params),
+  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1525,9 +1517,9 @@ async function Categories(params, type, parentOnly = false) {
 async function Attributes(params, type) {
   params['type'] = type;
   const response = fetch('/api/attributes.php', {
-      method: 'POST',
-      body: prepareData(params),
-    })
+    method: 'POST',
+    body: prepareData(params),
+  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1558,9 +1550,9 @@ function getFilterParams(query) {
 async function getFilters(params) {
 
   const response = fetch('/api/catalog_filters.php', {
-      method: 'POST',
-      body: prepareData(params),
-    })
+    method: 'POST',
+    body: prepareData(params),
+  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1616,7 +1608,7 @@ async function renderSelectCategories(query) {
                     </div>
                   </td>
                   <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">${c.slug}</code></td>
-                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>' : '<span class="badge badge-muted">Скрыта</span>'}</td>
                 </tr>`
     } else {
       html += `<tr>
@@ -1628,7 +1620,7 @@ async function renderSelectCategories(query) {
                     </div>
                   </td>
                   <td><code style="color: var(--text-secondary); font-family: var(--font-mono);">${c.slug}</code></td>
-                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>' : '<span class="badge badge-muted">Скрыта</span>'}</td>
                 </tr>`
     }
   }
@@ -1649,7 +1641,7 @@ async function renderSelectAttributes(query) {
                     </div>
                   </td>
                   <td><code style="color: var(--brand-yellow); font-family: var(--font-mono);">${c.slug}</code></td>
-                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>' : '<span class="badge badge-muted">Скрыта</span>'}</td>
                 </tr>`
     } else {
       html += `<tr>
@@ -1661,7 +1653,7 @@ async function renderSelectAttributes(query) {
                     </div>
                   </td>
                   <td><code style="color: var(--text-secondary); font-family: var(--font-mono);">${c.slug}</code></td>
-                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>':'<span class="badge badge-muted">Скрыта</span>'}</td>
+                  <td>${c.isActive == 1 ? '<span class="badge badge-success">Активна</span>' : '<span class="badge badge-muted">Скрыта</span>'}</td>
                 </tr>`
     }
   }
@@ -1675,7 +1667,7 @@ function renderProductVariants(product) {
   for (v of Object.keys(product.variants)) {
     v = product.variants[v];
     html += `
-                <tr ${v.action == 'remove'? "style='display:none'": ''}>                    
+                <tr ${v.action == 'remove' ? "style='display:none'" : ''}>                    
                   <td>
                     <input type="text" class="form-control" name='variant-${v.variantId}-action' value="${v.action}" style="display:none;">
                     <input type="text" class="form-control" name='variant-${v.variantId}-variant' value="${v.variant}" style="min-width: 170px;">
@@ -1744,9 +1736,9 @@ function renderVariantAttributes(product, setactive = '') {
         case 'number':
           grid.innerHTML += `
           <div class="form-group" ${display}>
-              <label class="form-label">${a.title} ${a.unit ? '('+a.unit+')':''}</label>
+              <label class="form-label">${a.title} ${a.unit ? '(' + a.unit + ')' : ''}</label>
               <div class='attr-input'>
-              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' title="${a.title}" unit="${a.unit}" itype='${a.type}' value="${a.value}" placeholder='Значение...'>
+              <input type="number" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action : ''}' title="${a.title}" unit="${a.unit}" itype='${a.type}' value="${a.value}" placeholder='Значение...'>
                 <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
               </div>
             </div>
@@ -1758,7 +1750,7 @@ function renderVariantAttributes(product, setactive = '') {
           <div class="form-group" ${display}>
               <label class="form-label">${a.title}</label>
               <div class='attr-input'>
-              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}' title="${a.title}" unit="${a.unit}" itype='${a.type}' value="${a.value}" placeholder='Значение...'>
+              <input type="text" class="form-control" name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action : ''}' title="${a.title}" unit="${a.unit}" itype='${a.type}' value="${a.value}" placeholder='Значение...'>
                 <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
               </div>
             </div>
@@ -1770,9 +1762,9 @@ function renderVariantAttributes(product, setactive = '') {
           <div class="form-group" ${display}>
               <label class="form-label">${a.title}</label>
               <div class='attr-input'>
-              <select class="form-control" title="${a.title}" unit="${a.unit}" itype='${a.type}' name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action: ''}'>
-                <option value="1" ${a.value == 1 ? 'selected': ''}>Да</option>
-                <option value="0" ${a.value == 0 ? 'selected': ''}>Нет</option>
+              <select class="form-control" title="${a.title}" unit="${a.unit}" itype='${a.type}' name='attr-${v.variantId}-${a.attributeId}-${a.title}${a.action ? '-' + a.action : ''}'>
+                <option value="1" ${a.value == 1 ? 'selected' : ''}>Да</option>
+                <option value="0" ${a.value == 0 ? 'selected' : ''}>Нет</option>
               </select>
                 <button class="table-action-btn delete-btn" title="Удалить" data-modal-target="remove-attribute" data-modal-attr-id='${v.variantId}-${a.attributeId}'><i class="bi bi-trash-fill"></i></button>
             </div>
@@ -1829,7 +1821,7 @@ function renderVariantGallery(product, setactive = '') {
               <img src="${i.imageUrl}" modal-action-button='select-main-image' modal-action-data='${i.id}' style='cursor:pointer;'>
               ${i.isMain == 1 ? '<span class="gallery-item-badge">Главное</span>' : ''}
               <button class="gallery-item-delete" type="button" data-modal-target='remove-image'  data-modal-image-id='${i.id}' title="Удалить"><i class="bi bi-trash"></i></button>
-              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}${i.action ? '-'+i.action : '-update'}" id='image-url' 
+              <input type="text" name="image-${i.id}-${v.variantId}-${i.sortOrder}-${i.isMain}${i.action ? '-' + i.action : '-update'}" id='image-url' 
                value='${i.imageUrl}' style='display: none'>
             </div>
       `

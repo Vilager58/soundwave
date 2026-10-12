@@ -197,9 +197,9 @@
 
   <script src="js/main.js"></script>
   <script>
-    let currentProduct = null;
     let basePrice = 0;
     let extraPackagePrice = 0;
+    let currentProduct = null;
 
     function renderStars(rating) {
       let stars = '';
@@ -422,11 +422,12 @@
       recentGrid.innerHTML = html;
     }
 
-    function renderProductPage() {
+    async function renderProductPage() {
       const params = new URLSearchParams(window.location.search);
       const productId = params.get('id') || 'fender-strat';
 
-      currentProduct = SOUNDWAVE_DATA.products.find(p => p.id === productId) || SOUNDWAVE_DATA.products[0];
+      currentProduct = await getProduct(productId);
+      console.log(currentProduct);
       if (!currentProduct) return;
 
       basePrice = currentProduct.price;
@@ -448,12 +449,12 @@
 
       const thumbsContainer = document.querySelector('#gallery-thumbs-container');
       if (thumbsContainer) {
-        const galleryImgs = currentProduct.gallery || [currentProduct.image];
+        const galleryImgs = currentProduct.images || [currentProduct.image];
         let thumbsHtml = '';
-        galleryImgs.forEach((src, idx) => {
+        Object.values(currentProduct.images).forEach((img, idx) => {
           thumbsHtml += `
-            <div class="gallery-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage(this, '${src}')">
-              <img src="${src}" alt="Ракурс ${idx + 1}">
+            <div class="gallery-thumb ${img.isMain == 1 ? 'active' : ''}" onclick="changeImage(this, '${img.imageUrl}')">
+              <img src="${img.imageUrl}" alt="Ракурс ${img.sortOrder}">
             </div>
           `;
         });
@@ -466,7 +467,7 @@
       }
 
       const skuBox = document.querySelector('#product-sku-box');
-      if (skuBox) skuBox.textContent = `Артикул: ${currentProduct.sku || 'SW-' + currentProduct.id}`;
+      if (skuBox) skuBox.textContent = `Артикул: ${currentProduct.slug || 'SW-' + currentProduct.id}`;
 
       const titleHeading = document.querySelector('#product-title-heading');
       if (titleHeading) titleHeading.textContent = currentProduct.title;
@@ -504,51 +505,18 @@
       const optionsContainer = document.querySelector('#product-options-container');
       if (optionsContainer) {
         let optHtml = '';
-
-        if (currentProduct.colors && currentProduct.colors.length > 0) {
+        if (currentProduct.variants && Object.keys(currentProduct.variants).length > 0) {
           optHtml += `
             <div class="option-group">
-              <div class="option-label">Цвет корпуса: <span id="selected-color-name">${currentProduct.colors[0].name}</span></div>
-              <div class="color-options">
-                ${currentProduct.colors.map((c, i) => `
-                  <div class="color-pill ${i === 0 ? 'active' : ''}" onclick="selectColor(this, '${c.name}')">
-                    <span class="color-dot" style="background: ${c.dot};"></span>
-                    ${c.name}
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `;
-        }
-
-        if (currentProduct.configs && currentProduct.configs.length > 0) {
-          optHtml += `
-            <div class="option-group">
-              <div class="option-label">Конфигурация:</div>
+              <div class="option-label">Вариант</div>
               <div class="config-options">
-                ${currentProduct.configs.map((cfg, i) => `
-                  <button type="button" class="config-btn ${i === 0 ? 'active' : ''}" onclick="selectConfig(this)">${cfg}</button>
+                ${Object.keys(currentProduct.variants).map((variant, i) => `
+                  <button type="button" class="config-btn ${i === 0 ? 'active' : ''}" onclick="selectConfig(this)">${variant.variant}</button>
                 `).join('')}
               </div>
             </div>
           `;
         }
-
-        if (currentProduct.packages && currentProduct.packages.length > 0) {
-          optHtml += `
-            <div class="option-group">
-              <div class="option-label">Комплектация:</div>
-              <div class="config-options">
-                ${currentProduct.packages.map((pkg, i) => `
-                  <button type="button" class="config-btn ${i === 0 ? 'active' : ''}" onclick="selectPackage(this, ${pkg.extraPrice})">
-                    ${pkg.name} ${pkg.extraPrice > 0 ? '(+' + formatPrice(pkg.extraPrice) + ')' : ''}
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-          `;
-        }
-
         optionsContainer.innerHTML = optHtml;
       }
 
@@ -578,7 +546,7 @@
         const specs = currentProduct.specs || [
           { label: "Бренд", value: currentProduct.brand || "SOUNDWAVE" },
           { label: "Категория", value: currentProduct.category },
-          { label: "Артикул", value: currentProduct.sku || 'SW-' + currentProduct.id },
+          { label: "Артикул", value: currentProduct.slug},
           { label: "Гарантия", value: "2 года официальной гарантии" }
         ];
         specs.forEach(s => {
@@ -596,8 +564,6 @@
       renderRecommendations();
       renderRecentlyViewed();
       addRecentProduct(currentProduct.id);
-      updateFavBadges();
-      updateCartBadges();
     }
 
     document.addEventListener('DOMContentLoaded', () => {

@@ -185,7 +185,7 @@
     async function logoutUser(e) {
       if (e) e.preventDefault();
 
-      fetch('/api/logout.php', {
+      fetch('/api/v1/logout', {
         method: 'POST',
         body: {}
       })
@@ -232,12 +232,12 @@
       const menuOrdersCount = document.querySelector('#menu-orders-count');
       const statOrdersCount = document.querySelector('#stat-orders-count');
 
-      if (menuOrdersCount) menuOrdersCount.textContent = orders.length;
-      if (statOrdersCount) statOrdersCount.textContent = orders.length;
+      if (menuOrdersCount) menuOrdersCount.textContent = Object.keys(orders).length;
+      if (statOrdersCount) statOrdersCount.textContent = Object.keys(orders).length;
 
       if (!container) return;
 
-      if (orders.length === 0) {
+      if (Object.keys(orders).length === 0) {
         container.innerHTML = `
           <div style="text-align: center; padding: 60px 20px; background: var(--wenge-card); border-radius: var(--radius-lg); border: 1px solid var(--wenge-border);">
             <i class="bi bi-box-seam" style="font-size: 48px; color: var(--yellow-main); margin-bottom: 16px; display: inline-block;"></i>
@@ -250,7 +250,8 @@
       }
 
       let html = '';
-      orders.forEach(order => {
+      Object.keys(orders).forEach(key => {
+        const order = orders[key];
         const isDelivered = order.status === 'delivered';
         const isDelivering = order.status === 'delivering';
         const isAssembled = order.status === 'assembled';
@@ -411,25 +412,18 @@
     }
 
     async function loadUserProfile(user) {
-      const firstName = user.name ? user.name.split(' ')[1] : 'Музыкант';
+      console.log(user);
       const heading = document.querySelector('#account-welcome-heading');
-      if (heading) heading.textContent = `Добро пожаловать, ${firstName}!`;
+      if (heading) heading.textContent = `Добро пожаловать, ${user.firstname}!`;
 
       const sub = document.querySelector('#account-welcome-sub');
       if (sub) sub.textContent = `Инструмент: ${user.instrument || 'Электрогитара'} • Город: ${user.city || 'Сыктывкар'}`;
 
       const nameEl = document.querySelector('#user-display-name');
-      if (nameEl) nameEl.textContent = user.name.split(' ')[1] || 'Музыкант SOUNDWAVE';
+      if (nameEl) nameEl.textContent = user.firstname || 'Музыкант SOUNDWAVE';
 
       const emailEl = document.querySelector('#user-display-email');
       if (emailEl) emailEl.textContent = user.email || 'user@example.com';
-
-      const initialsEl = document.querySelector('#user-avatar-initials');
-      if (initialsEl && user.name) {
-        const parts = user.name.split(' ');
-        const initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : parts[0][0].toUpperCase();
-        initialsEl.textContent = initials;
-      }
 
       const bonusVal = document.querySelector('#stat-bonuses-val');
       if (bonusVal) bonusVal.textContent = (user.bonuses || 0).toLocaleString() + ' ₽';
@@ -438,7 +432,7 @@
       const favsVal = document.querySelector('#stat-favs-count');
       if (favsVal) favsVal.textContent = favs.length;
 
-      if (document.querySelector('#prof-name')) document.querySelector('#prof-name').value = user.name || '';
+      if (document.querySelector('#prof-name')) document.querySelector('#prof-name').value = user.lastname + ' ' + user.firstname + ' ' + user.patronymic;
       if (document.querySelector('#prof-email')) document.querySelector('#prof-email').value = user.email || '';
       if (document.querySelector('#prof-phone')) document.querySelector('#prof-phone').value = user.phone || '';
       if (document.querySelector('#prof-city')) document.querySelector('#prof-city').value = user.city || '';
@@ -451,7 +445,7 @@
 
     async function init() {
       loadUserProfile(await getCurrentUser());
-      renderAccountOrders(await getStoredOrders());
+      renderAccountOrders(await getOrders());
       renderAccountRecent();
     }
 

@@ -177,4 +177,32 @@ class BrandRepository
             ];
         });
     }
+
+    /**
+     * Создать новый бренд
+     *
+     * @param BrandData $brand
+     * @return array
+     * @throws \Throwable
+     */
+    public function createBrand(BrandData $brand): array
+    {
+        return $this->db->transaction(function (PDO $pdo) use ($brand) {
+            $sql = "INSERT INTO brands (title, slug, country, logo_url, description, is_active) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $brand->title,
+                $brand->slug,
+                $brand->country,
+                $brand->logoUrl,
+                $brand->description,
+                $brand->active ? 1 : 0
+            ]);
+            return [
+                'status' => 'success',
+                'message' => "Успешное добавление бренда",
+                'id' => (int) $pdo->lastInsertId()
+            ];
+        });
+    }
 }

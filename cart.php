@@ -102,7 +102,7 @@
     let appliedDiscountPercent = 0;
 
     async function renderCartPage() {
-      const cart = await getStoredCart();
+      const cart = await getCart();
       const container = document.querySelector('#cart-items-container');
       const emptyView = document.querySelector('#empty-cart-view');
       const layout = document.querySelector('#cart-layout-container');
@@ -173,21 +173,14 @@
     }
 
     async function updateItemQty(id, delta) {
-      const item = {
-        'case': 'updateQuanity',
+      const item = 
+
+      fetch('/api/v1/cart/update', {
+        method: 'POST',
+        body: prepareData({
         'variant_id': id,
         'delta': delta
-      };
-      const formData = new FormData();
-      for (const key in item) {
-        if (item.hasOwnProperty(key)) {
-          formData.append(key, item[key]);
-        }
-      }
-
-      fetch('/api/user_cart.php', {
-        method: 'POST',
-        body: formData,
+      }),
       })
         .then(response => response.json())
         .then(data => {
@@ -196,7 +189,6 @@
         .catch(error => {
           showToast(error);
         });
-      
     }
 
     async function removeCartItem(id) {
