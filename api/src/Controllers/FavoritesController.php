@@ -42,15 +42,14 @@ class FavoritesController
      */
     public function removeItem(): array
     {
-        $variantId = (int) ($_POST['variant_id'] ?? 0);
+        $variantId = (int) ($_POST['variantId'] ?? 0);
         if ($variantId <= 0) {
-            throw new Exception("Не передан variant_id");
+            throw new Exception("Не передан variantId");
         }
 
         $this->favRepository->removeItem((int) $_SESSION['uid'], $variantId);
         return [
             'status' => 'success',
-            'case' => 'rmv',
             'message' => 'Товар удален из избранных'
         ];
     }
@@ -63,33 +62,15 @@ class FavoritesController
      */
     public function addItem(): array
     {
-        $variantId = (int) ($_POST['variant_id'] ?? 0);
-        $amount = (int) ($_POST['amount'] ?? 1);
+        $variantId = (int)($_POST['variantId'] ?? 0);
         if ($variantId <= 0) {
-            throw new Exception("Не передан variant_id");
+            throw new Exception("Не передан variantId");
         }
 
-        $this->favRepository->addItem((int) $_SESSION['uid'], $variantId);
+        $this->favRepository->addItem((int)$_SESSION['uid'], $variantId);
         return [
             'status' => 'success',
             'message' => 'Товар добавлен в избранные'
         ];
-    }
-
-    /**
-     * Универсальный обработчик для совместимости с user_fav.php
-     *
-     * @return mixed
-     * @throws Throwable
-     */
-    public function handle(): mixed
-    {
-        $case = $_POST['case'] ?? null;
-        if ($case === 'removeItem') {
-            return $this->removeItem();
-        } elseif ($case === 'addItem') {
-            return $this->addItem();
-        }
-        return $this-> getFavorites();
     }
 }

@@ -823,6 +823,7 @@ img {
   color: var(--text-secondary);
   margin-bottom: 12px;
   line-height: 1.4;
+  height: 100%;
 }
 
 .product-rating {
@@ -874,9 +875,9 @@ img {
 .btn-add-cart {
   background: var(--yellow-main);
   color: var(--wenge-dark);
-  border: none;
-  width: 40px;
-  height: 40px;
+  border: 2px solid var(--yellow-main);
+  width: 39px;
+  height: 39px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -888,6 +889,25 @@ img {
 
 .btn-add-cart:hover {
   background: var(--yellow-light);
+  box-shadow: 0 0 12px var(--yellow-glow);
+  transform: scale(1.05);
+}
+
+.incart-text{
+  display: flex;
+  gap: 16px;
+  color: var(--yellow-main);
+  align-items: center;
+}
+
+.incart-btn{
+  background: var(--wenge-dark);
+  color: var(--yellow-main);
+  border: 1px solid var(--yellow-main);
+}
+
+.incart-btn:hover {
+  background: var(--wenge-dark);
   box-shadow: 0 0 12px var(--yellow-glow);
   transform: scale(1.05);
 }

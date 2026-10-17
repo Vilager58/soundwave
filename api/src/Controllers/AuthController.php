@@ -12,6 +12,9 @@ use Throwable;
 class AuthController{
     private Auth $auth;
 
+    /**
+     * @throws Throwable
+     */
     public function __construct(Database $db){
         $userRepository = new UserRepository($db);
         $this->auth = new Auth($userRepository);

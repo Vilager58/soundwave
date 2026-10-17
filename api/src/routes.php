@@ -21,19 +21,14 @@ return [
 
     'POST:/user'           => [UserController::class, 'updateUser'],
     'GET:/user/counts'     => [UserController::class, 'getCountHandledItems'],
-    'GET:/user/handled-items' => [UserController::class, 'getCountHandledItems'],
-    'GET:/countHandledItems'  => [UserController::class, 'getCountHandledItems'],
 
     'GET:/brands'          => [BrandController::class, 'getAll'],
-    'POST:/brands'         => [BrandController::class, 'handle'],
     'GET:/brand'           => [BrandController::class, 'getById'],
 
     'GET:/categories'      => [CategoryController::class, 'getAll'],
-    'POST:/categories'     => [CategoryController::class, 'handle'],
     'GET:/category'        => [CategoryController::class, 'getById'],
 
     'GET:/attributes'      => [AttributeController::class, 'getAll'],
-    'POST:/attributes'     => [AttributeController::class, 'handle'],
     'GET:/attribute'       => [AttributeController::class, 'getById'],
 
     'GET:/catalog'         => [ProductController::class, 'getCatalog'],
@@ -43,18 +38,17 @@ return [
     'GET:/catalog_filters' => [ProductController::class, 'getFilters'],
     'POST:/catalog_filters'=> [ProductController::class, 'getFilters'],
     'GET:/product'         => [ProductController::class, 'getProduct'],
-    'POST:/product'        => [ProductController::class, 'handle'],
 
     'GET:/cart'            => [CartController::class, 'getCart'],
-    'POST:/cart'           => [CartController::class, 'handle'],
+    'GET:/cart/ids'        => [CartController::class, 'getCartIds'],
     'POST:/cart/update'    => [CartController::class, 'updateQuantity'],
     'POST:/cart/remove'    => [CartController::class, 'removeItem'],
     'POST:/cart/add'       => [CartController::class, 'addItem'],
 
     'GET:/favorites'       => [FavoritesController::class, 'getFavorites'],
+    'GET:/favorites/ids'    => [FavoritesController::class, 'getFavoriteIds'],
     'POST:/favorites/add'    => [FavoritesController::class, 'addItem'],
     'POST:/favorites/remove' => [FavoritesController::class, 'removeItem'],
-    'POST:/favorites'      => [FavoritesController::class, 'handle'],
 
     'GET:/orders'          => [OrderController::class, 'getOrders'],
     'POST:/orders'         => [OrderController::class, 'createOrder'],

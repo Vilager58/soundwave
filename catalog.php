@@ -238,11 +238,11 @@
       };
       const pf = JSON.parse(localStorage.getItem('lastFilter'));
       if (pf == null || JSON.stringify(currentCategories) != JSON.stringify(pf.selectedCats) ||
-       JSON.stringify(currentBrands) != JSON.stringify(pf.selectedBrands)) {
+        JSON.stringify(currentBrands) != JSON.stringify(pf.selectedBrands)) {
         setSlider(filters.availableMin, filters.availableMax, filters.availableMax);
-        localStorage.setItem('lastFilter', JSON.stringify({selectedBrands: currentBrands, selectedCats: currentCategories}));
+        localStorage.setItem('lastFilter', JSON.stringify({ selectedBrands: currentBrands, selectedCats: currentCategories }));
       }
-      
+
       document.querySelectorAll('.category-checkbox, .brand-checkbox, #filter-instock, .rating-checkbox').forEach(cb => {
         cb.removeEventListener('change', renderCatalog);
         cb.addEventListener('change', renderCatalog);
@@ -301,15 +301,21 @@
       let html = '';
       products.forEach(p => {
         // const isFav = favs.includes(p.id);
+        let infavs = false;
+        let incart = false;
+        p.variants.forEach(e => {
+          infavs = infavs || handledIds.message.favIds.includes(e.variantId);
+          incart = incart || handledIds.message.cartIds.includes(e.variantId);
+        });
         html += `
           <div class="col-xl-4 col-md-6">
-            <div class="product-card" pid="">
+            <div class="product-card" pid="${p.id}-${p.variants[0].variantId}">
               <div class="product-image-box">
                 <div class="product-badges">
                   ${p.badge ? `<span class="badge-${p.badgeType || 'hit'}">${p.badge}</span>` : ''}
                 </div>
-                <button class="product-fav-btn" data-id="${p.id}" aria-label="В избранное">
-                  <i class="bi bi-heart"></i>
+                <button class="product-fav-btn ${infavs ? 'active' : ''}" card-btn='${infavs ? 'fav-remove' : 'fav-add'}' aria-label="В избранное">
+                  <i class="bi bi-heart${infavs ? '-fill' : ''}"></i>
                 </button>
                 <a href="product.php?id=${p.id}">
                   <img src="${p.image}" alt="${p.productTitle}" loading="lazy">
@@ -330,9 +336,12 @@
                     ${p.oldPrice ? `<span class="old-price">${formatPrice(p.variants[0].oldPrice)}</span>` : ''}
                     <span class="current-price">${formatPrice(p.variants[0].price)}</span>
                   </div>
-                  <button class="btn-add-cart" data-add-cart="${p.id}" title="В корзину">
+                  <div class='incart-text'>
+                   ${incart ? 'В корзине' : ''}
+                  <button class="btn-add-cart ${incart ? 'incart-btn' : ''}" card-btn='${incart ? 'cart-go' : 'cart-add'}' title="В корзину">
                     <i class="bi bi-bag-plus"></i>
                   </button>
+                  </div>
                 </div>
               </div>
             </div>

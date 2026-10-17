@@ -1,693 +1,651 @@
 const SOUNDWAVE_DATA = {
   products: [{
-    id: "fender-strat",
-    title: "Fender Player Stratocaster",
-    brand: "Fender",
-    category: "Электрогитары",
-    categorySlug: "electric",
-    price: 89990,
-    oldPrice: 99990,
-    badge: "Хит",
-    badgeType: "hit",
-    rating: 4.9,
-    reviews: 128,
-    inStock: false,
-    sku: "SW-10482",
-    popularity: 98,
-    dateAdded: "2026-01-15",
-    image: "img/photo-1550291652-6ea9114a47b1.avif",
-    gallery: [
-      "img/photo-1550291652-6ea9114a47b1.avif",
-      "img/photo-1510915361894-db8b60106cb1.avif",
-      "img/photo-1516924962500-2b4b3b99ea02.jpg"
-    ],
-    desc: "Классическое стекло Stratocaster с тремя звукоснимателями Alnico 5.",
-    fullDesc: "Fender Player Stratocaster — это квинтэссенция аутентичного тона и нестареющего стиля Fender. Инструмент оснащён тремя синглами Player Series Alnico 5, обеспечивающими звонкий кристальный верх, плотные средние частоты и упругий бас. Удобный кленовый гриф профиля Modern C с накладкой радиусом 9.5 дюймов и 22 ладами medium-jumbo дарит непревзойденный комфорт как при исполнении скоростных пассажей, так и при бендах.",
-    colors: [{
-      name: "3-Color Sunburst",
-      dot: "linear-gradient(135deg, #b05a18, #2a1506)"
+      id: "fender-strat",
+      title: "Fender Player Stratocaster",
+      brand: "Fender",
+      category: "Электрогитары",
+      categorySlug: "electric",
+      price: 89990,
+      oldPrice: 99990,
+      badge: "Хит",
+      badgeType: "hit",
+      rating: 4.9,
+      reviews: 128,
+      inStock: false,
+      sku: "SW-10482",
+      popularity: 98,
+      dateAdded: "2026-01-15",
+      image: "img/photo-1550291652-6ea9114a47b1.avif",
+      gallery: [
+        "img/photo-1550291652-6ea9114a47b1.avif",
+        "img/photo-1510915361894-db8b60106cb1.avif",
+        "img/photo-1516924962500-2b4b3b99ea02.jpg"
+      ],
+      desc: "Классическое стекло Stratocaster с тремя звукоснимателями Alnico 5.",
+      fullDesc: "Fender Player Stratocaster — это квинтэссенция аутентичного тона и нестареющего стиля Fender. Инструмент оснащён тремя синглами Player Series Alnico 5, обеспечивающими звонкий кристальный верх, плотные средние частоты и упругий бас. Удобный кленовый гриф профиля Modern C с накладкой радиусом 9.5 дюймов и 22 ладами medium-jumbo дарит непревзойденный комфорт как при исполнении скоростных пассажей, так и при бендах.",
+      colors: [{
+          name: "3-Color Sunburst",
+          dot: "linear-gradient(135deg, #b05a18, #2a1506)"
+        },
+        {
+          name: "Black Gloss",
+          dot: "#111111"
+        },
+        {
+          name: "Polar White",
+          dot: "#f0f0f0"
+        }
+      ],
+      configs: ["SSS (3 сингла)", "HSS (хамбакер + 2 сингла)"],
+      packages: [{
+          name: "Базовая",
+          extraPrice: 0
+        },
+        {
+          name: "PRO (+ чехол и кабель Klotz)",
+          extraPrice: 5990
+        }
+      ],
+      specs: [{
+          label: "Форма корпуса",
+          value: "Stratocaster"
+        },
+        {
+          label: "Материал корпуса",
+          value: "Ольха (Alder)"
+        },
+        {
+          label: "Гриф",
+          value: "Клён, профиль Modern C"
+        },
+        {
+          label: "Крепление грифа",
+          value: "На болтах (4 болта)"
+        },
+        {
+          label: "Мензура",
+          value: '25.5" (648 мм)'
+        },
+        {
+          label: "Количество ладов",
+          value: "22 Medium Jumbo"
+        },
+        {
+          label: "Звукосниматели",
+          value: "3 × Player Series Alnico 5 Strat Single-Coil"
+        },
+        {
+          label: "Бридж",
+          value: "2-точечное синхронизированное тремоло"
+        },
+        {
+          label: "Страна производства",
+          value: "Мексика"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
     },
     {
-      name: "Black Gloss",
-      dot: "#111111"
+      id: "gibson-les-paul",
+      title: "Gibson Les Paul Studio",
+      brand: "Gibson",
+      category: "Электрогитары",
+      categorySlug: "electric",
+      price: 154990,
+      oldPrice: 169990,
+      badge: "-10%",
+      badgeType: "sale",
+      rating: 4.8,
+      reviews: 84,
+      inStock: true,
+      sku: "SW-10512",
+      popularity: 94,
+      dateAdded: "2026-02-10",
+      image: "img/photo-1516924962500-2b4b3b99ea02.jpg",
+      gallery: [
+        "img/photo-1516924962500-2b4b3b99ea02.jpg",
+        "img/photo-1550291652-6ea9114a47b1.avif",
+        "img/photo-1525201548942-d8732f6617a0.jpg"
+      ],
+      desc: "Плотный легендарный сустейн, вклеенный гриф и хамбакеры 490R/498T.",
+      fullDesc: "Gibson Les Paul Studio сочетает в себе все главные достоинства культовой гитары Les Paul: массивный корпус из красного дерева с кленовым топом, вклеенный гриф SlimTaper и горячие звукосниматели 490R / 498T с отсечками Push/Pull для универсального звучания от винтажного блюза до современного хард-рока.",
+      colors: [{
+          name: "Smokehouse Burst",
+          dot: "linear-gradient(135deg, #7c4b28, #18120c)"
+        },
+        {
+          name: "Ebony Black",
+          dot: "#0f0f0f"
+        },
+        {
+          name: "Wine Red",
+          dot: "#5c131d"
+        }
+      ],
+      configs: ["HH (Хамбакеры с Push/Pull)"],
+      packages: [{
+          name: "Базовая (в комплекте Soft Case)",
+          extraPrice: 0
+        },
+        {
+          name: "Deluxe (+ жесткий кейс Gibson USA)",
+          extraPrice: 14990
+        }
+      ],
+      specs: [{
+          label: "Форма корпуса",
+          value: "Singlecut (Les Paul)"
+        },
+        {
+          label: "Материал корпуса",
+          value: "Махагони (красное дерево) с топом из клёна"
+        },
+        {
+          label: "Гриф",
+          value: "Махагони, профиль SlimTaper"
+        },
+        {
+          label: "Накладка",
+          value: "Палисандр (Rosewood)"
+        },
+        {
+          label: "Мензура",
+          value: '24.75" (628 мм)'
+        },
+        {
+          label: "Количество ладов",
+          value: "22 Medium"
+        },
+        {
+          label: "Звукосниматели",
+          value: "490R (нек), 498T (бридж) с отсечками"
+        },
+        {
+          label: "Бридж",
+          value: "Aluminum Nashville Tune-O-Matic"
+        },
+        {
+          label: "Страна производства",
+          value: "США (Nashville, TN)"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
     },
     {
-      name: "Polar White",
-      dot: "#f0f0f0"
+      id: "yamaha-p225",
+      title: "Yamaha P-225 Black",
+      brand: "Yamaha",
+      category: "Клавишные",
+      categorySlug: "pianos",
+      price: 74990,
+      oldPrice: null,
+      badge: "Хит",
+      badgeType: "hit",
+      rating: 4.9,
+      reviews: 95,
+      inStock: true,
+      sku: "SW-20104",
+      popularity: 92,
+      dateAdded: "2026-02-01",
+      image: "img/photo-1590602847861-f357a9332bbc.jpg",
+      gallery: [
+        "img/photo-1590602847861-f357a9332bbc.jpg",
+        "img/photo-1598488035139-bdbb2231ce04.jpg",
+        "img/photo-1511671782779-c97d3d27a1d4.avif"
+      ],
+      desc: "Компактное цифровое пианино с молоточковой клавиатурой GHC.",
+      fullDesc: "Yamaha P-225 — элегантное цифровое фортепиано с обновленной клавиатурой Graded Hammer Compact (GHC), максимально точно передающей ощущение игры на акустическом рояле. В сердце инструмента сэмплы флагманского концертного рояля Yamaha CFX с технологией Virtual Resonance Modeling (VRM Lite).",
+      colors: [{
+          name: "Black Matte",
+          dot: "#1c1c1c"
+        },
+        {
+          name: "White Satin",
+          dot: "#f5f5f5"
+        }
+      ],
+      configs: ["88 клавиш, молоточковая механика GHC"],
+      packages: [{
+          name: "Базовая (педаль сустейна + пюпитр)",
+          extraPrice: 0
+        },
+        {
+          name: "PRO (+ стойка L-200 и 3-педальный блок LP-1)",
+          extraPrice: 12990
+        }
+      ],
+      specs: [{
+          label: "Клавиатура",
+          value: "88 клавиш GHC с матовыми черными клавишами"
+        },
+        {
+          label: "Тон-генератор",
+          value: "Yamaha CFX с технологией VRM Lite"
+        },
+        {
+          label: "Полифония",
+          value: "192 голоса"
+        },
+        {
+          label: "Количество тембров",
+          value: "24 встроенных тембра"
+        },
+        {
+          label: "Акустическая система",
+          value: "2 × 7 Вт, овальные динамики"
+        },
+        {
+          label: "Интерфейсы",
+          value: "USB to Host (Audio & MIDI), Bluetooth Audio, 2 × AUX OUT"
+        },
+        {
+          label: "Вес",
+          value: "11.5 кг"
+        },
+        {
+          label: "Страна производства",
+          value: "Индонезия"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
+    },
+    {
+      id: "roland-juno-d",
+      title: "Roland JUNO-D6",
+      brand: "Roland",
+      category: "Клавишные",
+      categorySlug: "synths",
+      price: 109990,
+      oldPrice: 119990,
+      badge: "NEW",
+      badgeType: "new",
+      rating: 4.7,
+      reviews: 32,
+      inStock: true,
+      sku: "SW-20380",
+      popularity: 88,
+      dateAdded: "2026-03-01",
+      image: "img/photo-1598488035139-bdbb2231ce04.jpg",
+      gallery: [
+        "img/photo-1598488035139-bdbb2231ce04.jpg",
+        "img/photo-1590602847861-f357a9332bbc.jpg",
+        "img/photo-1598488035138-bdab2431ce03.jpg"
+      ],
+      desc: "Синтезатор нового поколения со звуковым движком ZEN-Core.",
+      fullDesc: "Roland JUNO-D6 открывает новую главу легендарной линейки JUNO. Оснащённый флагманским движком ZEN-Core, он предлагает более 3800 высококлассных звуков — от акустических фортепиано и винтажных синтезаторов Roland до современных электронных текстур. Работает как от сети, так и от аккумулятора USB-C.",
+      colors: [{
+        name: "Classic Dark",
+        dot: "#141414"
+      }],
+      configs: ["61 динамическая клавиша синтезаторного типа"],
+      packages: [{
+          name: "Базовая комплектация",
+          extraPrice: 0
+        },
+        {
+          name: "Stage Pack (+ Х-стойка + полужесткий чехол)",
+          extraPrice: 8990
+        }
+      ],
+      specs: [{
+          label: "Клавиатура",
+          value: "61 клавиша с динамической чувствительностью"
+        },
+        {
+          label: "Звуковой движок",
+          value: "ZEN-Core (поддержка Wave Expansion)"
+        },
+        {
+          label: "Количество тембров",
+          value: "Более 3800 тембров + 95 ударных установок"
+        },
+        {
+          label: "Секвенсор",
+          value: "8-дорожечный шаговый секвенсор"
+        },
+        {
+          label: "Аудиоинтерфейс",
+          value: "USB-C Audio/MIDI, микрофонный вход с вокодером"
+        },
+        {
+          label: "Питание",
+          value: "Сетевой адаптер или внешний аккумулятор USB-C"
+        },
+        {
+          label: "Страна производства",
+          value: "Малайзия"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
+    },
+    {
+      id: "shure-sm58",
+      title: "Shure SM58-LCE",
+      brand: "Shure",
+      category: "Микрофоны",
+      categorySlug: "mics",
+      price: 14490,
+      oldPrice: 16290,
+      badge: "Хит",
+      badgeType: "hit",
+      rating: 5.0,
+      reviews: 310,
+      inStock: true,
+      sku: "SW-30018",
+      popularity: 99,
+      dateAdded: "2025-11-20",
+      image: "img/photo-1590602847861-f357a9332bbc.jpg",
+      gallery: [
+        "img/photo-1590602847861-f357a9332bbc.jpg",
+        "img/photo-1563245372-f21724e3856d.avif",
+        "img/photo-1511671782779-c97d3d27a1d4.avif"
+      ],
+      desc: "Мировой стандарт динамического вокального микрофона.",
+      fullDesc: "Shure SM58 — это признанный золотой эталон сценического и студийного вокала. Кардиоидная диаграмма направленности изолирует основной источник звука и отсекает посторонние сценические шумы. Прочнейший металлический корпус и стальная сетка со встроенным поп-фильтром выдерживают любые испытания туровой жизни.",
+      colors: [{
+        name: "Matte Dark Grey",
+        dot: "#3a3a3a"
+      }],
+      configs: ["Без выключателя (LCE)", "С выключателем (SE)"],
+      packages: [{
+          name: "Базовая (микрофон + чехол + держатель)",
+          extraPrice: 0
+        },
+        {
+          name: "Vocalist Kit (+ кабель XLR 6м + стойка K&M)",
+          extraPrice: 3990
+        }
+      ],
+      specs: [{
+          label: "Тип",
+          value: "Динамический"
+        },
+        {
+          label: "Диаграмма направленности",
+          value: "Кардиоидная"
+        },
+        {
+          label: "Частотный диапазон",
+          value: "50 Гц – 15 000 Гц"
+        },
+        {
+          label: "Выходное сопротивление",
+          value: "300 Ом"
+        },
+        {
+          label: "Чувствительность",
+          value: "-54.5 dBV/Pa (1.85 мВ)"
+        },
+        {
+          label: "Разъём",
+          value: "XLR (3-pin)"
+        },
+        {
+          label: "Страна производства",
+          value: "Мексика"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
+    },
+    {
+      id: "marshall-mg30gfx",
+      title: "Marshall MG30GFX Gold",
+      brand: "Marshall",
+      category: "Усилители",
+      categorySlug: "amps",
+      price: 29990,
+      oldPrice: 34990,
+      badge: "-15%",
+      badgeType: "sale",
+      rating: 4.8,
+      reviews: 67,
+      inStock: true,
+      sku: "SW-40092",
+      popularity: 89,
+      dateAdded: "2026-01-28",
+      image: "img/photo-1563245372-f21724e3856d.avif",
+      gallery: [
+        "img/photo-1563245372-f21724e3856d.avif",
+        "img/photo-1550291652-6ea9114a47b1.avif",
+        "img/photo-1516924962500-2b4b3b99ea02.jpg"
+      ],
+      desc: "Комбоусилитель 30 Вт с 10-дюймовым динамиком и блоком цифровых эффектов.",
+      fullDesc: "Marshall MG30GFX — компактный, но мощный гитарный комбоусилитель легендарной серии Gold. 4 переключаемых канала (Clean, Crunch, OD1, OD2), встроенный блок цифровых эффектов (Reverb, Chorus, Phaser, Flanger, Delay) и кастомный 10-дюймовый динамик позволяют нарулить фирменный британский рок-саунд прямо в комнате или на репетиции.",
+      colors: [{
+        name: "Marshall Gold / Black",
+        dot: "linear-gradient(135deg, #caa14c, #111)"
+      }],
+      configs: ["Мощность 30 Вт, динамик 10 дюймов"],
+      packages: [{
+          name: "Базовая (усилитель + сетевой кабель)",
+          extraPrice: 0
+        },
+        {
+          name: "PRO (+ футсвич Marshall PEDL-90008)",
+          extraPrice: 4490
+        }
+      ],
+      specs: [{
+          label: "Тип",
+          value: "Транзисторный с DSP-процессором"
+        },
+        {
+          label: "Выходная мощность",
+          value: "30 Вт"
+        },
+        {
+          label: "Динамик",
+          value: '1 × 10" Custom Speaker (4 Ом)'
+        },
+        {
+          label: "Каналы",
+          value: "4 (Clean, Crunch, OD-1, OD-2)"
+        },
+        {
+          label: "Эффекты",
+          value: "Reverb, Chorus, Phaser, Flanger, Vibe, Delay"
+        },
+        {
+          label: "Входы/выходы",
+          value: "Инструментальный Jack 6.3 мм, AUX 3.5 мм, выход на наушники"
+        },
+        {
+          label: "Вес",
+          value: "10.8 кг"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
+    },
+    {
+      id: "tama-imperialstar",
+      title: "TAMA Imperialstar 22",
+      brand: "TAMA",
+      category: "Ударные",
+      categorySlug: "drums",
+      price: 94990,
+      oldPrice: null,
+      badge: "NEW",
+      badgeType: "new",
+      rating: 4.9,
+      reviews: 21,
+      inStock: true,
+      sku: "SW-50119",
+      popularity: 86,
+      dateAdded: "2026-03-05",
+      image: "img/photo-1519892300165-cb5542fb47c7.jpg",
+      gallery: [
+        "img/photo-1519892300165-cb5542fb47c7.jpg",
+        "img/photo-1590602847861-f357a9332bbc.jpg",
+        "img/photo-1511671782779-c97d3d27a1d4.avif"
+      ],
+      desc: "Полный комплект акустических барабанов со стойками и тарелками Meinl.",
+      fullDesc: "TAMA Imperialstar 22 — готовый комплект ударной установки высшего класса для начинающих и выступающих барабанщиков. Кадушки из 100% тополя (6 слоев, 8 мм) обеспечивают сбалансированное звучание с глубоким резонансом. В комплект входит полный набор надежной фурнитуры Stage Master и комплект тарелок Meinl HCS (Германия).",
+      colors: [{
+          name: "Hairline Black",
+          dot: "#181818"
+        },
+        {
+          name: "Coffee Teak Wrap",
+          dot: "#4a3525"
+        },
+        {
+          name: "Burgundy Walnut",
+          dot: "#4d1a24"
+        }
+      ],
+      configs: ["5 барабанов (22/10/12/16/14) + хардвер + тарелки"],
+      packages: [{
+          name: "Комплект с тарелками Meinl HCS",
+          extraPrice: 0
+        },
+        {
+          name: "PRO (+ набор демпферов Evans + чехлы)",
+          extraPrice: 9990
+        }
+      ],
+      specs: [{
+          label: "Конфигурация",
+          value: 'Бас-бочка 22"×16", томы 10"×7", 12"×8", флор-том 16"×15", малый 14"×5"'
+        },
+        {
+          label: "Материал кадушек",
+          value: "100% тополь (Poplar), 6 слоёв, 8 мм"
+        },
+        {
+          label: "Фурнитура",
+          value: "Двойные ножки, стойки TAMA Stage Master"
+        },
+        {
+          label: "Тарелки в комплекте",
+          value: 'Meinl HCS: 14" Hi-Hat, 16" Crash, 20" Ride'
+        },
+        {
+          label: "Педаль",
+          value: "TAMA Iron Cobra 200 Power Glide"
+        },
+        {
+          label: "Стул барабанщика",
+          value: "В комплекте (с регулировкой высоты)"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
+    },
+    {
+      id: "yamaha-pacifica",
+      title: "Yamaha Pacifica 112V",
+      brand: "Yamaha",
+      category: "Электрогитары",
+      categorySlug: "electric",
+      price: 39990,
+      oldPrice: 44990,
+      badge: "Хит",
+      badgeType: "hit",
+      rating: 4.8,
+      reviews: 142,
+      inStock: true,
+      sku: "SW-10114",
+      popularity: 95,
+      dateAdded: "2026-02-15",
+      image: "img/photo-1510915361894-db8b60106cb1.avif",
+      gallery: [
+        "img/photo-1510915361894-db8b60106cb1.avif",
+        "img/photo-1550291652-6ea9114a47b1.avif",
+        "img/photo-1516924962500-2b4b3b99ea02.jpg"
+      ],
+      desc: "Универсальный стратокастер H-S-S с отсечкой катушки и массивом ольхи.",
+      fullDesc: "Yamaha Pacifica 112V давно заслужила репутацию лучшей универсальной гитары в своем ценовом классе. Корпус из массива ольхи, звукосниматели Alnico V конфигурации HSS с возможностью отсечки хамбакера в сингл делают эту гитару одинаково убедительной в джазе, фанке, блюзе и металле.",
+      colors: [{
+          name: "Sonic Blue",
+          dot: "#9bbcd4"
+        },
+        {
+          name: "Old Violin Sunburst",
+          dot: "linear-gradient(135deg, #a8581e, #1a100a)"
+        },
+        {
+          name: "Black",
+          dot: "#1a1a1a"
+        }
+      ],
+      configs: ["HSS (хамбакер + 2 сингла Alnico V)"],
+      packages: [{
+          name: "Базовая комплектация",
+          extraPrice: 0
+        },
+        {
+          name: "Start Pack (+ кабель Fender + ремень + тюнер)",
+          extraPrice: 2990
+        }
+      ],
+      specs: [{
+          label: "Форма корпуса",
+          value: "Pacifica Doublecut"
+        },
+        {
+          label: "Материал корпуса",
+          value: "Массив ольхи (Solid Alder)"
+        },
+        {
+          label: "Гриф",
+          value: "Клён с матовым сатиновым покрытием"
+        },
+        {
+          label: "Накладка",
+          value: "Палисандр (Rosewood)"
+        },
+        {
+          label: "Мензура",
+          value: '25.5" (648 мм)'
+        },
+        {
+          label: "Количество ладов",
+          value: "22"
+        },
+        {
+          label: "Звукосниматели",
+          value: "Alnico V: 2 × Single, 1 × Humbucker с Push/Pull"
+        },
+        {
+          label: "Бридж",
+          value: "Vintage Tremolo со литыми седлами"
+        },
+        {
+          label: "Гарантия",
+          value: "2 года"
+        }
+      ]
     }
-    ],
-    configs: ["SSS (3 сингла)", "HSS (хамбакер + 2 сингла)"],
-    packages: [{
-      name: "Базовая",
-      extraPrice: 0
-    },
-    {
-      name: "PRO (+ чехол и кабель Klotz)",
-      extraPrice: 5990
-    }
-    ],
-    specs: [{
-      label: "Форма корпуса",
-      value: "Stratocaster"
-    },
-    {
-      label: "Материал корпуса",
-      value: "Ольха (Alder)"
-    },
-    {
-      label: "Гриф",
-      value: "Клён, профиль Modern C"
-    },
-    {
-      label: "Крепление грифа",
-      value: "На болтах (4 болта)"
-    },
-    {
-      label: "Мензура",
-      value: '25.5" (648 мм)'
-    },
-    {
-      label: "Количество ладов",
-      value: "22 Medium Jumbo"
-    },
-    {
-      label: "Звукосниматели",
-      value: "3 × Player Series Alnico 5 Strat Single-Coil"
-    },
-    {
-      label: "Бридж",
-      value: "2-точечное синхронизированное тремоло"
-    },
-    {
-      label: "Страна производства",
-      value: "Мексика"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "gibson-les-paul",
-    title: "Gibson Les Paul Studio",
-    brand: "Gibson",
-    category: "Электрогитары",
-    categorySlug: "electric",
-    price: 154990,
-    oldPrice: 169990,
-    badge: "-10%",
-    badgeType: "sale",
-    rating: 4.8,
-    reviews: 84,
-    inStock: true,
-    sku: "SW-10512",
-    popularity: 94,
-    dateAdded: "2026-02-10",
-    image: "img/photo-1516924962500-2b4b3b99ea02.jpg",
-    gallery: [
-      "img/photo-1516924962500-2b4b3b99ea02.jpg",
-      "img/photo-1550291652-6ea9114a47b1.avif",
-      "img/photo-1525201548942-d8732f6617a0.jpg"
-    ],
-    desc: "Плотный легендарный сустейн, вклеенный гриф и хамбакеры 490R/498T.",
-    fullDesc: "Gibson Les Paul Studio сочетает в себе все главные достоинства культовой гитары Les Paul: массивный корпус из красного дерева с кленовым топом, вклеенный гриф SlimTaper и горячие звукосниматели 490R / 498T с отсечками Push/Pull для универсального звучания от винтажного блюза до современного хард-рока.",
-    colors: [{
-      name: "Smokehouse Burst",
-      dot: "linear-gradient(135deg, #7c4b28, #18120c)"
-    },
-    {
-      name: "Ebony Black",
-      dot: "#0f0f0f"
-    },
-    {
-      name: "Wine Red",
-      dot: "#5c131d"
-    }
-    ],
-    configs: ["HH (Хамбакеры с Push/Pull)"],
-    packages: [{
-      name: "Базовая (в комплекте Soft Case)",
-      extraPrice: 0
-    },
-    {
-      name: "Deluxe (+ жесткий кейс Gibson USA)",
-      extraPrice: 14990
-    }
-    ],
-    specs: [{
-      label: "Форма корпуса",
-      value: "Singlecut (Les Paul)"
-    },
-    {
-      label: "Материал корпуса",
-      value: "Махагони (красное дерево) с топом из клёна"
-    },
-    {
-      label: "Гриф",
-      value: "Махагони, профиль SlimTaper"
-    },
-    {
-      label: "Накладка",
-      value: "Палисандр (Rosewood)"
-    },
-    {
-      label: "Мензура",
-      value: '24.75" (628 мм)'
-    },
-    {
-      label: "Количество ладов",
-      value: "22 Medium"
-    },
-    {
-      label: "Звукосниматели",
-      value: "490R (нек), 498T (бридж) с отсечками"
-    },
-    {
-      label: "Бридж",
-      value: "Aluminum Nashville Tune-O-Matic"
-    },
-    {
-      label: "Страна производства",
-      value: "США (Nashville, TN)"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "yamaha-p225",
-    title: "Yamaha P-225 Black",
-    brand: "Yamaha",
-    category: "Клавишные",
-    categorySlug: "pianos",
-    price: 74990,
-    oldPrice: null,
-    badge: "Хит",
-    badgeType: "hit",
-    rating: 4.9,
-    reviews: 95,
-    inStock: true,
-    sku: "SW-20104",
-    popularity: 92,
-    dateAdded: "2026-02-01",
-    image: "img/photo-1590602847861-f357a9332bbc.jpg",
-    gallery: [
-      "img/photo-1590602847861-f357a9332bbc.jpg",
-      "img/photo-1598488035139-bdbb2231ce04.jpg",
-      "img/photo-1511671782779-c97d3d27a1d4.avif"
-    ],
-    desc: "Компактное цифровое пианино с молоточковой клавиатурой GHC.",
-    fullDesc: "Yamaha P-225 — элегантное цифровое фортепиано с обновленной клавиатурой Graded Hammer Compact (GHC), максимально точно передающей ощущение игры на акустическом рояле. В сердце инструмента сэмплы флагманского концертного рояля Yamaha CFX с технологией Virtual Resonance Modeling (VRM Lite).",
-    colors: [{
-      name: "Black Matte",
-      dot: "#1c1c1c"
-    },
-    {
-      name: "White Satin",
-      dot: "#f5f5f5"
-    }
-    ],
-    configs: ["88 клавиш, молоточковая механика GHC"],
-    packages: [{
-      name: "Базовая (педаль сустейна + пюпитр)",
-      extraPrice: 0
-    },
-    {
-      name: "PRO (+ стойка L-200 и 3-педальный блок LP-1)",
-      extraPrice: 12990
-    }
-    ],
-    specs: [{
-      label: "Клавиатура",
-      value: "88 клавиш GHC с матовыми черными клавишами"
-    },
-    {
-      label: "Тон-генератор",
-      value: "Yamaha CFX с технологией VRM Lite"
-    },
-    {
-      label: "Полифония",
-      value: "192 голоса"
-    },
-    {
-      label: "Количество тембров",
-      value: "24 встроенных тембра"
-    },
-    {
-      label: "Акустическая система",
-      value: "2 × 7 Вт, овальные динамики"
-    },
-    {
-      label: "Интерфейсы",
-      value: "USB to Host (Audio & MIDI), Bluetooth Audio, 2 × AUX OUT"
-    },
-    {
-      label: "Вес",
-      value: "11.5 кг"
-    },
-    {
-      label: "Страна производства",
-      value: "Индонезия"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "roland-juno-d",
-    title: "Roland JUNO-D6",
-    brand: "Roland",
-    category: "Клавишные",
-    categorySlug: "synths",
-    price: 109990,
-    oldPrice: 119990,
-    badge: "NEW",
-    badgeType: "new",
-    rating: 4.7,
-    reviews: 32,
-    inStock: true,
-    sku: "SW-20380",
-    popularity: 88,
-    dateAdded: "2026-03-01",
-    image: "img/photo-1598488035139-bdbb2231ce04.jpg",
-    gallery: [
-      "img/photo-1598488035139-bdbb2231ce04.jpg",
-      "img/photo-1590602847861-f357a9332bbc.jpg",
-      "img/photo-1598488035138-bdab2431ce03.jpg"
-    ],
-    desc: "Синтезатор нового поколения со звуковым движком ZEN-Core.",
-    fullDesc: "Roland JUNO-D6 открывает новую главу легендарной линейки JUNO. Оснащённый флагманским движком ZEN-Core, он предлагает более 3800 высококлассных звуков — от акустических фортепиано и винтажных синтезаторов Roland до современных электронных текстур. Работает как от сети, так и от аккумулятора USB-C.",
-    colors: [{
-      name: "Classic Dark",
-      dot: "#141414"
-    }],
-    configs: ["61 динамическая клавиша синтезаторного типа"],
-    packages: [{
-      name: "Базовая комплектация",
-      extraPrice: 0
-    },
-    {
-      name: "Stage Pack (+ Х-стойка + полужесткий чехол)",
-      extraPrice: 8990
-    }
-    ],
-    specs: [{
-      label: "Клавиатура",
-      value: "61 клавиша с динамической чувствительностью"
-    },
-    {
-      label: "Звуковой движок",
-      value: "ZEN-Core (поддержка Wave Expansion)"
-    },
-    {
-      label: "Количество тембров",
-      value: "Более 3800 тембров + 95 ударных установок"
-    },
-    {
-      label: "Секвенсор",
-      value: "8-дорожечный шаговый секвенсор"
-    },
-    {
-      label: "Аудиоинтерфейс",
-      value: "USB-C Audio/MIDI, микрофонный вход с вокодером"
-    },
-    {
-      label: "Питание",
-      value: "Сетевой адаптер или внешний аккумулятор USB-C"
-    },
-    {
-      label: "Страна производства",
-      value: "Малайзия"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "shure-sm58",
-    title: "Shure SM58-LCE",
-    brand: "Shure",
-    category: "Микрофоны",
-    categorySlug: "mics",
-    price: 14490,
-    oldPrice: 16290,
-    badge: "Хит",
-    badgeType: "hit",
-    rating: 5.0,
-    reviews: 310,
-    inStock: true,
-    sku: "SW-30018",
-    popularity: 99,
-    dateAdded: "2025-11-20",
-    image: "img/photo-1590602847861-f357a9332bbc.jpg",
-    gallery: [
-      "img/photo-1590602847861-f357a9332bbc.jpg",
-      "img/photo-1563245372-f21724e3856d.avif",
-      "img/photo-1511671782779-c97d3d27a1d4.avif"
-    ],
-    desc: "Мировой стандарт динамического вокального микрофона.",
-    fullDesc: "Shure SM58 — это признанный золотой эталон сценического и студийного вокала. Кардиоидная диаграмма направленности изолирует основной источник звука и отсекает посторонние сценические шумы. Прочнейший металлический корпус и стальная сетка со встроенным поп-фильтром выдерживают любые испытания туровой жизни.",
-    colors: [{
-      name: "Matte Dark Grey",
-      dot: "#3a3a3a"
-    }],
-    configs: ["Без выключателя (LCE)", "С выключателем (SE)"],
-    packages: [{
-      name: "Базовая (микрофон + чехол + держатель)",
-      extraPrice: 0
-    },
-    {
-      name: "Vocalist Kit (+ кабель XLR 6м + стойка K&M)",
-      extraPrice: 3990
-    }
-    ],
-    specs: [{
-      label: "Тип",
-      value: "Динамический"
-    },
-    {
-      label: "Диаграмма направленности",
-      value: "Кардиоидная"
-    },
-    {
-      label: "Частотный диапазон",
-      value: "50 Гц – 15 000 Гц"
-    },
-    {
-      label: "Выходное сопротивление",
-      value: "300 Ом"
-    },
-    {
-      label: "Чувствительность",
-      value: "-54.5 dBV/Pa (1.85 мВ)"
-    },
-    {
-      label: "Разъём",
-      value: "XLR (3-pin)"
-    },
-    {
-      label: "Страна производства",
-      value: "Мексика"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "marshall-mg30gfx",
-    title: "Marshall MG30GFX Gold",
-    brand: "Marshall",
-    category: "Усилители",
-    categorySlug: "amps",
-    price: 29990,
-    oldPrice: 34990,
-    badge: "-15%",
-    badgeType: "sale",
-    rating: 4.8,
-    reviews: 67,
-    inStock: true,
-    sku: "SW-40092",
-    popularity: 89,
-    dateAdded: "2026-01-28",
-    image: "img/photo-1563245372-f21724e3856d.avif",
-    gallery: [
-      "img/photo-1563245372-f21724e3856d.avif",
-      "img/photo-1550291652-6ea9114a47b1.avif",
-      "img/photo-1516924962500-2b4b3b99ea02.jpg"
-    ],
-    desc: "Комбоусилитель 30 Вт с 10-дюймовым динамиком и блоком цифровых эффектов.",
-    fullDesc: "Marshall MG30GFX — компактный, но мощный гитарный комбоусилитель легендарной серии Gold. 4 переключаемых канала (Clean, Crunch, OD1, OD2), встроенный блок цифровых эффектов (Reverb, Chorus, Phaser, Flanger, Delay) и кастомный 10-дюймовый динамик позволяют нарулить фирменный британский рок-саунд прямо в комнате или на репетиции.",
-    colors: [{
-      name: "Marshall Gold / Black",
-      dot: "linear-gradient(135deg, #caa14c, #111)"
-    }],
-    configs: ["Мощность 30 Вт, динамик 10 дюймов"],
-    packages: [{
-      name: "Базовая (усилитель + сетевой кабель)",
-      extraPrice: 0
-    },
-    {
-      name: "PRO (+ футсвич Marshall PEDL-90008)",
-      extraPrice: 4490
-    }
-    ],
-    specs: [{
-      label: "Тип",
-      value: "Транзисторный с DSP-процессором"
-    },
-    {
-      label: "Выходная мощность",
-      value: "30 Вт"
-    },
-    {
-      label: "Динамик",
-      value: '1 × 10" Custom Speaker (4 Ом)'
-    },
-    {
-      label: "Каналы",
-      value: "4 (Clean, Crunch, OD-1, OD-2)"
-    },
-    {
-      label: "Эффекты",
-      value: "Reverb, Chorus, Phaser, Flanger, Vibe, Delay"
-    },
-    {
-      label: "Входы/выходы",
-      value: "Инструментальный Jack 6.3 мм, AUX 3.5 мм, выход на наушники"
-    },
-    {
-      label: "Вес",
-      value: "10.8 кг"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "tama-imperialstar",
-    title: "TAMA Imperialstar 22",
-    brand: "TAMA",
-    category: "Ударные",
-    categorySlug: "drums",
-    price: 94990,
-    oldPrice: null,
-    badge: "NEW",
-    badgeType: "new",
-    rating: 4.9,
-    reviews: 21,
-    inStock: true,
-    sku: "SW-50119",
-    popularity: 86,
-    dateAdded: "2026-03-05",
-    image: "img/photo-1519892300165-cb5542fb47c7.jpg",
-    gallery: [
-      "img/photo-1519892300165-cb5542fb47c7.jpg",
-      "img/photo-1590602847861-f357a9332bbc.jpg",
-      "img/photo-1511671782779-c97d3d27a1d4.avif"
-    ],
-    desc: "Полный комплект акустических барабанов со стойками и тарелками Meinl.",
-    fullDesc: "TAMA Imperialstar 22 — готовый комплект ударной установки высшего класса для начинающих и выступающих барабанщиков. Кадушки из 100% тополя (6 слоев, 8 мм) обеспечивают сбалансированное звучание с глубоким резонансом. В комплект входит полный набор надежной фурнитуры Stage Master и комплект тарелок Meinl HCS (Германия).",
-    colors: [{
-      name: "Hairline Black",
-      dot: "#181818"
-    },
-    {
-      name: "Coffee Teak Wrap",
-      dot: "#4a3525"
-    },
-    {
-      name: "Burgundy Walnut",
-      dot: "#4d1a24"
-    }
-    ],
-    configs: ["5 барабанов (22/10/12/16/14) + хардвер + тарелки"],
-    packages: [{
-      name: "Комплект с тарелками Meinl HCS",
-      extraPrice: 0
-    },
-    {
-      name: "PRO (+ набор демпферов Evans + чехлы)",
-      extraPrice: 9990
-    }
-    ],
-    specs: [{
-      label: "Конфигурация",
-      value: 'Бас-бочка 22"×16", томы 10"×7", 12"×8", флор-том 16"×15", малый 14"×5"'
-    },
-    {
-      label: "Материал кадушек",
-      value: "100% тополь (Poplar), 6 слоёв, 8 мм"
-    },
-    {
-      label: "Фурнитура",
-      value: "Двойные ножки, стойки TAMA Stage Master"
-    },
-    {
-      label: "Тарелки в комплекте",
-      value: 'Meinl HCS: 14" Hi-Hat, 16" Crash, 20" Ride'
-    },
-    {
-      label: "Педаль",
-      value: "TAMA Iron Cobra 200 Power Glide"
-    },
-    {
-      label: "Стул барабанщика",
-      value: "В комплекте (с регулировкой высоты)"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  },
-  {
-    id: "yamaha-pacifica",
-    title: "Yamaha Pacifica 112V",
-    brand: "Yamaha",
-    category: "Электрогитары",
-    categorySlug: "electric",
-    price: 39990,
-    oldPrice: 44990,
-    badge: "Хит",
-    badgeType: "hit",
-    rating: 4.8,
-    reviews: 142,
-    inStock: true,
-    sku: "SW-10114",
-    popularity: 95,
-    dateAdded: "2026-02-15",
-    image: "img/photo-1510915361894-db8b60106cb1.avif",
-    gallery: [
-      "img/photo-1510915361894-db8b60106cb1.avif",
-      "img/photo-1550291652-6ea9114a47b1.avif",
-      "img/photo-1516924962500-2b4b3b99ea02.jpg"
-    ],
-    desc: "Универсальный стратокастер H-S-S с отсечкой катушки и массивом ольхи.",
-    fullDesc: "Yamaha Pacifica 112V давно заслужила репутацию лучшей универсальной гитары в своем ценовом классе. Корпус из массива ольхи, звукосниматели Alnico V конфигурации HSS с возможностью отсечки хамбакера в сингл делают эту гитару одинаково убедительной в джазе, фанке, блюзе и металле.",
-    colors: [{
-      name: "Sonic Blue",
-      dot: "#9bbcd4"
-    },
-    {
-      name: "Old Violin Sunburst",
-      dot: "linear-gradient(135deg, #a8581e, #1a100a)"
-    },
-    {
-      name: "Black",
-      dot: "#1a1a1a"
-    }
-    ],
-    configs: ["HSS (хамбакер + 2 сингла Alnico V)"],
-    packages: [{
-      name: "Базовая комплектация",
-      extraPrice: 0
-    },
-    {
-      name: "Start Pack (+ кабель Fender + ремень + тюнер)",
-      extraPrice: 2990
-    }
-    ],
-    specs: [{
-      label: "Форма корпуса",
-      value: "Pacifica Doublecut"
-    },
-    {
-      label: "Материал корпуса",
-      value: "Массив ольхи (Solid Alder)"
-    },
-    {
-      label: "Гриф",
-      value: "Клён с матовым сатиновым покрытием"
-    },
-    {
-      label: "Накладка",
-      value: "Палисандр (Rosewood)"
-    },
-    {
-      label: "Мензура",
-      value: '25.5" (648 мм)'
-    },
-    {
-      label: "Количество ладов",
-      value: "22"
-    },
-    {
-      label: "Звукосниматели",
-      value: "Alnico V: 2 × Single, 1 × Humbucker с Push/Pull"
-    },
-    {
-      label: "Бридж",
-      value: "Vintage Tremolo со литыми седлами"
-    },
-    {
-      label: "Гарантия",
-      value: "2 года"
-    }
-    ]
-  }
   ]
 };
 
-async function getCart() {
-  response = await fetch('/api/v1/cart', {
-    method: 'GET',
-  })
-    .then(response => response.json())
-    .then(data => {
-      return data
-    })
-    .catch(error => {
-      showToast(error);
-    });
-  return response
-}
-
-function addToCart(variant_id, quantity = 1) {
-
-  showToast("Товар добавлен в корзину");
-  if (typeof renderCartPage === "function") {
-    // renderCartPage();
-  }
-}
-
-async function getProducts(params) {
-  const url = new URL(window.location.origin + '/api/v1/catalog');
-  url.search = new URLSearchParams(params);
-  const response = fetch(
-    url,
-    {
+async function getUserCounts() {
+  response = await fetch('/api/v1/user/counts', {
       method: 'GET',
-    }
-  )
-    .then(response => response.json())
-    .then(data => {
-      return data
     })
-    .catch(error => {
-      showToast(error);
-    });
-
-  return response
-}
-function getProduct(id) {
-  const url = new URL(window.location.origin + '/api/v1/product');
-  url.search = new URLSearchParams({ id: id });
-
-  const response = fetch(url)
     .then(response => response.json())
     .then(data => {
-      return data
+      return data;
     })
     .catch(error => {
       showToast(error);
@@ -695,12 +653,10 @@ function getProduct(id) {
   return response;
 }
 
-async function getFilters(params) {
-
-  const response = fetch('/api/v1/catalog/filters', {
-    method: 'POST',
-    body: prepareData(params),
-  })
+async function getCart() {
+  response = await fetch('/api/v1/cart', {
+      method: 'GET',
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -708,14 +664,48 @@ async function getFilters(params) {
     .catch(error => {
       showToast(error);
     });
+  return response
+}
 
+async function addToCart(variantId, quantity = 1) {
+  response = await fetch('/api/v1/cart/add', {
+      method: 'POST',
+      body: prepareData({
+        variantId: variantId,
+        amount: quantity
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+  return response
+}
+
+async function removeFromCart(variantId) {
+  response = await fetch('/api/v1/cart/remove', {
+      method: 'POST',
+      body: prepareData({
+        variantId: variantId
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
   return response
 }
 
 async function getFavs() {
   response = await fetch('/api/v1/favorites', {
-    method: 'GET',
-  })
+      method: 'GET',
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -726,51 +716,112 @@ async function getFavs() {
   return response
 }
 
-function setStoredFavs(favs) {
-  // localStorage.setItem("soundwave_favs", JSON.stringify(favs));
-}
-
-function toggleFav(productId) {
-  // let favs = getStoredFavs();
-  if (favs.includes(productId)) {
-    favs = favs.filter((id) => id !== productId);
-    showToast("Удалено из избранного");
-  } else {
-    favs.push(productId);
-    showToast("Добавлено в избранное");
-  }
-  setStoredFavs(favs);
-  if (typeof renderFavoritesPage === "function") {
-    renderFavoritesPage();
-  }
-}
-
-async function updateHeaderBadges() {
-  response = await fetch('/api/v1/user/counts', {
-    method: 'GET',
-  })
+async function addToFavs(variantId) {
+  response = await fetch('/api/v1/favorites/add', {
+      method: 'POST',
+      body: prepareData({
+        variantId: variantId
+      })
+    })
     .then(response => response.json())
     .then(data => {
-      const favscount = data.message.favCount
-      const totalCount = data.message.cartCount
-      document.querySelectorAll(".fav-count-badge").forEach((badge) => {
-        badge.textContent = favscount;
-        badge.style.display = favscount > 0 ? "flex" : "none";
-      });
-      document.querySelectorAll(".cart-count-badge").forEach((badge) => {
-        badge.textContent = totalCount;
-        badge.style.display = totalCount > 0 ? "flex" : "none";
-      });
+      return data
     })
     .catch(error => {
       showToast(error);
     });
+  return response
+}
+
+async function removeFromFavs(variantId) {
+  response = await fetch('/api/v1/favorites/remove', {
+      method: 'POST',
+      body: prepareData({
+        variantId: variantId
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+  return response
+}
+
+async function getProducts(params) {
+  const url = new URL(window.location.origin + '/api/v1/catalog');
+  url.search = new URLSearchParams(params);
+  const response = fetch(
+      url, {
+        method: 'GET',
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+
+  return response
+}
+
+async function getProduct(id) {
+  const url = new URL(window.location.origin + '/api/v1/product');
+  url.search = new URLSearchParams({
+    id: id
+  });
+  const response = fetch(
+      url, {
+        method: 'GET',
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+
+  return response
+}
+
+async function getFilters(params) {
+
+  const response = fetch('/api/v1/catalog/filters', {
+      method: 'POST',
+      body: prepareData(params),
+    })
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+    .catch(error => {
+      showToast(error);
+    });
+
+  return response
+}
+
+async function updateHeaderBadges(handledIds) {
+  document.querySelectorAll(".fav-count-badge").forEach((badge) => {
+    badge.textContent = handledIds.favIds.length;
+    badge.style.display = handledIds.favIds.length > 0 ? "flex" : "none";
+  });
+  document.querySelectorAll(".cart-count-badge").forEach((badge) => {
+    badge.textContent = handledIds.cartIds.length;
+    badge.style.display = handledIds.cartIds.length > 0 ? "flex" : "none";
+  });
 }
 
 async function getCurrentUser() {
   response = await fetch('/api/v1/user', {
-    method: 'GET',
-  })
+      method: 'GET',
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -784,8 +835,8 @@ async function getCurrentUser() {
 
 async function getOrders() {
   response = await fetch('/api/v1/user/orders', {
-    method: 'GET',
-  })
+      method: 'GET',
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -831,7 +882,6 @@ function getRecentProducts() {
       return [];
     }
   }
-  return ["fender-strat", "yamaha-p225", "marshall-mg30gfx"];
 }
 
 function addRecentProduct(productId) {
@@ -845,56 +895,56 @@ function addRecentProduct(productId) {
 function getProductReviews(productId) {
   const defaultReviews = {
     "fender-strat": [{
-      author: "Михаил Р.",
-      date: "2 марта 2026",
-      rating: 5,
-      text: "Гитара превзошла все ожидания! Звук потрясающий, сустейн бесконечный. Отделка 3-Color Sunburst идеальная.",
-      verified: true
-    },
-    {
-      author: "Артём Ковалев",
-      date: "24 февраля 2026",
-      rating: 5,
-      text: "Классический стратовский звук с датчиками Alnico 5. Гриф приятный, лады закатаны без нареканий.",
-      verified: true
-    },
-    {
-      author: "Сергей В.",
-      date: "15 января 2026",
-      rating: 4,
-      text: "Отличный инструмент для сцены и студии. Заводская отстройка почти идеальная, чуть опустил струны.",
-      verified: false
-    }
+        author: "Михаил Р.",
+        date: "2 марта 2026",
+        rating: 5,
+        text: "Гитара превзошла все ожидания! Звук потрясающий, сустейн бесконечный. Отделка 3-Color Sunburst идеальная.",
+        verified: true
+      },
+      {
+        author: "Артём Ковалев",
+        date: "24 февраля 2026",
+        rating: 5,
+        text: "Классический стратовский звук с датчиками Alnico 5. Гриф приятный, лады закатаны без нареканий.",
+        verified: true
+      },
+      {
+        author: "Сергей В.",
+        date: "15 января 2026",
+        rating: 4,
+        text: "Отличный инструмент для сцены и студии. Заводская отстройка почти идеальная, чуть опустил струны.",
+        verified: false
+      }
     ],
     "gibson-les-paul": [{
-      author: "Денис Г.",
-      date: "5 марта 2026",
-      rating: 5,
-      text: "Настоящий Gibson с плотным мощным низом. В перегрузе поёт великолепно!",
-      verified: true
-    },
-    {
-      author: "Владимир",
-      date: "18 февраля 2026",
-      rating: 5,
-      text: "Сустейн и хамбакеры 490R/498T творят чудеса. Очень доволен покупкой в SOUNDWAVE.",
-      verified: true
-    }
+        author: "Денис Г.",
+        date: "5 марта 2026",
+        rating: 5,
+        text: "Настоящий Gibson с плотным мощным низом. В перегрузе поёт великолепно!",
+        verified: true
+      },
+      {
+        author: "Владимир",
+        date: "18 февраля 2026",
+        rating: 5,
+        text: "Сустейн и хамбакеры 490R/498T творят чудеса. Очень доволен покупкой в SOUNDWAVE.",
+        verified: true
+      }
     ],
     "yamaha-p225": [{
-      author: "Елена Смирнова",
-      date: "27 февраля 2026",
-      rating: 5,
-      text: "Клавиатура GHC очень отзывчивая, звук рояля CFX глубокий и естественный. Для занятий дома — лучший выбор.",
-      verified: true
-    },
-    {
-      author: "Павел К.",
-      date: "10 февраля 2026",
-      rating: 5,
-      text: "Компактный размер, качественная сборка, подключение по USB без задержек.",
-      verified: true
-    }
+        author: "Елена Смирнова",
+        date: "27 февраля 2026",
+        rating: 5,
+        text: "Клавиатура GHC очень отзывчивая, звук рояля CFX глубокий и естественный. Для занятий дома — лучший выбор.",
+        verified: true
+      },
+      {
+        author: "Павел К.",
+        date: "10 февраля 2026",
+        rating: 5,
+        text: "Компактный размер, качественная сборка, подключение по USB без задержек.",
+        verified: true
+      }
     ],
     "roland-juno-d": [{
       author: "Максим DJ",
@@ -904,19 +954,19 @@ function getProductReviews(productId) {
       verified: true
     }],
     "shure-sm58": [{
-      author: "Игорь Новиков",
-      date: "4 марта 2026",
-      rating: 5,
-      text: "Легенда! Неубиваемый микрофон, вокал звучит плотно и пробивно в любом миксе.",
-      verified: true
-    },
-    {
-      author: "Анна Вокальная",
-      date: "19 февраля 2026",
-      rating: 5,
-      text: "Использую в студии и на лайвах. Никакой обратной связи, надёжность 100%.",
-      verified: true
-    }
+        author: "Игорь Новиков",
+        date: "4 марта 2026",
+        rating: 5,
+        text: "Легенда! Неубиваемый микрофон, вокал звучит плотно и пробивно в любом миксе.",
+        verified: true
+      },
+      {
+        author: "Анна Вокальная",
+        date: "19 февраля 2026",
+        rating: 5,
+        text: "Использую в студии и на лайвах. Никакой обратной связи, надёжность 100%.",
+        verified: true
+      }
     ],
     "marshall-mg30gfx": [{
       author: "Дмитрий рок",
@@ -946,7 +996,7 @@ function getProductReviews(productId) {
   if (stored) {
     try {
       allStored = JSON.parse(stored);
-    } catch (e) { }
+    } catch (e) {}
   }
 
   const custom = allStored[productId] || [];
@@ -967,7 +1017,7 @@ function addProductReview(productId, review) {
   if (stored) {
     try {
       allStored = JSON.parse(stored);
-    } catch (e) { }
+    } catch (e) {}
   }
   if (!allStored[productId]) allStored[productId] = [];
   allStored[productId].unshift({
@@ -1014,10 +1064,164 @@ function prepareData(data) {
   return formData
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  updateHeaderBadges();
+async function initEvents() {
+  document.addEventListener('click', async (e) => {
+    // const tabButton = e.target.closest('.tab-btn');
+    // if (tabButton) {
+    //   const navtab = e.target.closest('.nav-tabs');
+    //   const tabButtons = navtab.querySelectorAll('.tab-btn');
+    //   const tabLevel = tabButton.getAttribute('data-tab-level');
+    //   const targetId = tabButton.getAttribute('data-tab');
+    //   const container = navtab.closest('.modal-body') || navtab.closest('.admin-card') || document;
 
-  document.addEventListener("click", (e) => {
+    //   tabButtons.forEach(btn => {
+    //     if (btn.getAttribute('data-tab-level') == tabLevel) btn.classList.remove('active');
+    //   });
+    //   tabButton.classList.add('active');
+
+    //   const panes = container.querySelectorAll('.tab-pane');
+    //   panes.forEach(pane => {
+    //     if (pane.getAttribute('data-tab-level') == tabLevel) {
+    //       if (pane.id === targetId) {
+    //         pane.classList.add('active');
+    //       } else {
+    //         pane.classList.remove('active');
+    //       }
+    //     }
+    //   });
+    // }
+
+    cardBtn = e.target.closest('[card-btn]');
+    if (cardBtn) {
+      productData = cardBtn.closest('[pid]');
+      if (productData) {
+        productData = productData.getAttribute('pid').split('-');
+        productId = productData[0];
+        variantId = productData[1];
+      };
+
+      switch (cardBtn.getAttribute('card-btn')) {
+        case 'cart-add':
+          add = await addToCart(variantId);
+          cardBtn.closest('.incart-text').innerHTML = `
+              В корзине
+              <button class="btn-add-cart incart-btn" card-btn='cart-go' title="В корзину">
+                <i class="bi bi-bag-plus"></i>
+              </button>
+            `
+          if (add.status != 'success') {
+            cardBtn.closest('.incart-text').innerHTML = `
+              <button class="btn-add-cart" card-btn='cart-add' title="В корзину">
+                <i class="bi bi-bag-plus"></i>
+              </button>
+            `
+          }
+          break;
+
+        case 'fav-add':
+          add = await addToFavs(variantId);
+          fvbtn = cardBtn.closest('.product-fav-btn');
+          fvbtn.classList.toggle('active');
+          fvbtn.setAttribute('card-btn', 'fav-remove');
+          fvbtn.innerHTML = `<i class="bi bi-heart-fill"></i>`
+          if (add.status != 'success') {
+            fvbtn.setAttribute('card-btn', 'fav-add');
+            fvbtn = cardBtn.closest('.product-fav-btn');
+            fvbtn.classList.toggle('active');
+            fvbtn.innerHTML = `<i class="bi bi-heart"></i>`
+          }
+          break;
+
+        case 'fav-remove':
+          rem = await removeFromFavs(variantId);
+          fvbtn = cardBtn.closest('.product-fav-btn');
+          fvbtn.classList.toggle('active');
+          fvbtn.setAttribute('card-btn', 'fav-add');
+          fvbtn.innerHTML = `<i class="bi bi-heart"></i>`
+          if (rem.status != 'success') {
+            fvbtn.setAttribute('card-btn', 'fav-remove');
+            fvbtn = cardBtn.closest('.product-fav-btn');
+            fvbtn.classList.toggle('active');
+            fvbtn.innerHTML = `<i class="bi bi-heart-fill"></i>`
+          }
+          break;
+
+        case 'cart-go':
+          window.location = './cart.php';
+          break;
+
+        case 'cart-remove':
+          await removeFromCart(variantId);
+          break;
+
+        case 'trans-fav':
+          await removeFromCart(variantId);
+          await addToFavs(variantId);
+          break;
+
+        case 'trans-cart':
+          await removeFromFavs(variantId);
+          await addToCart(variantId);
+          break;
+      }
+      if (typeof (renderCartPage) == 'function') await renderCartPage();
+      if (typeof (renderFavoritesPage) == 'function') await renderFavoritesPage();
+      await updateHandled();
+      e.preventDefault();
+      return;
+    }
+
+    const actionBtn = e.target.closest('[modal-action-button]');
+    if (actionBtn) {
+      e.preventDefault();
+      const modalType = actionBtn.getAttribute('modal-action-button');
+      obtainModal(modalType, actionBtn);
+      return;
+    }
+
+    function changeUrl(i) {
+      if (i.target.files[0]) {
+        uploadBtn.innerHTML = i.target.files[0].name;
+        document.querySelector('#logo-select-url').value = '';
+      }
+      i.target.removeEventListener('change', changeUrl);
+    }
+
+    const uploadBtn = e.target.closest('#logo-select-button');
+    if (uploadBtn) {
+      const selectInput = document.querySelector('#logo-select-input');
+      selectInput.addEventListener('change', changeUrl);
+      if (selectInput) selectInput.click();
+      return;
+    }
+    // const selectCatBtn = e.target.closest('#category-select-button');
+    // if (selectCatBtn) {
+    //   const selectInput = document.querySelector('#logo-select-input');
+    //   console.log(selectInput);
+    //   selectInput.addEventListener('change', changeUrl);
+    //   if (selectInput) selectInput.click();
+    //   return;
+    // }
+
+
+    const input = e.target.closest('[modal-action-input]');
+    if (input) {
+      const inputType = input.getAttribute('modal-action-input');
+      switch (inputType) {
+        case 'select-category':
+          renderSelectCategories(input.value);
+          break;
+
+        case 'brand':
+          renderBrands(input.value);
+          break;
+
+        case 'category':
+          renderCategories(input.value);
+          break;
+
+      }
+    }
     const addBtn = e.target.closest("[data-add-cart]");
     if (addBtn) {
       e.preventDefault();
@@ -1026,16 +1230,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const qty = qtyInput ? parseInt(qtyInput.value, 10) || 1 : 1;
       addToCart(id, qty);
     }
-
-    const favBtn = e.target.closest(".product-fav-btn, [data-toggle-fav]");
-    if (favBtn) {
-      e.preventDefault();
-      const id = favBtn.getAttribute("data-id") || favBtn.getAttribute("data-toggle-fav");
-      if (id) {
-        toggleFav(id);
-      }
-    }
   });
+};
+
+let handledIds = '';
+
+async function updateHandled() {
+  handledIds = await getUserCounts();
+  updateHeaderBadges(handledIds.message);
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  updateHandled();
+  initEvents();
 
   const searchInput = document.querySelector("#header-search-input");
   const searchResults = document.querySelector("#search-autocomplete-box");
@@ -1046,9 +1253,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (val.length >= 2) {
         const matches = SOUNDWAVE_DATA.products.filter(
           (p) =>
-            p.title.toLowerCase().includes(val) ||
-            p.category.toLowerCase().includes(val) ||
-            (p.brand && p.brand.toLowerCase().includes(val))
+          p.title.toLowerCase().includes(val) ||
+          p.category.toLowerCase().includes(val) ||
+          (p.brand && p.brand.toLowerCase().includes(val))
         );
 
         if (matches.length > 0) {

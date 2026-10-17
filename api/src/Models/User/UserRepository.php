@@ -180,19 +180,19 @@ class UserRepository{
         });
     }
 
-    public function getCountHandledItems(int $id): array {
+    public function getHandledItems(int $id): array {
         return $this->db->transaction(function (PDO $pdo) use ($id) {
-            $q1 = $pdo->prepare('SELECT COALESCE(SUM(amount), 0) AS cart_count FROM products_cart WHERE user_id = ?');
+            $q1 = $pdo->prepare('SELECT variant_id AS cart FROM products_cart WHERE user_id = ?');
             $q1->execute([$id]);
-            $cartCount = (int) $q1->fetchColumn();
+            $carts = $q1->fetchAll(PDO::FETCH_COLUMN);
 
-            $q2 = $pdo->prepare('SELECT COUNT(*) AS fav_count FROM products_favorites WHERE user_id = ?');
+            $q2 = $pdo->prepare('SELECT variant_id AS fav_count FROM products_favorites WHERE user_id = ?');
             $q2->execute([$id]);
-            $favCount = (int) $q2->fetchColumn();
+            $favs = $q2->fetchAll(PDO::FETCH_COLUMN);
 
             return [
-                'cartCount' => $cartCount,
-                'favCount' => $favCount
+                'cartIds' => $carts,
+                'favIds' => $favs
             ];
         });
     }

@@ -172,18 +172,18 @@
       let html = '';
       favs.forEach(fav => {
         html += `
-          <div class="product-card">
+          <div class="product-card" pid="${fav.productId}-${fav.variantId}">
             <div class="product-image-box">
-              <button class="product-fav-btn active" onclick="removeFromFavs('${fav.id}')" title="Удалить из избранного">
+              <button class="product-fav-btn active" card-btn='fav-remove' title="Удалить из избранного">
                 <i class="bi bi-heart-fill"></i>
               </button>
-              <a href="product.php?id=${fav.id}">
+              <a href="product.php?id=${fav.productId}&vid=${fav.variantId}">
                 <img src="${fav.image}" alt="${fav.product_title}">
               </a>
             </div>
             <div class="product-content">
               <div class="product-category-tag">${fav.category}</div>
-              <a href="product.php?id=${fav.id}" class="product-title">${fav.product_title}</a>
+              <a href="product.php?id=${fav.productId}&vid=${fav.variantId}" class="product-title">${fav.productTitle}</a>
               <div class="product-rating">
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
@@ -197,7 +197,7 @@
                 <div class="price-box">
                   <span class="current-price">${formatPrice(fav.price)}</span>
                 </div>
-                <button class="btn-add-cart" onclick="addToCart('${fav.id}')" title="В корзину">
+                <button class="btn-add-cart" card-btn='trans-cart' title="В корзину">
                   <i class="bi bi-bag-plus"></i>
                 </button>
               </div>
@@ -207,11 +207,6 @@
       });
 
       container.innerHTML = html;
-    }
-
-    function removeFromFavs(id) {
-      toggleFav(id);
-      renderFavoritesPage();
     }
 
     function clearAllFavorites() {

@@ -6,6 +6,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Models\Database;
 use PDO;
+use Throwable;
 
 class FavoritesRepository
 {
@@ -21,7 +22,7 @@ class FavoritesRepository
      *
      * @param int $userId
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getFavoritesByUserId(int $userId): array
     {
@@ -65,14 +66,14 @@ class FavoritesRepository
                 $varId = $row['variant_id'];
                 if (!isset( $favMap[$varId])) {
                     $favMap[$varId] = (object) [
-                        'product_id'    => (int) $row['product_id'],
-                        'variant_id'    => (int) $row['variant_id'],
-                        'product_title' => $row['product_title'],
+                        'productId'    => (int) $row['product_id'],
+                        'variantId'    => (int) $row['variant_id'],
+                        'productTitle' => $row['product_title'],
                         'price'         => (float) $row['price'],
                         'image'         => $row['image_url'],
                         'article'       => $row['article'],
                         'rating'        => $row['rating'],
-                        'variant_title' => $row['variant_title'],
+                        'variantTitle' => $row['variant_title'],
                         'category'      => $row['category_title'],
                     ];
                 }
@@ -88,7 +89,7 @@ class FavoritesRepository
      * @param int $userId
      * @param int $variantId
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function removeItem(int $userId, int $variantId): bool
     {
@@ -104,7 +105,7 @@ class FavoritesRepository
      * @param int $userId
      * @param int $variantId
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function addItem(int $userId, int $variantId): bool
     {

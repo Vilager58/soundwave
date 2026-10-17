@@ -41,10 +41,10 @@ class UserController{
     public function getCountHandledItems(?int $id = null): array
     {
         $userId = $id ?? $this->auth->getUser()->getId();
-        $counts = $this->userRepository->getCountHandledItems($userId);
+        $handled = $this->userRepository->getHandledItems($userId);
         return [
             'status' => 'success',
-            'message' => $counts
+            'message' => $handled
         ];
     }
 

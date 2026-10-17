@@ -7,6 +7,7 @@ use App\Models\User\UserDto;
 use App\Models\User\UserRepository;
 use Exception;
 use App\Models\User;
+use Throwable;
 
 class Auth{
 
@@ -17,7 +18,7 @@ class Auth{
     private User $user;
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function __construct(UserRepository $userRepository){
         $this->userRepository = $userRepository;
@@ -32,7 +33,7 @@ class Auth{
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function register(UserDto $userDto): bool
     {
@@ -52,6 +53,9 @@ class Auth{
         return true;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function login($email, $password): bool{
             $user = $this->userRepository->getUserByEmail($email);
             if(!password_verify($password, $user->getPasswordHash())) {
@@ -65,13 +69,15 @@ class Auth{
             return true;
     }
 
-    public function logout(){
+    public function logout(): false
+    {
         $_SESSION = array();
         session_destroy();
         return false;
     }
 
-    public function isLoggedIn(){
+    public function isLoggedIn(): bool
+    {
         return $this->isLoggedIn;
     }
 

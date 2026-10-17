@@ -6,6 +6,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Models\Database;
 use PDO;
+use Throwable;
 
 class CartRepository
 {
@@ -21,7 +22,7 @@ class CartRepository
      *
      * @param int $userId
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getCartByUserId(int $userId): array
     {
@@ -53,13 +54,13 @@ class CartRepository
                 $varId = $row['variant_id'];
                 if (!isset($cartMap[$varId])) {
                     $cartMap[$varId] = (object) [
-                        'product_id'    => (int) $row['product_id'],
-                        'variant_id'    => (int) $row['variant_id'],
-                        'product_title' => $row['product_title'],
+                        'productId'    => (int) $row['product_id'],
+                        'variantId'    => (int) $row['variant_id'],
+                        'productTitle' => $row['product_title'],
                         'price'         => (float) $row['price'],
                         'image'         => $row['image_url'],
                         'article'       => $row['article'],
-                        'variant_title' => $row['variant_title'],
+                        'variantTitle' => $row['variant_title'],
                         'amount'        => (int) $row['amount'],
                         'category'      => $row['category_title'],
                     ];
@@ -77,7 +78,7 @@ class CartRepository
      * @param int $variantId
      * @param int $delta
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function updateQuantity(int $userId, int $variantId, int $delta): bool
     {
@@ -100,7 +101,7 @@ class CartRepository
      * @param int $userId
      * @param int $variantId
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function removeItem(int $userId, int $variantId): bool
     {
@@ -117,7 +118,7 @@ class CartRepository
      * @param int $variantId
      * @param int $amount
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function addItem(int $userId, int $variantId, int $amount = 1): bool
     {

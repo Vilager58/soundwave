@@ -64,9 +64,9 @@ class CartController
      */
     public function removeItem(): array
     {
-        $variantId = (int) ($_POST['variant_id'] ?? 0);
+        $variantId = (int) ($_POST['variantId'] ?? 0);
         if ($variantId <= 0) {
-            throw new Exception("Не передан variant_id");
+            throw new Exception("Не передан variantId");
         }
 
         $this->cartRepository->removeItem((int) $_SESSION['uid'], $variantId);
@@ -85,7 +85,7 @@ class CartController
      */
     public function addItem(): array
     {
-        $variantId = (int) ($_POST['variant_id'] ?? 0);
+        $variantId = (int) ($_POST['variantId'] ?? 0);
         $amount = (int) ($_POST['amount'] ?? 1);
         if ($variantId <= 0) {
             throw new Exception("Не передан variant_id");
@@ -96,24 +96,5 @@ class CartController
             'status' => 'success',
             'message' => 'Товар добавлен в корзину'
         ];
-    }
-
-    /**
-     * Универсальный обработчик для совместимости с user_cart.php
-     *
-     * @return mixed
-     * @throws Throwable
-     */
-    public function handle(): mixed
-    {
-        $case = $_POST['case'] ?? null;
-        if ($case === 'updateQuanity' || $case === 'updateQuantity') {
-            return $this->updateQuantity();
-        } elseif ($case === 'removeItem') {
-            return $this->removeItem();
-        } elseif ($case === 'addItem') {
-            return $this->addItem();
-        }
-        return $this->getCart();
     }
 }

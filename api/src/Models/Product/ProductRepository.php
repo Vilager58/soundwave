@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 use App\Models\Database;
 use Exception;
 use PDO;
+use Throwable;
 
 class ProductRepository
 {
@@ -22,7 +23,7 @@ class ProductRepository
      *
      * @param array $filters
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getCatalog(array $filters = []): array
     {
@@ -147,7 +148,6 @@ class ProductRepository
                         'variants'         => [],
                     ];
                 }
-
                 $products[$productId]->variants[] = (object) [
                     'variantId' => (int) $row['variant_id'],
                     'variant'   => $row['variant'],
@@ -159,7 +159,6 @@ class ProductRepository
                     'image'     => $row['image_url'],
                 ];
             }
-
             return array_values($products);
         });
     }
@@ -169,7 +168,7 @@ class ProductRepository
      *
      * @param array $params
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getFilters(array $params = []): array
     {
@@ -277,7 +276,7 @@ class ProductRepository
      *
      * @param int $id
      * @return object|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getById(int $id): ?object
     {
@@ -425,7 +424,7 @@ class ProductRepository
      * @param int $id
      * @param array $data
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function update(int $id, array $data): array
     {

@@ -125,13 +125,13 @@
         totalItems += item.amount;
 
         html += `
-          <div class="cart-item-card">
+          <div class="cart-item-card" pid='${item.productId}-${item.variantId}'>
             <div class="cart-item-thumb">
               <img src="${item.image}" alt="soundwave">
             </div>
             <div class="cart-item-info">
               <div class="cart-item-category">${item.category}</div>
-              <a href="product.php?id=${item.product_id}" class="cart-item-title">${item.product_title}</a>
+              <a href="product.php?id=${item.product_id}" class="cart-item-title">${item.productTitle}</a>
               <div class="cart-item-price-each">${formatPrice(item.price)} / шт.</div>
             </div>
             <div class="quantity-picker">
@@ -142,10 +142,10 @@
             <div class="cart-item-controls">
               <div class="cart-item-total">${formatPrice(itemTotal)}</div>
               <div class="cart-item-actions">
-                <button class="cart-action-btn" onclick="transferToFavs(${item.variant_id})" title="В избранное">
+                <button class="cart-action-btn" card-btn="trans-fav" title="В избранное">
                   <i class="bi bi-heart"></i>
                 </button>
-                <button class="cart-action-btn btn-remove" onclick="removeCartItem(${item.variant_id})" title="Удалить">
+                <button class="cart-action-btn btn-remove" card-btn="cart-remove" title="Удалить">
                   <i class="bi bi-trash3"></i>
                 </button>
               </div>
@@ -181,31 +181,6 @@
         'variant_id': id,
         'delta': delta
       }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          renderCartPage();
-        })
-        .catch(error => {
-          showToast(error);
-        });
-    }
-
-    async function removeCartItem(id) {
-      const item = {
-        'case': 'removeItem',
-        'variant_id': id
-      };
-      const formData = new FormData();
-      for (const key in item) {
-        if (item.hasOwnProperty(key)) {
-          formData.append(key, item[key]);
-        }
-      }
-
-      fetch('/api/user_cart.php', {
-        method: 'POST',
-        body: formData,
       })
         .then(response => response.json())
         .then(data => {

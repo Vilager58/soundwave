@@ -53,11 +53,11 @@
             <div class="header-actions">
                 <a href="favorites.html" class="action-btn" title="Избранное">
                     <i class="bi bi-heart"></i>
-                    <span class="action-badge fav-count-badge">0</span>
+                    <span class="action-badge fav-count-badge" style="display: none">0</span>
                 </a>
                 <a href="cart.php" class="action-btn" title="Корзина">
                     <i class="bi bi-bag"></i>
-                    <span class="action-badge cart-count-badge">0</span>
+                    <span class="action-badge cart-count-badge" style="display: none">0</span>
                 </a>
                 <a href=<?= isset($_SESSION['uid']) ? "account.php" : "login.php"; ?> class="action-btn" title="Личный кабинет">
                     <i class="bi bi-person"></i>
