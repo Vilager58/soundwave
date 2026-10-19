@@ -59,10 +59,7 @@ class UserController{
         if (isset($_POST['birthdate'])) $user->setBirthdate(!empty($_POST['birthdate']) ? filter_var($_POST['birthdate'], FILTER_SANITIZE_SPECIAL_CHARS) : null);
         if (isset($_POST['instrument'])) $user->setInstrument(filter_var($_POST['instrument'], FILTER_SANITIZE_SPECIAL_CHARS));
         if (isset($_POST['city'])) $user->setCity(filter_var($_POST['city'], FILTER_SANITIZE_SPECIAL_CHARS));
-        if (isset($_POST['adress']) || isset($_POST['address'])) {
-            $addr = $_POST['adress'] ?? $_POST['address'];
-            $user->setAddress(filter_var($addr, FILTER_SANITIZE_SPECIAL_CHARS));
-        }
+        if (isset($_POST['address'])) $user->setAddress(filter_var($_POST['address'], FILTER_SANITIZE_SPECIAL_CHARS));
 
         $this->userRepository->updateUser($user);
 
@@ -85,6 +82,7 @@ class UserController{
             'bonus_balance' => $this->auth->getUser()->getBonusBalance(),
             'instrument' => $this->auth->getUser()->getInstrument(),
             'city' => $this->auth->getUser()->getCity(),
+            'address' => $this->auth->getUser()->getAddress(),
         ];
     }
 

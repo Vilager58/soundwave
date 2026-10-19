@@ -1,15 +1,26 @@
+import {
+  api
+} from "./api.js";
+import { renderCatalog } from "./pages/products.js";
+
+// import { renderCatalog } from "./pages/products.js";
+
+export let pageData = {
+  brands: [],
+}
+
+let products = [];
+let brand = {};
+let categories = [];
+let product = {};
+let presaveproduct = {};
+let lastSearchCat = '0';
+
 document.addEventListener('DOMContentLoaded', () => {
-  let products = [];
-  let brands = [];
-  let categories = [];
-  let product = {};
-  let presaveproduct = {};
-  let lastSearchCat = '0';
   initSidebar();
   initEvents();
-  // initTabs();
-  // initTableSearchAndFilters();
   initPickupTerminal();
+  renderCatalog();
 });
 
 function initSidebar() {
@@ -57,12 +68,12 @@ async function openModal(modalId, targetBtn) {
     modalBox = mb;
   }
   switch (modalId) {
-    case 'product-modal':
+    case 'product-modal':{
+      
       const productId = targetBtn.getAttribute('data-modal-product-id');
-      product = await Product({
+      product = await api.get('/product', {
         id: productId
-      }, 'get');
-      console.log(product);
+      });
       modalBox.innerHTML = `<div class="admin-modal modal-xl">
       <div class="modal-header">
         <div class="modal-title">
@@ -212,6 +223,7 @@ async function openModal(modalId, targetBtn) {
       renderVariantAttributes(product);
       renderVariantGallery(product);
       break;
+    }
 
     case 'brand-modal':
       const brandId = targetBtn.getAttribute('data-modal-brand-id');
@@ -226,8 +238,9 @@ async function openModal(modalId, targetBtn) {
           "isActive": 1
         }
       } else {
-        brand = brands.find(b => b.id == brandId);
+        brand = pageData.brands.find(b => b.id == brandId);
       }
+      console.log(brand);
       modalBox.innerHTML = `
           <div class="admin-modal modal-lg">
       <div class="modal-header">
@@ -486,7 +499,7 @@ async function openModal(modalId, targetBtn) {
           <button class="btn btn-secondary" type="button" modal-action-button='close'>Отмена</button>
         </div>
       </div>
-    </div>`
+    </div>`;
       renderSelectAttributes();
       break;
 
@@ -527,9 +540,9 @@ async function openModal(modalId, targetBtn) {
       </div>`;
       break;
 
-    case 'remove-category':
-      removingCategoryId = targetBtn.getAttribute('data-modal-category-id');
-      category = categories.find(c => c.id == removingCategoryId);
+    case 'remove-category':{
+      let removingCategoryId = targetBtn.getAttribute('data-modal-category-id');
+      let category = categories.find(c => c.id == removingCategoryId);
       modalBox.innerHTML = `  
       <div class="admin-modal modal-sm">
         <div class="modal-header">
@@ -544,10 +557,10 @@ async function openModal(modalId, targetBtn) {
           <i class="bi bi-check2"></i> Удалить бренд </button>
       </div>`;
       break;
-
-    case 'remove-variant':
-      removingVariantId = targetBtn.getAttribute('data-modal-variant-id');
-      variant = product.variants[removingVariantId];
+    }
+    case 'remove-variant':{
+      let removingVariantId = targetBtn.getAttribute('data-modal-variant-id');
+      let variant = product.variants[removingVariantId];
       modalBox.innerHTML = `  
       <div class="admin-modal modal-sm">
         <div class="modal-header">
@@ -562,10 +575,10 @@ async function openModal(modalId, targetBtn) {
           <i class="bi bi-check2"></i> Удалить вариант </button>
       </div>`;
       break;
-
-    case 'remove-image':
-      removingImageId = targetBtn.getAttribute('data-modal-image-id');
-      image = product.images[removingImageId];
+    }
+    case 'remove-image':{
+      let removingImageId = targetBtn.getAttribute('data-modal-image-id');
+      let image = product.images[removingImageId];
       modalBox.innerHTML = `  
       <div class="admin-modal modal-sm">
         <div class="modal-header">
@@ -583,6 +596,8 @@ async function openModal(modalId, targetBtn) {
           <i class="bi bi-check2"></i> Удалить изображение </button>
       </div>`;
       break;
+    }
+      
   }
   modalBox.style.display = 'flex';
   setTimeout(() => modalBox.classList.add('show'), 10);
@@ -661,7 +676,6 @@ function initEvents() {
     const uploadBtn = e.target.closest('#logo-select-button');
     if (uploadBtn) {
       const selectInput = document.querySelector('#logo-select-input');
-      console.log(selectInput);
       selectInput.addEventListener('change', changeUrl);
       if (selectInput) selectInput.click();
       return;
@@ -669,7 +683,6 @@ function initEvents() {
     // const selectCatBtn = e.target.closest('#category-select-button');
     // if (selectCatBtn) {
     //   const selectInput = document.querySelector('#logo-select-input');
-    //   console.log(selectInput);
     //   selectInput.addEventListener('change', changeUrl);
     //   if (selectInput) selectInput.click();
     //   return;
@@ -755,7 +768,6 @@ async function obtainModal(action, btn) {
       cid = btn.getAttribute('modal-action-data');
       if (cid == 0) {
         title = 'Корневая';
-        console.log('корневая');
       } else {
         category = categories.find(c => c.id == cid);
         title = category.title;
@@ -784,25 +796,24 @@ async function obtainModal(action, btn) {
       closeModal('category-modal');
       break;
 
-    case 'remove-category':
-      cid = btn.getAttribute('modal-action-data');
-      response = await Categories({
+    case 'remove-category':{
+      let cid = btn.getAttribute('modal-action-data');
+      let response = await Categories({
         id: cid
       }, 'remove');
       showToast('Успешно', response.message, 'success');
       renderCategories();
       closeModal('remove-category');
       break;
-
-    case 'reload-attributes':
+    }   
+    case 'reload-attributes':{
       presave();
       renderVariantAttributes(product);
       break;
-
-    case 'add-variant':
-      pid = btn.getAttribute('modal-action-data');
-      var_arr = Object.keys(product.variants);
-      new_id = 'new-' + (var_arr.length + 1);
+    }
+    case 'add-variant':{
+      let pid = btn.getAttribute('modal-action-data');
+      let new_id = 'new' + (Object.keys(product.variants).length + 1);
       product.variants[new_id] = {
         'action': 'add',
         "variantId": new_id,
@@ -815,12 +826,11 @@ async function obtainModal(action, btn) {
       };
       renderProductVariants(product);
       break;
-
-    case 'copy-variant':
-      vid = btn.getAttribute('modal-action-data');
-      var_arr = Object.keys(product.variants);
-      new_id = 'copy-' + (var_arr.length + 1);
-      variant = {
+    }
+    case 'copy-variant':{
+      let vid = btn.getAttribute('modal-action-data');
+      let new_id = 'copy' + (Object.keys(product.variants).length + 1);
+      let variant = {
         ...product.variants[vid],
         variantId: new_id,
         'action': 'add',
@@ -828,10 +838,9 @@ async function obtainModal(action, btn) {
       product.variants[new_id] = variant;
       renderProductVariants(product);
       break;
-
-    case 'remove-variant':
-      vid = btn.getAttribute('modal-action-data');
-      console.log(vid);
+    }
+    case 'remove-variant':{
+      let vid = btn.getAttribute('modal-action-data');
       if (vid.includes('copy') || vid.includes('new')) {
         delete product.variants[vid];
       } else {
@@ -840,29 +849,29 @@ async function obtainModal(action, btn) {
       renderProductVariants(product);
       closeModal('remove-variant');
       break;
-
-    case 'remove-attr':
-      ids = btn.getAttribute('modal-action-data').split('-');
+    }
+    case 'remove-attr':{
+      let ids = btn.getAttribute('modal-action-data').split('-');
       product.variants[ids[0]].attributes[ids[1]].action = 'remove';
       renderVariantAttributes(product, setactive = ids[0]);
       closeModal('remove-attribute');
       break;
-
-    case 'select-main-image':
-      id = btn.getAttribute('modal-action-data');
-      for (i of Object.keys(product.images)) {
+    }
+    case 'select-main-image':{
+      let id = btn.getAttribute('modal-action-data');
+      for (let i of Object.keys(product.images)) {
         product.images[i].isMain = '0';
       }
       product.images[id].isMain = '1';
       renderVariantGallery(product, product.images[id].variantId);
       break;
-
-    case 'remove-image':
-      id = btn.getAttribute('modal-action-data');
+    }
+    case 'remove-image':{
+      let id = btn.getAttribute('modal-action-data');
       product.images[id].action = 'remove';
-      vid = product.images[id].variantId;
-      l = [];
-      for (i of Object.keys(product.images)) {
+      let vid = product.images[id].variantId;
+      let l = [];
+      for (let i of Object.keys(product.images)) {
         if (product.images[i].action != 'remove') l.push(i);
       }
       if (l.length == 0) {
@@ -875,24 +884,26 @@ async function obtainModal(action, btn) {
       renderVariantGallery(product, product.images[id].variantId);
       closeModal('remove-image');
       break;
-
-    case 'reload-images':
+    }
+    case 'reload-images':{
       presave();
       renderVariantGallery(product);
       break;
-
-    case 'save-product':
+    }
+    case 'save-product': {
       presave();
-      response = await Product(product, 'update');
+      let response = await api.post('/product', product);
       showToast('Успешно', response.message, 'success');
       renderCatalog();
       closeModal('product-modal');
       break;
-
-    case 'close':
-      backdrop = btn.closest('.modal-backdrop');
+    }
+    case 'close':{
+      let backdrop = btn.closest('.modal-backdrop');
       if (backdrop) closeModal(backdrop.id);
       break;
+    }
+      
   }
 
 }
@@ -904,17 +915,19 @@ function presave() {
     variants: {},
     images: {}
   };
-  vars = []
-  for (input of inputs) {
-    i = input.name;
+  let vars = []
+  for (let input of inputs) {
+    let i = input.name;
+    let val = '';
+
     if (input.type == 'checkbox') {
       val = input.checked ? '1' : '0';
     } else {
-      val = input.value
+      val = input.value;
     };
 
     if (i.includes('variant')) {
-      s = i.split('-');
+      let s = i.split('-');
       if (typeof (prs['variants'][s[1]]) != 'object') prs['variants'][s[1]] = {
         variantId: s[1],
         attributes: {},
@@ -925,7 +938,7 @@ function presave() {
       continue;
     }
     if (i.includes('image')) {
-      v = i.split('-');
+      let v = i.split('-');
       prs['images'][v[1]] = {
         id: v[1],
         isMain: v[4],
@@ -937,7 +950,7 @@ function presave() {
       continue;
     }
     if (i.includes('attr')) {
-      a = i.split('-');
+      let a = i.split('-');
       prs['variants'][a[1]]['attributes'][a[2]] = {
         attributeId: a[2],
         title: a[3],
@@ -949,14 +962,14 @@ function presave() {
       continue
     }
     if (i.includes('category') || i.includes('brand')) {
-      bc = i.split('-');
+      let bc = i.split('-');
       prs[bc[1] + 'Id'] = bc[2];
       prs[bc[1]] = val;
       continue
     }
 
     if (i.includes('general')) {
-      g = i.split('-');
+      let g = i.split('-');
       prs[g[1]] = val;
       continue
     }
@@ -1038,7 +1051,7 @@ function showToast(title, message, type = 'success') {
 
   container.appendChild(toast);
 
-  closeBtn = toast.querySelector('.toast-close');
+  let closeBtn = toast.querySelector('.toast-close');
   closeBtn.addEventListener('click', () => {
     removeToast(toast);
   });
@@ -1447,27 +1460,9 @@ function addOrderToTodayLog() {
 
 async function getProducts(params) {
 
-  const response = fetch('/api/catalog.php', {
-    method: 'POST',
-    body: prepareData(params),
-  })
-    .then(response => response.json())
-    .then(data => {
-      return data
+  const response = fetch('/api/v1/catalog', {
+      method: 'GET',
     })
-    .catch(error => {
-      showToast('Ошибка', error, 'danger');
-    });
-
-  return response
-}
-
-async function Product(params, type) {
-  params['type'] = type;
-  const response = fetch('/api/product.php', {
-    method: 'POST',
-    body: prepareData(params),
-  })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1481,10 +1476,10 @@ async function Product(params, type) {
 
 async function Brands(params, type) {
   params['type'] = type;
-  const response = fetch('/api/brands.php', {
-    method: 'POST',
-    body: prepareData(params),
-  })
+  const response = fetch('/api/v1/brands', {
+      method: 'POST',
+      body: prepareData(params),
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1500,9 +1495,9 @@ async function Categories(params, type, parentOnly = false) {
   params['type'] = type;
   if (parentOnly) params['parent'] = '1';
   const response = fetch('/api/categories.php', {
-    method: 'POST',
-    body: prepareData(params),
-  })
+      method: 'POST',
+      body: prepareData(params),
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1517,9 +1512,9 @@ async function Categories(params, type, parentOnly = false) {
 async function Attributes(params, type) {
   params['type'] = type;
   const response = fetch('/api/attributes.php', {
-    method: 'POST',
-    body: prepareData(params),
-  })
+      method: 'POST',
+      body: prepareData(params),
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1529,30 +1524,14 @@ async function Attributes(params, type) {
     });
 
   return response
-}
-
-function getFilterParams(query) {
-  const params = new URLSearchParams(window.location.search);
-  console.log(query);
-  const filterParams = {
-    query: query || params.get('q'),
-    category: params.get('cat'),
-    brand: params.get('brand'),
-    sort: params.get('sort'),
-    selectedCats: '',
-    selectedBrands: '',
-    minP: 0,
-    maxP: 1000000,
-  }
-  return filterParams;
 }
 
 async function getFilters(params) {
 
   const response = fetch('/api/catalog_filters.php', {
-    method: 'POST',
-    body: prepareData(params),
-  })
+      method: 'POST',
+      body: prepareData(params),
+    })
     .then(response => response.json())
     .then(data => {
       return data
@@ -1562,36 +1541,6 @@ async function getFilters(params) {
     });
 
   return response
-}
-
-function prepareData(data) {
-  const formData = new FormData();
-  for (const key in data) {
-    if (data.hasOwnProperty(key)) {
-      if (typeof (data[key]) == 'object' || typeof (data[key]) == 'array') {
-        formData.append(key, JSON.stringify(data[key]));
-      } else {
-        formData.append(key, data[key]);
-      }
-    }
-  }
-  return formData
-}
-
-function formatPrice(num) {
-  return (num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-}
-
-async function loadSvg(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`
-      Ошибка загрузки лого `);
-    return await response.text();
-  } catch (error) {
-    console.error(error);
-    return '<span class="error-logo">X</span>';
-  }
 }
 
 async function renderSelectCategories(query) {
@@ -1628,7 +1577,7 @@ async function renderSelectCategories(query) {
 }
 
 async function renderSelectAttributes(query) {
-  attributes = await Categories(getFilterParams(query), 'get', lastSearchCat);
+  let attributes = api.get('/attributes', getFilterParams(query));
   const box = document.querySelector('#select-category-list');
   let html = '';
   for (const c of categories) {
@@ -1660,11 +1609,10 @@ async function renderSelectAttributes(query) {
   box.innerHTML = html;
 }
 
-
 function renderProductVariants(product) {
-  box = document.getElementById('product-variants');
-  html = ''
-  for (v of Object.keys(product.variants)) {
+  let box = document.getElementById('product-variants');
+  let html = ''
+  for (let v of Object.keys(product.variants)) {
     v = product.variants[v];
     html += `
                 <tr ${v.action == 'remove' ? "style='display:none'" : ''}>                    
@@ -1702,36 +1650,36 @@ function renderProductVariants(product) {
 }
 
 function renderVariantAttributes(product, setactive = '') {
-  box = document.getElementById('attributes-box');
-  navtabs = document.createElement('div');
+  let box = document.getElementById('attributes-box');
+  let navtabs = document.createElement('div');
   navtabs.className = 'nav-tabs';
-  variantTabs = document.createElement('div');
-  for (v of Object.keys(product.variants)) {
+  let variantTabs = document.createElement('div');
+  for (let v of Object.keys(product.variants)) {
 
-    vid = v;
+    let vid = v;
     v = product.variants[v];
-    active = setactive == vid ? ' active' : '';
+    let active = setactive == vid ? ' active' : '';
     navtabs.innerHTML += `<button class="tab-btn${active}" data-tab="tab-variant-${vid}" data-tab-level='2'>
                             <i class="bi bi-info-circle"></i> ${v.variant}
                           </button>`;
 
-    variantTab = document.createElement('div');
-
+    let variantTab = document.createElement('div');
     variantTab.className = "tab-pane" + active;
     variantTab.id = 'tab-variant-' + v.variantId;
     variantTab.setAttribute('data-tab-level', '2');
-    grid = document.createElement('div');
+
+    let grid = document.createElement('div');
     grid.className = 'attr-grid';
     variantTab.innerHTML = `
           <div style="display: flex; justify-content: end; align-items: center; margin-bottom: 16px;">
-            <button class="btn btn-brand btn-sm" type="button" modal-action-button='add-attribute' modal-action-data='${vid}'>
+            <button class="btn btn-brand btn-sm" type="button" data-modal-target='select-attribute' modal-action-data='${vid}'>
               <i class="bi bi-plus-lg"></i> Добавить атрибут
             </button>    
     `
 
-    for (a of Object.keys(v.attributes)) {
+    for (let a of Object.keys(v.attributes)) {
       a = v.attributes[a];
-      display = a.action == 'remove' ? "style='display:none;'" : '';
+      let display = a.action == 'remove' ? "style='display:none;'" : '';
       switch (a.type) {
         case 'number':
           grid.innerHTML += `
@@ -1782,26 +1730,25 @@ function renderVariantAttributes(product, setactive = '') {
 }
 
 function renderVariantGallery(product, setactive = '') {
-  box = document.getElementById('gallery-box');
+  let box = document.getElementById('gallery-box');
   box.innerHTML = '';
-  navtabs = document.createElement('div');
+  let navtabs = document.createElement('div');
   navtabs.className = 'nav-tabs';
-  variantTabs = document.createElement('div');
-  console.log(setactive);
-  for (v of Object.keys(product.variants)) {
-    vid = v;
+  let variantTabs = document.createElement('div');
+  for (let v of Object.keys(product.variants)) {
+    let vid = v;
     v = product.variants[v];
-    active = setactive == vid ? ' active' : '';
+    let active = setactive == vid ? ' active' : '';
     navtabs.innerHTML += `<button class="tab-btn${active}" data-tab="tab-variant-${v.variantId}" data-tab-level='2'>
                             <i class="bi bi-info-circle"></i> ${v.variant}
                           </button>`;
 
-    variantTab = document.createElement('div');
+    let variantTab = document.createElement('div');
     variantTab.className = "tab-pane" + active;
     variantTab.id = 'tab-variant-' + v.variantId;
     variantTab.setAttribute('data-tab-level', '2');
 
-    dropzone = document.createElement('div');
+    let dropzone = document.createElement('div');
     dropzone.className = "dropzone-box";
     dropzone.innerHTML = `
             <i class="bi bi-cloud-arrow-up-fill dropzone-icon"></i>
@@ -1809,10 +1756,10 @@ function renderVariantGallery(product, setactive = '') {
             <div class="dropzone-subtext">Поддерживаются WebP, PNG, JPG высокой четкости</div>
             `;
 
-    grid = document.createElement('div');
+    let grid = document.createElement('div');
     grid.className = 'gallery-grid';
 
-    for (i of Object.keys(product.images)) {
+    for (let i of Object.keys(product.images)) {
       i = product.images[i];
       if (i.variantId !== v.variantId) continue;
 
@@ -1833,4 +1780,35 @@ function renderVariantGallery(product, setactive = '') {
 
   box.append(navtabs);
   box.append(variantTabs);
+}
+
+export function formatPrice(num) {
+  return (num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+}
+
+export function getFilterParams(query) {
+  const params = new URLSearchParams(window.location.search);
+  const filterParams = {
+    query: query || params.get('q'),
+    category: params.get('cat'),
+    brand: params.get('brand'),
+    sort: params.get('sort'),
+    selectedCats: '',
+    selectedBrands: '',
+    minP: 0,
+    maxP: 1000000,
+  }
+  return filterParams;
+}
+
+export async function loadSvg(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`
+      Ошибка загрузки лого `);
+    return await response.text();
+  } catch (error) {
+    console.error(error);
+    return '<span class="error-logo">X</span>';
+  }
 }

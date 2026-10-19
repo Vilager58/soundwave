@@ -50,7 +50,7 @@ class ProductController
      */
     public function getProduct(): object
     {
-        $id = (int) ($_GET['id'] ?? $_POST['id'] ?? 0);
+        $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
             throw new Exception("Не передан id товара");
         }
@@ -72,21 +72,5 @@ class ProductController
         }
 
         return $this->productRepository->update($id, $_POST);
-    }
-
-    /**
-     * Универсальный обработчик для совместимости с product.php
-     *
-     * @return mixed
-     * @throws Throwable
-     */
-    public function handle(): mixed
-    {
-        $type = $_POST['type'] ?? $_GET['type'] ?? 'get';
-        return match ($type) {
-            'get' => $this->getProduct(),
-            'update' => $this->updateProduct(),
-            default => throw new Exception("Неизвестный тип действия: $type")
-        };
     }
 }

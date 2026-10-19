@@ -24,6 +24,9 @@ return [
 
     'GET:/brands'          => [BrandController::class, 'getAll'],
     'GET:/brand'           => [BrandController::class, 'getById'],
+    'POST:/brand/remove'        => [BrandController::class, 'removeById'],
+    'POST:/brand/add'       => [BrandController::class, 'addBrand'],
+    'POST:/brand/update'           => [BrandController::class, 'updateById'],
 
     'GET:/categories'      => [CategoryController::class, 'getAll'],
     'GET:/category'        => [CategoryController::class, 'getById'],
@@ -38,6 +41,7 @@ return [
     'GET:/catalog_filters' => [ProductController::class, 'getFilters'],
     'POST:/catalog_filters'=> [ProductController::class, 'getFilters'],
     'GET:/product'         => [ProductController::class, 'getProduct'],
+    'POST:/product'        => [ProductController::class, 'updateProduct'],
 
     'GET:/cart'            => [CartController::class, 'getCart'],
     'GET:/cart/ids'        => [CartController::class, 'getCartIds'],

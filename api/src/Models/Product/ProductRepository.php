@@ -461,6 +461,29 @@ class ProductRepository
                 if (is_array($variants)) {
                     foreach ($variants as $variant) {
                         $action = $variant['action'] ?? '';
+
+                        if ($action === 'add') {
+                            $vSql = 'INSERT INTO products_variants(
+                              product_id, title, article, barcode, price, old_price, amount, is_active, created_at
+                              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())';
+                            $vStmt = $pdo->prepare($vSql);
+                            $vStmt->execute([
+                                $id,
+                                $variant['variant'] ?? '',
+                                $variant['article'] ?? '',
+                                $variant['barcode'] ?? null,
+                                $variant['price'] ?? 0,
+                                !empty($variant['oldPrice']) ? $variant['oldPrice'] : null,
+                                $variant['amount'] ?? 0,
+                                isset($variant['isActive']) ? ($variant['isActive'] ? 1 : 0) : 1,
+                            ]);
+
+                        };
+                        if ($action === 'remove') {
+                            $vSql = 'DELETE FROM products_variants WHERE id = ?';
+                            $vStmt = $pdo->prepare($vSql);
+                            $vStmt->execute([$variant['variantId']]);
+                        };
                         if ($action === 'update' && !empty($variant['variantId'])) {
                             $vSql = 'UPDATE products_variants SET
                                 title = ?, article = ?, barcode = ?, price = ?, old_price = ?, amount = ?, is_active = ?
@@ -475,24 +498,23 @@ class ProductRepository
                                 $variant['amount'] ?? 0,
                                 isset($variant['isActive']) ? ($variant['isActive'] ? 1 : 0) : 1,
                                 $variant['variantId']
-                            ]);
+                        ]);};
 
-                            if (!empty($variant['attributes']) && is_array($variant['attributes'])) {
-                                foreach ($variant['attributes'] as $attribute) {
-                                    if (($attribute['action'] ?? '') === 'update') {
-                                        $aSql = 'UPDATE product_attributes SET
-                                            value_string = ?, value_number = ?, value_bool = ?
-                                            WHERE variant_id = ? AND attribute_id = ?';
-                                        $aStmt = $pdo->prepare($aSql);
-                                        $aType = $attribute['type'] ?? 'string';
-                                        $aStmt->execute([
-                                            $aType === 'string' ? ($attribute['value'] ?? null) : null,
-                                            $aType === 'number' ? ($attribute['value'] ?? null) : null,
-                                            $aType === 'boolean' ? ($attribute['value'] ?? null) : null,
-                                            $variant['variantId'],
-                                            $attribute['attributeId']
-                                        ]);
-                                    }
+                        if (!empty($variant['attributes']) && is_array($variant['attributes'])) {
+                            foreach ($variant['attributes'] as $attribute) {
+                                if (($attribute['action'] ?? '') === 'update') {
+                                    $aSql = 'UPDATE product_attributes SET
+                                        value_string = ?, value_number = ?, value_bool = ?
+                                        WHERE variant_id = ? AND attribute_id = ?';
+                                    $aStmt = $pdo->prepare($aSql);
+                                    $aType = $attribute['type'] ?? 'string';
+                                    $aStmt->execute([
+                                        $aType === 'string' ? ($attribute['value'] ?? null) : null,
+                                        $aType === 'number' ? ($attribute['value'] ?? null) : null,
+                                        $aType === 'boolean' ? ($attribute['value'] ?? null) : null,
+                                        $variant['variantId'],
+                                        $attribute['attributeId']
+                                    ]);
                                 }
                             }
                         }
