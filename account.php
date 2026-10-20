@@ -344,6 +344,7 @@
       }
 
       let html = '';
+      
       recentIds.forEach(id => {
         const p = SOUNDWAVE_DATA.products.find(item => item.id === id);
         if (!p) return;
@@ -427,10 +428,6 @@
 
       const bonusVal = document.querySelector('#stat-bonuses-val');
       if (bonusVal) bonusVal.textContent = (user.bonuses || 0).toLocaleString() + ' ₽';
-
-      const favs = getStoredFavs();
-      const favsVal = document.querySelector('#stat-favs-count');
-      if (favsVal) favsVal.textContent = favs.length;
 
       if (document.querySelector('#prof-name')) document.querySelector('#prof-name').value = user.lastname + ' ' + user.firstname + ' ' + user.patronymic;
       if (document.querySelector('#prof-email')) document.querySelector('#prof-email').value = user.email || '';

@@ -1,6 +1,3 @@
-
-
-
 async function getUser() {
   response = await fetch('/api/v1/user', {
       method: 'GET',
@@ -467,9 +464,9 @@ async function initEvents() {
     //   });
     // }
 
-    cardBtn = e.target.closest('[card-btn]');
+    const cardBtn = e.target.closest('[card-btn]');
     if (cardBtn) {
-      productData = cardBtn.closest('[pid]');
+      let productData = cardBtn.closest('[pid]');
       if (productData) {
         productData = productData.getAttribute('pid').split('-');
         productId = productData[0];
@@ -555,6 +552,19 @@ async function initEvents() {
       return;
     }
 
+    const productBtn = e.target.closest('[product-btn]')
+    if(productBtn){
+      e.preventDefault();
+      let productData = productBtn.closest('[pid]');
+      let action = productBtn.getAttribute('product-btn').split('-');
+      switch(action[0]){
+        case 'config':{
+          renderProductPage(action[1], false);
+          break;
+        }
+      }
+    }
+
     function changeUrl(i) {
       if (i.target.files[0]) {
         uploadBtn.innerHTML = i.target.files[0].name;
@@ -598,6 +608,7 @@ async function initEvents() {
 
       }
     }
+
     const addBtn = e.target.closest("[data-add-cart]");
     if (addBtn) {
       e.preventDefault();
@@ -610,11 +621,16 @@ async function initEvents() {
 };
 
 let user = {};
-let handledIds = {message: {favIds: [], cartIds: []}};
+let handledIds = {
+  message: {
+    favIds: [],
+    cartIds: []
+  }
+};
 
 async function updateHandled() {
   handled = await getUserCounts();
-  if(typeof handled.message != 'string'){
+  if (typeof handled.message != 'string') {
     handledIds = handled;
     updateHeaderBadges(handledIds.message);
   }
@@ -630,26 +646,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   const searchResults = document.querySelector("#search-autocomplete-box");
 
   if (searchInput && searchResults) {
-    searchInput.addEventListener("input", () => {
+    searchInput.addEventListener("input", async () => {
       const val = searchInput.value.trim().toLowerCase();
       if (val.length >= 2) {
-        const matches = SOUNDWAVE_DATA.products.filter(
-          (p) =>
-          p.title.toLowerCase().includes(val) ||
-          p.category.toLowerCase().includes(val) ||
-          (p.brand && p.brand.toLowerCase().includes(val))
-        );
-
+        const matches = await getProducts({
+          q: val
+        })
         if (matches.length > 0) {
           let html = "";
           matches.slice(0, 4).forEach((item) => {
             html += `
               <a href="product.php?id=${item.id}" class="autocomplete-item">
                 <div>
-                  <strong>${item.title}</strong>
+                  <strong>${item.productTitle}</strong>
                   <div style="font-size: 11px; color: var(--text-muted);">${item.category} • ${item.brand || ''}</div>
                 </div>
-                <span style="font-weight: 700; color: var(--yellow-main);">${formatPrice(item.price)}</span>
+                <span style="font-weight: 700; color: var(--yellow-main);">${formatPrice(item.variants[0].price)}</span>
               </a>
             `;
           });

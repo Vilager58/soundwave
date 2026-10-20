@@ -1,11 +1,11 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fender Player Stratocaster | SOUNDWAVE</title>
+  <title>Загрузка... | SOUNDWAVE</title>
   <meta name="description"
     content="Купить электрогитару Fender Player Stratocaster в магазине музыкальных инструментов SOUNDWAVE.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,8 +19,8 @@
 </head>
 
 <body>
-  
-  <?php require('./components/header.php')?>
+
+  <?php require('./components/header.php') ?>
 
   <nav class="site-breadcrumbs">
     <div class="container">
@@ -35,7 +35,7 @@
 
   <main>
     <div class="container">
-      <div class="product-detail-layout">
+      <div class="product-detail-layout" pid="0">
         <div class="product-gallery">
           <div class="gallery-main-view" id="main-view-box">
             <img src="img/photo-1550291652-6ea9114a47b1.avif" alt="Товар" id="main-product-img">
@@ -193,7 +193,7 @@
     </div>
   </main>
 
-  <?php require('./components/footer.php')?>
+  <?php require('./components/footer.php') ?>
 
   <script src="js/main.js"></script>
   <script>
@@ -220,19 +220,6 @@
       if (el) el.classList.add('active');
       const img = document.querySelector('#main-product-img');
       if (img) img.src = src;
-    }
-
-    function selectColor(el, name) {
-      document.querySelectorAll('.color-pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
-      const label = document.querySelector('#selected-color-name');
-      if (label) label.textContent = name;
-    }
-
-    function selectConfig(el) {
-      const parent = el.parentElement;
-      parent.querySelectorAll('.config-btn').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
     }
 
     function selectPackage(el, extra) {
@@ -422,29 +409,34 @@
       recentGrid.innerHTML = html;
     }
 
-    async function renderProductPage() {
+    async function renderProductPage(variant = 0, reload = true) {
       const params = new URLSearchParams(window.location.search);
       const productId = params.get('id') || 'fender-strat';
 
-      currentProduct = await getProduct(productId);
+      if(reload){
+        currentProduct = await getProduct(productId);
+      }
+      
       console.log(currentProduct);
       if (!currentProduct) return;
 
-      basePrice = currentProduct.price;
-      extraPackagePrice = 0;
+      const currentVariant = currentProduct.variants[variant == 0 ? Object.keys(currentProduct.variants)[variant] : variant];
+      document.querySelector('[pid]').setAttribute('pid', currentVariant.variantId)
+      basePrice = currentVariant.price;
+      extraPackagePrice = 1;
 
-      document.title = `${currentProduct.title} | SOUNDWAVE`;
+      document.title = `${currentProduct.productTitle} | SOUNDWAVE`;
       const catBreadcrumb = document.querySelector('#breadcrumb-category');
       if (catBreadcrumb) {
         catBreadcrumb.innerHTML = `<a href="catalog.php?cat=${currentProduct.categorySlug || ''}">${currentProduct.category}</a>`;
       }
       const titleBreadcrumb = document.querySelector('#breadcrumb-title');
-      if (titleBreadcrumb) titleBreadcrumb.textContent = currentProduct.title;
+      if (titleBreadcrumb) titleBreadcrumb.textContent = currentProduct.productTitle;
 
       const mainImg = document.querySelector('#main-product-img');
       if (mainImg) {
         mainImg.src = currentProduct.image;
-        mainImg.alt = currentProduct.title;
+        mainImg.alt = currentProduct.productTitle;
       }
 
       const thumbsContainer = document.querySelector('#gallery-thumbs-container');
@@ -467,10 +459,10 @@
       }
 
       const skuBox = document.querySelector('#product-sku-box');
-      if (skuBox) skuBox.textContent = `Артикул: ${currentProduct.slug || 'SW-' + currentProduct.id}`;
+      if (skuBox) skuBox.textContent = `Артикул: ${currentVariant.article || 'SW-' + currentProduct.id}`;
 
       const titleHeading = document.querySelector('#product-title-heading');
-      if (titleHeading) titleHeading.textContent = currentProduct.title;
+      if (titleHeading) titleHeading.textContent = currentProduct.productTitle;
 
       const starsBox = document.querySelector('#product-stars-box');
       if (starsBox) starsBox.innerHTML = renderStars(currentProduct.rating);
@@ -480,19 +472,25 @@
 
       const stockStatus = document.querySelector('#product-stock-status');
       if (stockStatus) {
-        stockStatus.textContent = currentProduct.inStock ? 'В наличии на складе' : 'Под заказ';
-        stockStatus.className = currentProduct.inStock ? 'badge-stock' : 'badge-stock out';
+        stockStatus.textContent = currentVariant.amount > 0 ? 'В наличии на складе' : 'Под заказ';
+        stockStatus.className = currentVariant.amount > 0 ? 'badge-stock' : 'badge-stock out';
+      }
+
+      const priceVal = document.querySelector('#product-price-val');
+
+      if (priceVal) {
+        priceVal.textContent = formatPrice(currentVariant.price);
       }
 
       const oldPriceVal = document.querySelector('#product-old-price-val');
       const discountBadge = document.querySelector('#product-discount-badge');
-      if (currentProduct.oldPrice) {
+      if (currentVariant.oldPrice) {
         if (oldPriceVal) {
-          oldPriceVal.textContent = formatPrice(currentProduct.oldPrice);
+          oldPriceVal.textContent = formatPrice(currentVariant.oldPrice);
           oldPriceVal.style.display = 'inline-block';
         }
         if (discountBadge) {
-          const discountPercent = Math.round((1 - currentProduct.price / currentProduct.oldPrice) * 100);
+          const discountPercent = Math.round((1 - currentVariant.price / currentVariant.oldPrice) * 100);
           discountBadge.textContent = `-${discountPercent}%`;
           discountBadge.style.display = 'inline-block';
         }
@@ -511,7 +509,9 @@
               <div class="option-label">Вариант</div>
               <div class="config-options">
                 ${Object.keys(currentProduct.variants).map((variant, i) => `
-                  <button type="button" class="config-btn ${i === 0 ? 'active' : ''}" onclick="selectConfig(this)">${variant.variant}</button>
+                  <button type="button" class="config-btn 
+                  ${currentProduct.variants[variant].variantId == currentVariant.variantId ? 'active' : ''}" 
+                  product-btn='config-${currentProduct.variants[variant].variantId}'>${currentProduct.variants[variant].variant}</button>
                 `).join('')}
               </div>
             </div>
@@ -521,43 +521,59 @@
       }
 
       const addCartBtn = document.querySelector('#btn-add-to-cart');
-      if (addCartBtn) addCartBtn.setAttribute('data-add-cart', currentProduct.id);
+      if (addCartBtn) addCartBtn.setAttribute('product-btn', currentProduct.id);
 
       const favBtn = document.querySelector('#btn-fav-toggle');
-      if (favBtn) favBtn.setAttribute('data-id', currentProduct.id);
+      if (favBtn) favBtn.setAttribute('product-btn', 'fav-currentProduct.id');
 
       const descContent = document.querySelector('#tab-desc-content');
       if (descContent) {
         descContent.innerHTML = `
           <p style="margin-bottom: 16px; font-size: 16px; color: var(--text-primary); font-weight: 600;">
-            ${currentProduct.desc}
+            ${currentProduct.shortDescription}
           </p>
           <p style="margin-bottom: 16px;">
-            ${currentProduct.fullDesc || ''}
+            ${currentProduct.description || ''}
           </p>
           <p>
-            Каждый инструмент перед отправкой покупателю проходит обязательную предпродажную проверку нашими мастерами в сервисном центре SOUNDWAVE: отстройку мензуры, высоты струн и проверку электронной схемы.
+            Каждый продукт перед отправкой покупателю проходит обязательную предпродажную проверку нашими мастерами в сервисном центре SOUNDWAVE: отстройку мензуры, высоты струн и проверку электронной схемы.
           </p>
         `;
       }
       const specsTbody = document.querySelector('#tab-specs-tbody');
       if (specsTbody) {
         let specsHtml = '';
-        const specs = currentProduct.specs || [
-          { label: "Бренд", value: currentProduct.brand || "SOUNDWAVE" },
-          { label: "Категория", value: currentProduct.category },
-          { label: "Артикул", value: currentProduct.slug},
-          { label: "Гарантия", value: "2 года официальной гарантии" }
-        ];
-        specs.forEach(s => {
+        const variantSpecs = currentVariant.attributes;
+
+        const productSpecs = [
+          { title: "Категория", value: currentProduct.category },
+          { title: "Артикул", value: currentProduct.slug },
+          { title: "Гарантия", value: "2 года официальной гарантии" },
+          { title: "Бренд", value: currentProduct.brand || "SOUNDWAVE" }
+        ]
+
+
+        Object.keys(variantSpecs).forEach(k => {
+          let s = variantSpecs[k]
           specsHtml += `
             <tr>
-              <td>${s.label}</td>
+              <td>${s.title}</td>
+              <td>${s.type == 'boolean' ? 'Да' : s.value} ${s.unit == null ? '' : s.unit}</td>
+            </tr>
+          `;
+        });
+        productSpecs.forEach(s => {
+          specsHtml += `
+            <tr>
+              <td>${s.title}</td>
               <td>${s.value}</td>
             </tr>
           `;
         });
         specsTbody.innerHTML = specsHtml;
+
+
+
       }
       renderReviews();
       initStarPicker();

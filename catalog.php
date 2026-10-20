@@ -283,7 +283,7 @@
       // const favs = getStoredFavs();
 
       if (countEl) {
-        countEl.innerHTML = `Показано <strong>${products.length}</strong> из <strong>${SOUNDWAVE_DATA.products.length}</strong> товаров`;
+        countEl.innerHTML = `Показано <strong>${products.length}</strong> из <strong>${products.length}</strong> товаров`;
       }
 
       if (products.length === 0) {

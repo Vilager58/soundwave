@@ -131,7 +131,7 @@
             </div>
             <div class="cart-item-info">
               <div class="cart-item-category">${item.category}</div>
-              <a href="product.php?id=${item.product_id}" class="cart-item-title">${item.productTitle}</a>
+              <a href="product.php?id=${item.productId}" class="cart-item-title">${item.productTitle}</a>
               <div class="cart-item-price-each">${formatPrice(item.price)} / шт.</div>
             </div>
             <div class="quantity-picker">
